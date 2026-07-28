@@ -11,8 +11,12 @@
 
 	"helpful_tweake.config.tools.name.betterAutoJump": "Better Auto Jump",
 	"helpful_tweake.config.tools.comment.betterAutoJump": "Allows smooth stepping up blocks <=1.25 blocks high without losing horizontal speed. Inspired by Accessible Step.",
+	"helpful_tweake.config.tools.name.globalMending": "Global Mending",
+	"helpful_tweake.config.tools.comment.globalMending": "All items with Mending in equipment slots, main/off-hand, hotbar and inventory are repaired when absorbing XP, without needing to be held. Items inside shulker boxes and other containers are ignored.",
 	"helpful_tweake.config.hotkeys.name.openGuiSettings": "Open config GUI",
 	"helpful_tweake.config.hotkeys.comment.openGuiSettings": "Opens the Helpful Tweake config GUI",
 	"helpful_tweake.message.betterAutoJump.enabled": "Better Auto Jump: ON",
-	"helpful_tweake.message.betterAutoJump.disabled": "Better Auto Jump: OFF"
+	"helpful_tweake.message.betterAutoJump.disabled": "Better Auto Jump: OFF",
+	"helpful_tweake.message.globalMending.enabled": "Global Mending: ON",
+	"helpful_tweake.message.globalMending.disabled": "Global Mending: OFF"
 }

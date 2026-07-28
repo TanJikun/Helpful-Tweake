@@ -34,8 +34,13 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed BETTER_AUTO_JUMP =
                 new ConfigBooleanHotkeyed("betterAutoJump", false, "").apply(TOOLS_KEY);
 
+        // 全局经验修补：装备栏/主副手/快捷栏/背包内所有经验修补物品都能在吸收经验时修复
+        public static final ConfigBooleanHotkeyed GLOBAL_MENDING =
+                new ConfigBooleanHotkeyed("globalMending", false, "").apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
-                BETTER_AUTO_JUMP
+                BETTER_AUTO_JUMP,
+                GLOBAL_MENDING
         );
     }
 

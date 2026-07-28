@@ -16,6 +16,7 @@ public class KeyCallbacks
     {
         Hotkeys.OPEN_GUI_SETTINGS.getKeybind().setCallback(new OpenGuiCallback(mc));
         Configs.Tools.BETTER_AUTO_JUMP.getKeybind().setCallback(new ToggleBetterAutoJumpCallback());
+        Configs.Tools.GLOBAL_MENDING.getKeybind().setCallback(new ToggleGlobalMendingCallback());
     }
 
     private record OpenGuiCallback(Minecraft mc) implements IHotkeyCallback
@@ -40,6 +41,24 @@ public class KeyCallbacks
                 boolean enabled = Configs.Tools.BETTER_AUTO_JUMP.getBooleanValue();
                 Minecraft.getInstance().player.displayClientMessage(
                         Component.translatable("helpful_tweake.message.betterAutoJump." + (enabled ? "enabled" : "disabled")),
+                        true);
+            }
+            return true;
+        }
+    }
+
+    private record ToggleGlobalMendingCallback() implements IHotkeyCallback
+    {
+        @Override
+        public boolean onKeyAction(KeyAction action, IKeybind key)
+        {
+            Configs.Tools.GLOBAL_MENDING.toggleBooleanValue();
+            Configs.saveToFile();
+            if (Minecraft.getInstance().player != null)
+            {
+                boolean enabled = Configs.Tools.GLOBAL_MENDING.getBooleanValue();
+                Minecraft.getInstance().player.displayClientMessage(
+                        Component.translatable("helpful_tweake.message.globalMending." + (enabled ? "enabled" : "disabled")),
                         true);
             }
             return true;

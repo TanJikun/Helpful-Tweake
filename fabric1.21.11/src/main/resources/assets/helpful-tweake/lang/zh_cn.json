@@ -11,8 +11,12 @@
 
 	"helpful_tweake.config.tools.name.betterAutoJump": "更好的自动跳跃",
 	"helpful_tweake.config.tools.comment.betterAutoJump": "允许平滑通过≤1.25格高的障碍，不损失水平速度。灵感来源于 Accessible Step。",
+	"helpful_tweake.config.tools.name.globalMending": "全局经验修补",
+	"helpful_tweake.config.tools.comment.globalMending": "装备栏、主副手、快捷栏、背包内所有附有经验修补的物品都能在吸收经验时修复，不需要拿在手上。忽略潜影盒等容器内的物品。",
 	"helpful_tweake.config.hotkeys.name.openGuiSettings": "打开配置界面",
 	"helpful_tweake.config.hotkeys.comment.openGuiSettings": "打开 Helpful Tweake 配置界面",
 	"helpful_tweake.message.betterAutoJump.enabled": "更好的自动跳跃：已开启",
-	"helpful_tweake.message.betterAutoJump.disabled": "更好的自动跳跃：已关闭"
+	"helpful_tweake.message.betterAutoJump.disabled": "更好的自动跳跃：已关闭",
+	"helpful_tweake.message.globalMending.enabled": "全局经验修补：已开启",
+	"helpful_tweake.message.globalMending.disabled": "全局经验修补：已关闭"
 }

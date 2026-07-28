@@ -5,7 +5,8 @@
 	"client": [
 		"ExampleClientMixin",
 		"MixinLivingEntity",
-		"MixinMinecraft"
+		"MixinMinecraft",
+		"MixinExperienceOrb"
 	],
 	"injectors": {
 		"defaultRequire": 1
