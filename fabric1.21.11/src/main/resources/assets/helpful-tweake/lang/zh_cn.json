@@ -1,0 +1,18 @@
+{
+	"helpful_tweake.gui.title.configs": "Helpful Tweake 配置",
+	"helpful_tweake.gui.button.config_gui.tools": "工具",
+	"helpful_tweake.gui.button.config_gui.optimization": "优化",
+
+	"helpful_tweake.hotkeys.category.generic_hotkeys": "通用热键",
+
+	"helpful_tweake.config.tools": "工具",
+	"helpful_tweake.config.optimization": "优化",
+	"helpful_tweake.config.hotkeys": "热键",
+
+	"helpful_tweake.config.tools.name.betterAutoJump": "更好的自动跳跃",
+	"helpful_tweake.config.tools.comment.betterAutoJump": "允许平滑通过≤1.25格高的障碍，不损失水平速度。灵感来源于 Accessible Step。",
+	"helpful_tweake.config.hotkeys.name.openGuiSettings": "打开配置界面",
+	"helpful_tweake.config.hotkeys.comment.openGuiSettings": "打开 Helpful Tweake 配置界面",
+	"helpful_tweake.message.betterAutoJump.enabled": "更好的自动跳跃：已开启",
+	"helpful_tweake.message.betterAutoJump.disabled": "更好的自动跳跃：已关闭"
+}

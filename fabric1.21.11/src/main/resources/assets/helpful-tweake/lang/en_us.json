@@ -1,0 +1,18 @@
+{
+	"helpful_tweake.gui.title.configs": "Helpful Tweake Configs",
+	"helpful_tweake.gui.button.config_gui.tools": "Tools",
+	"helpful_tweake.gui.button.config_gui.optimization": "Optimization",
+
+	"helpful_tweake.hotkeys.category.generic_hotkeys": "Generic hotkeys",
+
+	"helpful_tweake.config.tools": "Tools",
+	"helpful_tweake.config.optimization": "Optimization",
+	"helpful_tweake.config.hotkeys": "Hotkeys",
+
+	"helpful_tweake.config.tools.name.betterAutoJump": "Better Auto Jump",
+	"helpful_tweake.config.tools.comment.betterAutoJump": "Allows smooth stepping up blocks <=1.25 blocks high without losing horizontal speed. Inspired by Accessible Step.",
+	"helpful_tweake.config.hotkeys.name.openGuiSettings": "Open config GUI",
+	"helpful_tweake.config.hotkeys.comment.openGuiSettings": "Opens the Helpful Tweake config GUI",
+	"helpful_tweake.message.betterAutoJump.enabled": "Better Auto Jump: ON",
+	"helpful_tweake.message.betterAutoJump.disabled": "Better Auto Jump: OFF"
+}

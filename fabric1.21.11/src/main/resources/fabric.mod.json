@@ -1,0 +1,46 @@
+{
+	"schemaVersion": 1,
+	"id": "helpful-tweake",
+	"version": "${version}",
+	"name": "Helpful Tweake",
+	"description": "A client-side tweak mod built on MaLiLib, providing helpful tools and optimizations.",
+	"authors": [
+		"Tanjikun"
+	],
+	"contact": {
+		"homepage": "https://github.com/Tanjikun/Helpful-Tweake",
+		"sources": "https://github.com/Tanjikun/Helpful-Tweake",
+		"issues": "https://github.com/Tanjikun/Helpful-Tweake/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/helpful-tweake/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"main": [
+			"tanjikun.helpful.tweake.HelpfulTweake"
+		],
+		"client": [
+			"tanjikun.helpful.tweake.client.HelpfulTweakeClient"
+		],
+		"modmenu": [
+			"tanjikun.helpful.tweake.client.ModMenuCompat"
+		],
+		"fabric-datagen": [
+			"tanjikun.helpful.tweake.client.HelpfulTweakeDataGenerator"
+		]
+	},
+	"mixins": [
+		"helpful-tweake.mixins.json",
+		{
+			"config": "helpful-tweake.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*",
+		"malilib": ">=0.27.7- <0.28.0-"
+	}
+}

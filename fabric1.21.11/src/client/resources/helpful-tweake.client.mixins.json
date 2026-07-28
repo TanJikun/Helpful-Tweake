@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"package": "tanjikun.helpful.tweake.client.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ExampleClientMixin",
+		"MixinLivingEntity",
+		"MixinMinecraft"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
