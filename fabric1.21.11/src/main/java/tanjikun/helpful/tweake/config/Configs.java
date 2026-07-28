@@ -38,9 +38,14 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed GLOBAL_MENDING =
                 new ConfigBooleanHotkeyed("globalMending", false, "").apply(TOOLS_KEY);
 
+        // 更好的不死图腾：装备栏/主副手/快捷栏/背包内所有不死图腾都能在死亡时触发，不需要拿在手上
+        public static final ConfigBooleanHotkeyed BETTER_TOTEM =
+                new ConfigBooleanHotkeyed("betterTotem", false, "").apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
-                GLOBAL_MENDING
+                GLOBAL_MENDING,
+                BETTER_TOTEM
         );
     }
 

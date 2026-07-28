@@ -3,7 +3,8 @@
 	"package": "tanjikun.helpful.tweake.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+		"ExampleMixin",
+		"MixinLivingEntityDeath"
 	],
 	"injectors": {
 		"defaultRequire": 1

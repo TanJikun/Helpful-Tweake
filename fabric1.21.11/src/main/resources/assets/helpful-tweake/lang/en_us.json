@@ -13,6 +13,8 @@
 	"helpful_tweake.config.tools.comment.betterAutoJump": "Allows smooth stepping up blocks <=1.25 blocks high without losing horizontal speed. Inspired by Accessible Step.",
 	"helpful_tweake.config.tools.name.globalMending": "Global Mending",
 	"helpful_tweake.config.tools.comment.globalMending": "All items with Mending in equipment slots, main/off-hand, hotbar and inventory are repaired when absorbing XP, without needing to be held. Items inside shulker boxes and other containers are ignored.",
+	"helpful_tweake.config.tools.name.betterTotem": "Better Totem of Undying",
+	"helpful_tweake.config.tools.comment.betterTotem": "When dying, any item with death protection (Totem of Undying) in equipment slots, main/off-hand, hotbar and inventory is triggered, without needing to be held. Items inside shulker boxes and other containers are ignored. Damage sources that bypass invulnerability (e.g. /kill) are not protected, matching vanilla behavior.",
 	"helpful_tweake.config.hotkeys.name.openGuiSettings": "Open config GUI",
 	"helpful_tweake.config.hotkeys.comment.openGuiSettings": "Opens the Helpful Tweake config GUI",
 	"helpful_tweake.message.betterAutoJump.enabled": "Better Auto Jump: ON",
