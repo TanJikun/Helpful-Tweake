@@ -7,7 +7,8 @@
 		"MixinLivingEntity",
 		"MixinMinecraft",
 		"MixinExperienceOrb",
-		"MixinLivingEntityClimb"
+		"MixinLivingEntityClimb",
+		"MixinEntityBoatStep"
 	],
 	"injectors": {
 		"defaultRequire": 1

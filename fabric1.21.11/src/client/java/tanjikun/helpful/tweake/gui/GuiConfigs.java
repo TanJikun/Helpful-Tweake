@@ -12,9 +12,12 @@ import fi.dy.masa.malilib.gui.button.ButtonBase;
 import fi.dy.masa.malilib.gui.button.ButtonGeneric;
 import fi.dy.masa.malilib.gui.button.IButtonActionListener;
 import fi.dy.masa.malilib.gui.interfaces.IConfigGuiAllTab;
+import fi.dy.masa.malilib.gui.widgets.WidgetListConfigOptions;
 import fi.dy.masa.malilib.util.StringUtils;
 
 import tanjikun.helpful.tweake.Reference;
+import tanjikun.helpful.tweake.client.gui.ExpandState;
+import tanjikun.helpful.tweake.client.gui.widgets.WidgetListConfigOptionsExpandable;
 import tanjikun.helpful.tweake.config.Configs;
 import tanjikun.helpful.tweake.config.Hotkeys;
 
@@ -32,6 +35,7 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
     {
         super.initGui();
         this.clearOptions();
+        ExpandState.setRefreshCallback(this::refreshList);
 
         int x = 10;
         int y = 26;
@@ -51,6 +55,20 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
     }
 
     @Override
+    protected WidgetListConfigOptions createListWidget(int x, int y)
+    {
+        return new WidgetListConfigOptionsExpandable(x, y, this.getBrowserWidth(), this.getBrowserHeight(),
+                this.getConfigWidth(), 0.0F, this.useKeybindSearch(), this);
+    }
+
+    public void refreshList()
+    {
+        this.reCreateListWidget();
+        Objects.requireNonNull(this.getListWidget()).resetScrollbarPosition();
+        this.initGui();
+    }
+
+    @Override
     public List<ConfigOptionWrapper> getConfigs()
     {
         List<? extends IConfigBase> configs;
@@ -61,7 +79,7 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
         }
         else if (currentTab == ConfigGuiTab.TOOLS)
         {
-            configs = Configs.Tools.OPTIONS;
+            configs = Configs.Tools.getDisplayOptions(ExpandState.betterBoatExpanded);
         }
         else if (currentTab == ConfigGuiTab.OPTIMIZATION)
         {
@@ -85,7 +103,7 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
     public List<ConfigOptionWrapper> getAllConfigs()
     {
         List<ConfigOptionWrapper> configs = new ArrayList<>();
-        configs.addAll(ConfigOptionWrapper.createFor(Configs.Tools.OPTIONS));
+        configs.addAll(ConfigOptionWrapper.createFor(Configs.Tools.getDisplayOptions(ExpandState.betterBoatExpanded)));
         configs.addAll(ConfigOptionWrapper.createFor(Configs.Optimization.OPTIONS));
         configs.addAll(ConfigOptionWrapper.createFor(Hotkeys.HOTKEY_LIST));
         return configs;

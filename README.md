@@ -34,6 +34,13 @@ Fabric API、MaLiLib
 - **默认热键**：无
 - **灵感来源**：[better-climbing](https://github.com/artemisSystem/better-climbing)（作者 artemisSystem）。速度阈值与分阶段计时数据来源于该项目。
 
+### 更好的船
+
+- **效果**：开启后船只可以越过一定高度的障碍（如台阶、半砖）。在配置界面中点击功能左侧的 +/- 按钮可展开设置抬升高度，高度越高能越过的障碍越高。
+- **默认状态**：关闭
+- **默认热键**：无
+- **灵感来源**：[Better Boat Movement](https://modrinth.com/mod/better-boat-movement)（作者 btwonion）。
+
 ## 许可证
 
 MIT — Copyright (c) 2026 Tanjikun. 见 [LICENSE.txt](LICENSE.txt)。

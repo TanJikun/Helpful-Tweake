@@ -2,6 +2,7 @@ package tanjikun.helpful.tweake.config;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
@@ -11,6 +12,7 @@ import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.IConfigHandler;
 import fi.dy.masa.malilib.config.options.ConfigBooleanHotkeyed;
+import fi.dy.masa.malilib.config.options.ConfigDouble;
 import fi.dy.masa.malilib.util.FileUtils;
 import fi.dy.masa.malilib.util.JsonUtils;
 import tanjikun.helpful.tweake.HelpfulTweake;
@@ -46,12 +48,43 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed BETTER_CLIMBING =
                 new ConfigBooleanHotkeyed("betterClimbing", false, "").apply(TOOLS_KEY);
 
+        // 更好的船：船只可越过高度不大于抬升高度的障碍
+        public static final ConfigBooleanHotkeyed BETTER_BOAT =
+                new ConfigBooleanHotkeyed("betterBoat", false, "").apply(TOOLS_KEY);
+
+        // 更好的船子配置：抬升高度（0-200，默认0）
+        public static final ConfigDouble BOAT_LIFT_HEIGHT =
+                new ConfigDouble("boatLiftHeight", 0.0, 0.0, 200.0).apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 GLOBAL_MENDING,
                 BETTER_TOTEM,
-                BETTER_CLIMBING
+                BETTER_CLIMBING,
+                BETTER_BOAT,
+                BOAT_LIFT_HEIGHT
         );
+
+        /**
+         * 返回显示用配置列表。BOAT_LIFT_HEIGHT 仅在 BETTER_BOAT 展开时显示。
+         * 持久化始终使用 OPTIONS（包含全部配置项）。
+         */
+        public static List<IConfigBase> getDisplayOptions(boolean betterBoatExpanded)
+        {
+            if (betterBoatExpanded)
+            {
+                return OPTIONS;
+            }
+            List<IConfigBase> filtered = new java.util.ArrayList<>();
+            for (IConfigBase config : OPTIONS)
+            {
+                if (config != BOAT_LIFT_HEIGHT)
+                {
+                    filtered.add(config);
+                }
+            }
+            return filtered;
+        }
     }
 
     public static class Optimization

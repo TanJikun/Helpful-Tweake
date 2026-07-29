@@ -17,6 +17,10 @@
 	"helpful_tweake.config.tools.comment.betterTotem": "玩家死亡时，装备栏、主副手、快捷栏、背包内所有不死图腾都可触发，不需要拿在手上。忽略潜影盒等容器内的物品。原版图腾无法免疫的伤害（如/kill）仍不可触发。",
 	"helpful_tweake.config.tools.name.betterClimbing": "更好的攀爬",
 	"helpful_tweake.config.tools.comment.betterClimbing": "攀爬可攀爬方块时，根据视角倾斜方向调整纵向速度。向下看20°~90°：速度线性增至-0.4，持续60 tick后增至-0.6；向上看20°~90°：速度线性增至0.25，持续60 tick后增至0.5。",
+	"helpful_tweake.config.tools.name.betterBoat": "更好的船",
+	"helpful_tweake.config.tools.comment.betterBoat": "开启后船只可以越过高度不大于抬升高度的障碍。点击左侧 +/- 按钮展开配置抬升高度。",
+	"helpful_tweake.config.tools.name.boatLiftHeight": "        抬升高度",
+	"helpful_tweake.config.tools.comment.boatLiftHeight": "船只可越过的障碍最大高度。范围0-200，默认0。",
 	"helpful_tweake.config.hotkeys.name.openGuiSettings": "打开配置界面",
 	"helpful_tweake.config.hotkeys.comment.openGuiSettings": "打开 Helpful Tweake 配置界面",
 	"helpful_tweake.message.betterAutoJump.enabled": "更好的自动跳跃：已开启",
@@ -26,5 +30,7 @@
 	"helpful_tweake.message.betterTotem.enabled": "更好的不死图腾：已开启",
 	"helpful_tweake.message.betterTotem.disabled": "更好的不死图腾：已关闭",
 	"helpful_tweake.message.betterClimbing.enabled": "更好的攀爬：已开启",
-	"helpful_tweake.message.betterClimbing.disabled": "更好的攀爬：已关闭"
+	"helpful_tweake.message.betterClimbing.disabled": "更好的攀爬：已关闭",
+	"helpful_tweake.message.betterBoat.enabled": "更好的船：已开启",
+	"helpful_tweake.message.betterBoat.disabled": "更好的船：已关闭"
 }
