@@ -18,6 +18,7 @@ public class KeyCallbacks
         Configs.Tools.BETTER_AUTO_JUMP.getKeybind().setCallback(new ToggleBetterAutoJumpCallback());
         Configs.Tools.GLOBAL_MENDING.getKeybind().setCallback(new ToggleGlobalMendingCallback());
         Configs.Tools.BETTER_TOTEM.getKeybind().setCallback(new ToggleBetterTotemCallback());
+        Configs.Tools.BETTER_CLIMBING.getKeybind().setCallback(new ToggleBetterClimbingCallback());
     }
 
     private record OpenGuiCallback(Minecraft mc) implements IHotkeyCallback
@@ -78,6 +79,24 @@ public class KeyCallbacks
                 boolean enabled = Configs.Tools.BETTER_TOTEM.getBooleanValue();
                 Minecraft.getInstance().player.displayClientMessage(
                         Component.translatable("helpful_tweake.message.betterTotem." + (enabled ? "enabled" : "disabled")),
+                        true);
+            }
+            return true;
+        }
+    }
+
+    private record ToggleBetterClimbingCallback() implements IHotkeyCallback
+    {
+        @Override
+        public boolean onKeyAction(KeyAction action, IKeybind key)
+        {
+            Configs.Tools.BETTER_CLIMBING.toggleBooleanValue();
+            Configs.saveToFile();
+            if (Minecraft.getInstance().player != null)
+            {
+                boolean enabled = Configs.Tools.BETTER_CLIMBING.getBooleanValue();
+                Minecraft.getInstance().player.displayClientMessage(
+                        Component.translatable("helpful_tweake.message.betterClimbing." + (enabled ? "enabled" : "disabled")),
                         true);
             }
             return true;

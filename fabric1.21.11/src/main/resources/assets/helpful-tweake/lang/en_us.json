@@ -15,10 +15,16 @@
 	"helpful_tweake.config.tools.comment.globalMending": "All items with Mending in equipment slots, main/off-hand, hotbar and inventory are repaired when absorbing XP, without needing to be held. Items inside shulker boxes and other containers are ignored.",
 	"helpful_tweake.config.tools.name.betterTotem": "Better Totem of Undying",
 	"helpful_tweake.config.tools.comment.betterTotem": "When dying, any item with death protection (Totem of Undying) in equipment slots, main/off-hand, hotbar and inventory is triggered, without needing to be held. Items inside shulker boxes and other containers are ignored. Damage sources that bypass invulnerability (e.g. /kill) are not protected, matching vanilla behavior.",
+	"helpful_tweake.config.tools.name.betterClimbing": "Better Climbing",
+	"helpful_tweake.config.tools.comment.betterClimbing": "When climbing climbable blocks, vertical speed linearly increases based on look pitch. Looking down 20-90 degrees: speed to -0.4, after 60 ticks to -0.6. Looking up 20-90 degrees: speed to 0.25, after 60 ticks to 0.5.",
 	"helpful_tweake.config.hotkeys.name.openGuiSettings": "Open config GUI",
 	"helpful_tweake.config.hotkeys.comment.openGuiSettings": "Opens the Helpful Tweake config GUI",
 	"helpful_tweake.message.betterAutoJump.enabled": "Better Auto Jump: ON",
 	"helpful_tweake.message.betterAutoJump.disabled": "Better Auto Jump: OFF",
 	"helpful_tweake.message.globalMending.enabled": "Global Mending: ON",
-	"helpful_tweake.message.globalMending.disabled": "Global Mending: OFF"
+	"helpful_tweake.message.globalMending.disabled": "Global Mending: OFF",
+	"helpful_tweake.message.betterTotem.enabled": "Better Totem of Undying: ON",
+	"helpful_tweake.message.betterTotem.disabled": "Better Totem of Undying: OFF",
+	"helpful_tweake.message.betterClimbing.enabled": "Better Climbing: ON",
+	"helpful_tweake.message.betterClimbing.disabled": "Better Climbing: OFF"
 }

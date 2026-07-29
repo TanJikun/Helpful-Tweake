@@ -6,7 +6,8 @@
 		"ExampleClientMixin",
 		"MixinLivingEntity",
 		"MixinMinecraft",
-		"MixinExperienceOrb"
+		"MixinExperienceOrb",
+		"MixinLivingEntityClimb"
 	],
 	"injectors": {
 		"defaultRequire": 1

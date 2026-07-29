@@ -42,10 +42,15 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed BETTER_TOTEM =
                 new ConfigBooleanHotkeyed("betterTotem", false, "").apply(TOOLS_KEY);
 
+        // 更好的攀爬：攀爬时根据视角方向调整纵向速度
+        public static final ConfigBooleanHotkeyed BETTER_CLIMBING =
+                new ConfigBooleanHotkeyed("betterClimbing", false, "").apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 GLOBAL_MENDING,
-                BETTER_TOTEM
+                BETTER_TOTEM,
+                BETTER_CLIMBING
         );
     }
 

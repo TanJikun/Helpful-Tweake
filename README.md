@@ -27,6 +27,13 @@ Fabric API、MaLiLib
 - **默认状态**：关闭
 - **默认热键**：无
 
+### 更好的攀爬
+
+- **效果**：玩家攀爬可攀爬方块（梯子、藤蔓等）时，根据视角倾斜方向调整纵向速度。向下看 20°~90°：y 速度线性增至 -0.4，持续向下攀爬 60 tick（3 秒）后再增至 -0.6；向上看 20°~90°：y 速度线性增至 0.25，持续向上攀爬 60 tick 后再增至 0.5。视角不在 20°~90° 范围、未在攀爬或方向改变时重置计时器。
+- **默认状态**：关闭
+- **默认热键**：无
+- **灵感来源**：[better-climbing](https://github.com/artemisSystem/better-climbing)（作者 artemisSystem）。速度阈值与分阶段计时数据来源于该项目。
+
 ## 许可证
 
 MIT — Copyright (c) 2026 Tanjikun. 见 [LICENSE.txt](LICENSE.txt)。
