@@ -6,7 +6,7 @@
 
 Fabric API、MaLiLib
 
-## 功能
+## 功能-工具
 
 ### 更好的自动跳跃
 
@@ -60,4 +60,6 @@ Fabric API、MaLiLib
 
 ## 许可证
 
-MIT — Copyright (c) 2026 Tanjikun. 见 [LICENSE.txt](LICENSE.txt)。
+本项目基于 **MIT License** 开源，详细条款请查看 [LICENSE](./LICENSE) 文件。
+
+简单来说，你可以自由使用、修改、分发和商业化本软件，唯一的要求是保留原始的版权和许可声明（即在某个地方注明 Copyright (c) 2026 Tanjikun 和 MIT 协议）。
