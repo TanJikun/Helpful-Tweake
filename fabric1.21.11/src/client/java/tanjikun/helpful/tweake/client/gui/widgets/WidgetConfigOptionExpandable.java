@@ -16,7 +16,7 @@ import tanjikun.helpful.tweake.config.Configs;
 
 /**
  * 在 ConfigBooleanHotkeyed 行的 toggle 按钮左侧添加展开/折叠按钮。
- * 仅对 BETTER_BOAT 配置项生效，其他配置项走原版逻辑。
+ * 对 BETTER_BOAT 和 BETTER_DURABILITY 配置项生效，其他配置项走原版逻辑。
  */
 public class WidgetConfigOptionExpandable extends WidgetConfigOption
 {
@@ -36,10 +36,13 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
     {
         if (configBoolean == Configs.Tools.BETTER_BOAT)
         {
-            boolean expanded = ExpandState.betterBoatExpanded;
-            ButtonGeneric expandBtn = new ButtonGeneric(x, y, 14, 20, expanded ? "-" : "+");
-            this.addButton(expandBtn, new ExpandButtonListener());
-            super.addBooleanAndHotkeyWidgets(x + 16, y, w - 16, configResettable, configBoolean, keybind);
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.betterBoatExpanded, ExpandState::toggleBetterBoat);
+        }
+        else if (configBoolean == Configs.Tools.BETTER_DURABILITY)
+        {
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.betterDurabilityExpanded, ExpandState::toggleBetterDurability);
         }
         else
         {
@@ -47,12 +50,22 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
         }
     }
 
-    private record ExpandButtonListener() implements IButtonActionListener
+    private void addExpandButton(int x, int y, int w,
+                                 IConfigResettable configResettable,
+                                 IConfigBoolean configBoolean, IKeybind keybind,
+                                 boolean expanded, Runnable toggleAction)
+    {
+        ButtonGeneric expandBtn = new ButtonGeneric(x, y, 14, 20, expanded ? "-" : "+");
+        this.addButton(expandBtn, new ExpandButtonListener(toggleAction));
+        super.addBooleanAndHotkeyWidgets(x + 16, y, w - 16, configResettable, configBoolean, keybind);
+    }
+
+    private record ExpandButtonListener(Runnable toggleAction) implements IButtonActionListener
     {
         @Override
         public void actionPerformedWithButton(ButtonBase button, int mouseButton)
         {
-            ExpandState.toggleBetterBoat();
+            toggleAction.run();
         }
     }
 }

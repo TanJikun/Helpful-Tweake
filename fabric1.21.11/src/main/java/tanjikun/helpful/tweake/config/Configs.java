@@ -56,32 +56,47 @@ public class Configs implements IConfigHandler
         public static final ConfigDouble BOAT_LIFT_HEIGHT =
                 new ConfigDouble("boatLiftHeight", 0.0, 0.0, 200.0).apply(TOOLS_KEY);
 
+        // 更好的耐久显示：在物品上显示剩余耐久数字，颜色与耐久条一致
+        public static final ConfigBooleanHotkeyed BETTER_DURABILITY =
+                new ConfigBooleanHotkeyed("betterDurability", false, "").apply(TOOLS_KEY);
+
+        // 更好的耐久显示子配置：根据耐久附魔等级推算实际可用次数
+        public static final ConfigBooleanHotkeyed DURABILITY_UNBREAKING_CALC =
+                new ConfigBooleanHotkeyed("durabilityUnbreakingCalc", false, "").apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 GLOBAL_MENDING,
                 BETTER_TOTEM,
                 BETTER_CLIMBING,
                 BETTER_BOAT,
-                BOAT_LIFT_HEIGHT
+                BOAT_LIFT_HEIGHT,
+                BETTER_DURABILITY,
+                DURABILITY_UNBREAKING_CALC
         );
 
         /**
-         * 返回显示用配置列表。BOAT_LIFT_HEIGHT 仅在 BETTER_BOAT 展开时显示。
+         * 返回显示用配置列表。子配置项仅在对应主配置展开时显示。
          * 持久化始终使用 OPTIONS（包含全部配置项）。
          */
-        public static List<IConfigBase> getDisplayOptions(boolean betterBoatExpanded)
+        public static List<IConfigBase> getDisplayOptions(boolean betterBoatExpanded, boolean betterDurabilityExpanded)
         {
-            if (betterBoatExpanded)
+            if (betterBoatExpanded && betterDurabilityExpanded)
             {
                 return OPTIONS;
             }
             List<IConfigBase> filtered = new java.util.ArrayList<>();
             for (IConfigBase config : OPTIONS)
             {
-                if (config != BOAT_LIFT_HEIGHT)
+                if (!betterBoatExpanded && config == BOAT_LIFT_HEIGHT)
                 {
-                    filtered.add(config);
+                    continue;
                 }
+                if (!betterDurabilityExpanded && config == DURABILITY_UNBREAKING_CALC)
+                {
+                    continue;
+                }
+                filtered.add(config);
             }
             return filtered;
         }

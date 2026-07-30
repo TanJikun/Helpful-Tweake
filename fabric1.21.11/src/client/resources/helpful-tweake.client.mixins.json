@@ -8,7 +8,8 @@
 		"MixinMinecraft",
 		"MixinExperienceOrb",
 		"MixinLivingEntityClimb",
-		"MixinEntityBoatStep"
+		"MixinEntityBoatStep",
+		"MixinGuiGraphicsDurability"
 	],
 	"injectors": {
 		"defaultRequire": 1

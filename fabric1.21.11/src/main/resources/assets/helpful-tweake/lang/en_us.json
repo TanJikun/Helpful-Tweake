@@ -17,7 +17,7 @@
 	"helpful_tweake.config.tools.comment.betterTotem": "When dying, any item with death protection (Totem of Undying) in equipment slots, main/off-hand, hotbar and inventory is triggered, without needing to be held. Items inside shulker boxes and other containers are ignored. Damage sources that bypass invulnerability (e.g. /kill) are not protected, matching vanilla behavior.",
 	"helpful_tweake.config.tools.name.betterClimbing": "Better Climbing",
 	"helpful_tweake.config.tools.comment.betterClimbing": "When climbing climbable blocks, vertical speed linearly increases based on look pitch. Looking down 20-90 degrees: speed to -0.4, after 60 ticks to -0.6. Looking up 20-90 degrees: speed to 0.25, after 60 ticks to 0.5.",
-	"helpful_tweake.config.tools.name.boatLiftHeight": "        Lift Height",
+	"helpful_tweake.config.tools.name.boatLiftHeight": "    Lift Height",
 	"helpful_tweake.config.tools.comment.boatLiftHeight": "The maximum height of obstacles a boat can step up over. Range 0-200, default 0.",
 	"helpful_tweake.config.hotkeys.name.openGuiSettings": "Open config GUI",
 	"helpful_tweake.config.hotkeys.comment.openGuiSettings": "Opens the Helpful Tweake config GUI",
@@ -30,5 +30,12 @@
 	"helpful_tweake.message.betterClimbing.enabled": "Better Climbing: ON",
 	"helpful_tweake.message.betterClimbing.disabled": "Better Climbing: OFF",
 	"helpful_tweake.message.betterBoat.enabled": "Better Boat: ON",
-	"helpful_tweake.message.betterBoat.disabled": "Better Boat: OFF"
+	"helpful_tweake.message.betterBoat.disabled": "Better Boat: OFF",
+
+	"helpful_tweake.config.tools.name.betterDurability": "Better Durability",
+	"helpful_tweake.config.tools.comment.betterDurability": "Shows remaining durability as a number on items, colored to match the durability bar. Click the +/- button to configure Unbreaking estimation.",
+	"helpful_tweake.config.tools.name.durabilityUnbreakingCalc": "    Unbreaking Estimation",
+	"helpful_tweake.config.tools.comment.durabilityUnbreakingCalc": "When enabled, the displayed number accounts for the Unbreaking enchantment, showing estimated actual uses remaining instead of raw durability.",
+	"helpful_tweake.message.betterDurability.enabled": "Better Durability: ON",
+	"helpful_tweake.message.betterDurability.disabled": "Better Durability: OFF"
 }

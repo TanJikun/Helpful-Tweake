@@ -19,7 +19,7 @@
 	"helpful_tweake.config.tools.comment.betterClimbing": "攀爬可攀爬方块时，根据视角倾斜方向调整纵向速度。向下看20°~90°：速度线性增至-0.4，持续60 tick后增至-0.6；向上看20°~90°：速度线性增至0.25，持续60 tick后增至0.5。",
 	"helpful_tweake.config.tools.name.betterBoat": "更好的船",
 	"helpful_tweake.config.tools.comment.betterBoat": "开启后船只可以越过高度不大于抬升高度的障碍。点击左侧 +/- 按钮展开配置抬升高度。",
-	"helpful_tweake.config.tools.name.boatLiftHeight": "        抬升高度",
+	"helpful_tweake.config.tools.name.boatLiftHeight": "    抬升高度",
 	"helpful_tweake.config.tools.comment.boatLiftHeight": "船只可越过的障碍最大高度。范围0-200，默认0。",
 	"helpful_tweake.config.hotkeys.name.openGuiSettings": "打开配置界面",
 	"helpful_tweake.config.hotkeys.comment.openGuiSettings": "打开 Helpful Tweake 配置界面",
@@ -32,5 +32,12 @@
 	"helpful_tweake.message.betterClimbing.enabled": "更好的攀爬：已开启",
 	"helpful_tweake.message.betterClimbing.disabled": "更好的攀爬：已关闭",
 	"helpful_tweake.message.betterBoat.enabled": "更好的船：已开启",
-	"helpful_tweake.message.betterBoat.disabled": "更好的船：已关闭"
+	"helpful_tweake.message.betterBoat.disabled": "更好的船：已关闭",
+
+	"helpful_tweake.config.tools.name.betterDurability": "更好的耐久显示",
+	"helpful_tweake.config.tools.comment.betterDurability": "在物品上显示剩余耐久数字，颜色与耐久条一致。点击 +/- 按钮可展开配置耐久附魔推算。",
+	"helpful_tweake.config.tools.name.durabilityUnbreakingCalc": "    耐久附魔推算实际耐久",
+	"helpful_tweake.config.tools.comment.durabilityUnbreakingCalc": "开启后显示的数字会根据耐久附魔等级推算实际可用次数，而非原始剩余耐久。",
+	"helpful_tweake.message.betterDurability.enabled": "更好的耐久显示：已开启",
+	"helpful_tweake.message.betterDurability.disabled": "更好的耐久显示：已关闭"
 }

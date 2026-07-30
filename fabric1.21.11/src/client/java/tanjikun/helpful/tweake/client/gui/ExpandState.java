@@ -7,6 +7,7 @@ package tanjikun.helpful.tweake.client.gui;
 public class ExpandState
 {
     public static boolean betterBoatExpanded = false;
+    public static boolean betterDurabilityExpanded = false;
     private static Runnable refreshCallback;
 
     public static void setRefreshCallback(Runnable callback)
@@ -17,6 +18,15 @@ public class ExpandState
     public static void toggleBetterBoat()
     {
         betterBoatExpanded = !betterBoatExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
+    }
+
+    public static void toggleBetterDurability()
+    {
+        betterDurabilityExpanded = !betterDurabilityExpanded;
         if (refreshCallback != null)
         {
             refreshCallback.run();
