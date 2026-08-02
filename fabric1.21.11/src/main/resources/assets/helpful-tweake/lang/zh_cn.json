@@ -10,13 +10,13 @@
 	"helpful_tweake.config.hotkeys": "热键",
 
 	"helpful_tweake.config.tools.name.betterAutoJump": "更好的自动跳跃",
-	"helpful_tweake.config.tools.comment.betterAutoJump": "允许平滑通过≤1.25格高的障碍，不损失水平速度。灵感来源于 Accessible Step。",
+	"helpful_tweake.config.tools.comment.betterAutoJump": "允许平滑通过≤1.25格高的障碍，不损失水平速度。",
 	"helpful_tweake.config.tools.name.globalMending": "全局经验修补",
-	"helpful_tweake.config.tools.comment.globalMending": "装备栏、主副手、快捷栏、背包内所有附有经验修补的物品都能在吸收经验时修复，不需要拿在手上。忽略潜影盒等容器内的物品。",
+	"helpful_tweake.config.tools.comment.globalMending": "装备栏、主副手、快捷栏、背包内所有附有经验修补的物品都能在吸收经验时修复，不需要拿在手上。\n忽略潜影盒等容器内的物品。",
 	"helpful_tweake.config.tools.name.betterTotem": "更好的不死图腾",
-	"helpful_tweake.config.tools.comment.betterTotem": "玩家死亡时，装备栏、主副手、快捷栏、背包内所有不死图腾都可触发，不需要拿在手上。忽略潜影盒等容器内的物品。原版图腾无法免疫的伤害（如/kill）仍不可触发。",
+	"helpful_tweake.config.tools.comment.betterTotem": "玩家死亡时，装备栏、主副手、快捷栏、背包内所有不死图腾都可触发，不需要拿在手上。\n忽略潜影盒等容器内的物品。\n原版图腾无法免疫的伤害（如/kill）仍不可触发。",
 	"helpful_tweake.config.tools.name.betterClimbing": "更好的攀爬",
-	"helpful_tweake.config.tools.comment.betterClimbing": "攀爬可攀爬方块时，根据视角倾斜方向调整纵向速度。向下看20°~90°：速度线性增至-0.4，持续60 tick后增至-0.6；向上看20°~90°：速度线性增至0.25，持续60 tick后增至0.5。",
+	"helpful_tweake.config.tools.comment.betterClimbing": "攀爬可攀爬方块时，根据视角倾斜方向调整纵向速度。\n向下看20°~90°：速度线性增至-0.4，持续60 tick后增至-0.6；\n向上看20°~90°：速度线性增至0.25，持续60 tick后增至0.5。",
 	"helpful_tweake.config.tools.name.betterBoat": "更好的船",
 	"helpful_tweake.config.tools.comment.betterBoat": "开启后船只可以越过高度不大于抬升高度的障碍。点击左侧 +/- 按钮展开配置抬升高度。",
 	"helpful_tweake.config.tools.name.boatLiftHeight": "    抬升高度",
@@ -39,5 +39,21 @@
 	"helpful_tweake.config.tools.name.durabilityUnbreakingCalc": "    耐久附魔推算实际耐久",
 	"helpful_tweake.config.tools.comment.durabilityUnbreakingCalc": "开启后显示的数字会根据耐久附魔等级推算实际可用次数，而非原始剩余耐久。",
 	"helpful_tweake.message.betterDurability.enabled": "更好的耐久显示：已开启",
-	"helpful_tweake.message.betterDurability.disabled": "更好的耐久显示：已关闭"
+	"helpful_tweake.message.betterDurability.disabled": "更好的耐久显示：已关闭",
+
+	"helpful_tweake.config.tools.name.betterHarvest": "更方便的收获",
+	"helpful_tweake.config.tools.comment.betterHarvest": "右键收获成熟作物并自动消耗一颗种子重新种植。\n点击 +/- 按钮展开配置手持锄头、耐久消耗和黑名单选项。仅单机模式可用。",
+	"helpful_tweake.config.tools.name.harvestRequireHoe": "    手持锄头",
+	"helpful_tweake.config.tools.comment.harvestRequireHoe": "开启后需要手持锄头才能收获作物。",
+	"helpful_tweake.config.tools.name.harvestHoeDurability": "    消耗锄头耐久",
+	"helpful_tweake.config.tools.comment.harvestHoeDurability": "开启后手持锄头收获时消耗耐久值，耐久附魔会正常生效。仅在上项开启时生效。",
+	"helpful_tweake.config.tools.name.harvestBlacklist": "    黑名单",
+	"helpful_tweake.config.tools.comment.harvestBlacklist": "不能触发收获功能的作物方块 ID 列表（如 minecraft:wheat）。",
+	"helpful_tweake.message.betterHarvest.enabled": "更方便的收获：已开启",
+	"helpful_tweake.message.betterHarvest.disabled": "更方便的收获：已关闭",
+
+	"helpful_tweake.config.optimization.name.boldFont": "加粗显示优化",
+	"helpful_tweake.config.optimization.comment.boldFont": "使用高清字体包时，加粗文字会因原版1像素偏移出现错位。\n开启后自动切换到 cu_ 前缀的粗体字体文件并禁用偏移。\n材质包需提供 cu_ 前缀字体文件。无自定义字体时沿用原版。",
+	"helpful_tweake.message.boldFont.enabled": "加粗显示优化：已开启",
+	"helpful_tweake.message.boldFont.disabled": "加粗显示优化：已关闭"
 }

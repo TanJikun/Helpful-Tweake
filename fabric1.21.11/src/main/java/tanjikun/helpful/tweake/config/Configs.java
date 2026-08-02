@@ -13,6 +13,7 @@ import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.IConfigHandler;
 import fi.dy.masa.malilib.config.options.ConfigBooleanHotkeyed;
 import fi.dy.masa.malilib.config.options.ConfigDouble;
+import fi.dy.masa.malilib.config.options.ConfigStringList;
 import fi.dy.masa.malilib.util.FileUtils;
 import fi.dy.masa.malilib.util.JsonUtils;
 import tanjikun.helpful.tweake.HelpfulTweake;
@@ -64,6 +65,22 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed DURABILITY_UNBREAKING_CALC =
                 new ConfigBooleanHotkeyed("durabilityUnbreakingCalc", false, "").apply(TOOLS_KEY);
 
+        // 更方便的收获：右键收获成熟作物并消耗种子重新种植
+        public static final ConfigBooleanHotkeyed BETTER_HARVEST =
+                new ConfigBooleanHotkeyed("betterHarvest", false, "").apply(TOOLS_KEY);
+
+        // 更方便的收获子配置：是否需要手持锄头
+        public static final ConfigBooleanHotkeyed HARVEST_REQUIRE_HOE =
+                new ConfigBooleanHotkeyed("harvestRequireHoe", false, "").apply(TOOLS_KEY);
+
+        // 更方便的收获子配置：手持锄头收获时是否消耗耐久（仅在 requireHoe=true 时生效）
+        public static final ConfigBooleanHotkeyed HARVEST_HOE_DURABILITY =
+                new ConfigBooleanHotkeyed("harvestHoeDurability", false, "").apply(TOOLS_KEY);
+
+        // 更方便的收获子配置：作物黑名单（游戏内 ID 列表）
+        public static final ConfigStringList HARVEST_BLACKLIST =
+                new ConfigStringList("harvestBlacklist", ImmutableList.of(), "").apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 GLOBAL_MENDING,
@@ -72,16 +89,22 @@ public class Configs implements IConfigHandler
                 BETTER_BOAT,
                 BOAT_LIFT_HEIGHT,
                 BETTER_DURABILITY,
-                DURABILITY_UNBREAKING_CALC
+                DURABILITY_UNBREAKING_CALC,
+                BETTER_HARVEST,
+                HARVEST_REQUIRE_HOE,
+                HARVEST_HOE_DURABILITY,
+                HARVEST_BLACKLIST
         );
 
         /**
          * 返回显示用配置列表。子配置项仅在对应主配置展开时显示。
          * 持久化始终使用 OPTIONS（包含全部配置项）。
          */
-        public static List<IConfigBase> getDisplayOptions(boolean betterBoatExpanded, boolean betterDurabilityExpanded)
+        public static List<IConfigBase> getDisplayOptions(boolean betterBoatExpanded,
+                                                          boolean betterDurabilityExpanded,
+                                                          boolean betterHarvestExpanded)
         {
-            if (betterBoatExpanded && betterDurabilityExpanded)
+            if (betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded)
             {
                 return OPTIONS;
             }
@@ -96,6 +119,12 @@ public class Configs implements IConfigHandler
                 {
                     continue;
                 }
+                if (!betterHarvestExpanded && (config == HARVEST_REQUIRE_HOE
+                        || config == HARVEST_HOE_DURABILITY
+                        || config == HARVEST_BLACKLIST))
+                {
+                    continue;
+                }
                 filtered.add(config);
             }
             return filtered;
@@ -104,7 +133,13 @@ public class Configs implements IConfigHandler
 
     public static class Optimization
     {
-        public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of();
+        // 加粗显示优化：使用 cu_ 前缀粗体字体替代原版1像素偏移加粗
+        public static final ConfigBooleanHotkeyed BOLD_FONT =
+                new ConfigBooleanHotkeyed("boldFont", true, "").apply(OPTIMIZATION_KEY);
+
+        public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
+                BOLD_FONT
+        );
     }
 
     public static void loadFromFile()

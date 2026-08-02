@@ -44,6 +44,11 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.betterDurabilityExpanded, ExpandState::toggleBetterDurability);
         }
+        else if (configBoolean == Configs.Tools.BETTER_HARVEST)
+        {
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.betterHarvestExpanded, ExpandState::toggleBetterHarvest);
+        }
         else
         {
             super.addBooleanAndHotkeyWidgets(x, y, w, configResettable, configBoolean, keybind);

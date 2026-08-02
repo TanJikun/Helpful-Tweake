@@ -79,7 +79,7 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
         }
         else if (currentTab == ConfigGuiTab.TOOLS)
         {
-            configs = Configs.Tools.getDisplayOptions(ExpandState.betterBoatExpanded, ExpandState.betterDurabilityExpanded);
+            configs = Configs.Tools.getDisplayOptions(ExpandState.betterBoatExpanded, ExpandState.betterDurabilityExpanded, ExpandState.betterHarvestExpanded);
         }
         else if (currentTab == ConfigGuiTab.OPTIMIZATION)
         {
@@ -103,7 +103,7 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
     public List<ConfigOptionWrapper> getAllConfigs()
     {
         List<ConfigOptionWrapper> configs = new ArrayList<>();
-        configs.addAll(ConfigOptionWrapper.createFor(Configs.Tools.getDisplayOptions(ExpandState.betterBoatExpanded, ExpandState.betterDurabilityExpanded)));
+        configs.addAll(ConfigOptionWrapper.createFor(Configs.Tools.getDisplayOptions(ExpandState.betterBoatExpanded, ExpandState.betterDurabilityExpanded, ExpandState.betterHarvestExpanded)));
         configs.addAll(ConfigOptionWrapper.createFor(Configs.Optimization.OPTIONS));
         configs.addAll(ConfigOptionWrapper.createFor(Hotkeys.HOTKEY_LIST));
         return configs;

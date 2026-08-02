@@ -1,0 +1,62 @@
+﻿Starting a Gradle Daemon, 2 incompatible and 1 stopped Daemons could not be reused, use --status for details
+
+> Configure project :
+Fabric Loom: 1.17.17
+The mixin annotation is no longer enabled by default, you should remove any loom.mixin configuration. If you wish to continue to use the mixin AP you can set useLegacyMixinAp = true.
+
+> Task :compileJava
+gradle.bat : 注: D:\code\Helpful 
+Tweake\fabric1.21.11\src\main\java\tanjikun\helpful\tweake\config\Configs.java使用或覆盖了已过时的 API。
+所在位置 行:15 字符: 6242
++ ... pgrep\bin'; & "C:\Users\Huawei\.gradle\wrapper\dists\gradle-9.5.1-bin ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (注: D:\code\Help...使用或覆盖了已过时的 API。:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
+
+> Task :processResources
+> Task :classes
+
+> Task :compileClientJava
+D:\code\Helpful Tweake\fabric1.21.11\src\client\java\tanjikun\helpful\tweake\client\util\CropHelper.java:7: 错误: 找不到符号
+import net.minecraft.resources.ResourceLocation;
+                              ^
+  符号:   类 ResourceLocation
+  位置: 程序包 net.minecraft.resources
+D:\code\Helpful 
+Tweake\fabric1.21.11\src\client\java\tanjikun\helpful\tweake\client\mixin\MixinMultiPlayerGameModeHarvest.java:136: 
+错误: 找不到符号
+                serverMainHand.hurt(1, serverPlayer.getRandom(), serverPlayer);
+                              ^
+  符号:   方法 hurt(int,RandomSource,ServerPlayer)
+  位置: 类型为ItemStack的变量 serverMainHand
+D:\code\Helpful Tweake\fabric1.21.11\src\client\java\tanjikun\helpful\tweake\client\util\CropHelper.java:105: 错误: 找不到符号
+        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
+        ^
+  符号:   类 ResourceLocation
+  位置: 类 CropHelper
+3 个错误
+
+> Task :compileClientJava FAILED
+
+[Incubating] Problems report is available at: file:///D:/code/Helpful%20Tweake/fabric1.21.11/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileClientJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  D:\code\Helpful Tweake\fabric1.21.11\src\client\java\tanjikun\helpful\tweake\client\util\CropHelper.java:7: 错误: 找不到符号
+  import net.minecraft.resources.ResourceLocation;
+                                ^
+    符号:   类 ResourceLocation
+    位置: 程序包 net.minecraft.resources
+  3 个错误
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 20s
+3 actionable tasks: 3 executed

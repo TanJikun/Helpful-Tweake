@@ -21,6 +21,8 @@ public class KeyCallbacks
         Configs.Tools.BETTER_CLIMBING.getKeybind().setCallback(new ToggleBetterClimbingCallback());
         Configs.Tools.BETTER_BOAT.getKeybind().setCallback(new ToggleBetterBoatCallback());
         Configs.Tools.BETTER_DURABILITY.getKeybind().setCallback(new ToggleBetterDurabilityCallback());
+        Configs.Tools.BETTER_HARVEST.getKeybind().setCallback(new ToggleBetterHarvestCallback());
+        Configs.Optimization.BOLD_FONT.getKeybind().setCallback(new ToggleBoldFontCallback());
     }
 
     private record OpenGuiCallback(Minecraft mc) implements IHotkeyCallback
@@ -135,6 +137,44 @@ public class KeyCallbacks
                 boolean enabled = Configs.Tools.BETTER_DURABILITY.getBooleanValue();
                 Minecraft.getInstance().player.displayClientMessage(
                         Component.translatable("helpful_tweake.message.betterDurability." + (enabled ? "enabled" : "disabled")),
+                        true);
+            }
+            return true;
+        }
+    }
+
+    private record ToggleBetterHarvestCallback() implements IHotkeyCallback
+    {
+        @Override
+        public boolean onKeyAction(KeyAction action, IKeybind key)
+        {
+            Configs.Tools.BETTER_HARVEST.toggleBooleanValue();
+            Configs.saveToFile();
+            if (Minecraft.getInstance().player != null)
+            {
+                boolean enabled = Configs.Tools.BETTER_HARVEST.getBooleanValue();
+                Minecraft.getInstance().player.displayClientMessage(
+                        Component.translatable("helpful_tweake.message.betterHarvest." + (enabled ? "enabled" : "disabled")),
+                        true);
+            }
+            return true;
+        }
+    }
+
+    private record ToggleBoldFontCallback() implements IHotkeyCallback
+    {
+        @Override
+        public boolean onKeyAction(KeyAction action, IKeybind key)
+        {
+            Configs.Optimization.BOLD_FONT.toggleBooleanValue();
+            Configs.saveToFile();
+            // 切换时重置状态，让下次渲染重新检测
+            tanjikun.helpful.tweake.client.util.BoldFontManager.reset();
+            if (Minecraft.getInstance().player != null)
+            {
+                boolean enabled = Configs.Optimization.BOLD_FONT.getBooleanValue();
+                Minecraft.getInstance().player.displayClientMessage(
+                        Component.translatable("helpful_tweake.message.boldFont." + (enabled ? "enabled" : "disabled")),
                         true);
             }
             return true;

@@ -9,7 +9,14 @@
 		"MixinExperienceOrb",
 		"MixinLivingEntityClimb",
 		"MixinEntityBoatStep",
-		"MixinGuiGraphicsDurability"
+		"MixinGuiGraphicsDurability",
+		"MixinMultiPlayerGameModeHarvest",
+		"MixinMinecraftAccessor",
+		"MixinFontManagerAccessor",
+		"MixinTrueTypeGlyphProviderAccessor",
+		"MixinFont",
+		"MixinGlyphInfo",
+		"MixinPreparedTextBuilder"
 	],
 	"injectors": {
 		"defaultRequire": 1
