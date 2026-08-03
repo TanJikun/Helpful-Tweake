@@ -154,12 +154,22 @@ public class MixinMultiPlayerGameModeHarvest
 
         // 从掉落物中优先移除1颗种子用于补种（模拟原版收获-补种逻辑）
         // 这样小麦等作物用掉落的种子补种，不消耗背包种子
-        // 火把花/瓶子草(age=4)的掉落物不含种子，需要从背包消耗
+        // 火把花/瓶子草(age=4)的掉落物不含种子：
+        //   1. 先尝试从掉落物移除1个产物（花朵/植物）当作种子补种（模拟原版1:1合成转换）
+        //   2. 仍无种子则从背包消耗
         Item seed = CropHelper.getSeedFor(harvestState);
         boolean hasSeed = false;
         if (seed != null)
         {
             hasSeed = helpfulTweake$takeSeedFromDrops(drops, seed);
+            if (!hasSeed)
+            {
+                Item product = CropHelper.getConvertableProduct(harvestState);
+                if (product != null)
+                {
+                    hasSeed = helpfulTweake$takeSeedFromDrops(drops, product);
+                }
+            }
             if (!hasSeed)
             {
                 hasSeed = helpfulTweake$consumeItem(serverPlayer, seed);

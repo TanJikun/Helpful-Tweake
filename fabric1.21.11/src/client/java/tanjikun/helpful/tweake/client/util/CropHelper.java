@@ -41,6 +41,13 @@ public class CropHelper
             Blocks.PITCHER_CROP, Items.PITCHER_POD
     );
 
+    // 火把花/瓶子草成熟后掉落产物（花朵/植物），原版可通过合成 1:1 转为种子/荚果。
+    // 背包无种子时，从掉落物移除1个产物当作种子补种（模拟原版合成转换）。
+    private static final Map<Block, Item> CROP_TO_PRODUCT = Map.of(
+            Blocks.TORCHFLOWER, Items.TORCHFLOWER,
+            Blocks.PITCHER_CROP, Items.PITCHER_PLANT
+    );
+
     /**
      * 判断方块状态是否为成熟作物。
      * CropBlock 子类用 isMaxAge()（虚方法分派，子类重写 getMaxAge/getAgeProperty 后正确返回）。
@@ -79,6 +86,15 @@ public class CropHelper
     public static Item getSeedFor(BlockState state)
     {
         return CROP_TO_SEED.get(state.getBlock());
+    }
+
+    /**
+     * 获取可转换为种子的产物（火把花花朵/瓶子草植物），无则返回 null。
+     * 用于背包无种子时从掉落物转换种子补种（模拟原版 1:1 合成）。
+     */
+    public static Item getConvertableProduct(BlockState state)
+    {
+        return CROP_TO_PRODUCT.get(state.getBlock());
     }
 
     /**

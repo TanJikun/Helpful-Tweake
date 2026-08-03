@@ -6,7 +6,7 @@
 
 必要依赖：[Fabric API](https://modrinth.com/mod/fabric-api)、[MaLiLib](https://modrinth.com/mod/malilib)
 
-可选依赖：模组菜单（modmenu）
+可选依赖：[模组菜单（modmenu）](modrinth.com/mod/modmenu)
 
 ## 功能-工具
 
