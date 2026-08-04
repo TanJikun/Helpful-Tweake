@@ -10,14 +10,16 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.player.Player;
 
 /**
- * 盾牌状态跟踪器：通过监听客户端接收的声音事件，推测其他玩家的盾牌冷却状态。
+ * 盾牌状态跟踪器：推测其他玩家的盾牌冷却状态。
  *
- * 原理：服务端不会将其他玩家的盾牌冷却同步到客户端，但盾牌被斧头击中禁用时会播放
- * SHIELD_BREAK 声音。客户端监听此声音事件，通过实体 ID 或坐标定位玩家，
- * 本地维护 5 秒（100 tick）冷却计时器。
+ * 双重检测机制：
+ * 1. 姿态变化（主）：破盾时 BlocksAttacks.disable() 调用 stopUsingItem()，
+ *    玩家 isBlocking() 从 true 变 false。这个姿态变化通过 EntityData 同步到
+ *    所有客户端，比声音更可靠。检测到变化后标记 5 秒（100 tick）冷却。
+ * 2. 声音监听（辅）：SHIELD_BREAK 声音事件，作为补充信号。
  *
  * 局限：
- * - 仅在收到 SHIELD_BREAK 声音事件时触发，依赖原版发送该声音
+ * - 姿态变化无法区分"被破盾"和"主动松开右键"，有误判（持续 5 秒后自动恢复）
  * - 计时器基于客户端 tick，与服务端实际冷却可能有偏差
  * - 玩家退出渲染范围后状态可能残留（自动清理）
  *
@@ -31,14 +33,34 @@ public class ShieldStateTracker
     /** 玩家 UUID → 冷却到期时刻（game time tick） */
     private static final Map<UUID, Long> cooldownUntil = new ConcurrentHashMap<>();
 
+    /** 玩家 UUID → 上一帧的 isBlocking 状态（姿态变化检测用） */
+    private static final Map<UUID, Boolean> lastBlockingState = new ConcurrentHashMap<>();
+
     /**
-     * 标记某玩家的盾牌进入冷却（收到 SHIELD_BREAK 声音）。
+     * 标记某玩家的盾牌进入冷却。
      */
     public static void markShieldDisabled(UUID playerUuid)
     {
         if (playerUuid == null) return;
+        if (Minecraft.getInstance().level == null) return;
         long now = Minecraft.getInstance().level.getGameTime();
         cooldownUntil.put(playerUuid, now + SHIELD_COOLDOWN_TICKS);
+    }
+
+    /**
+     * 检测姿态变化：玩家从举盾（isBlocking=true）变为不举盾（isBlocking=false）时，
+     * 推测盾牌被破。每次渲染其他玩家时调用。
+     */
+    public static void checkBlockingChange(UUID playerUuid, boolean currentlyBlocking)
+    {
+        if (playerUuid == null) return;
+        Boolean last = lastBlockingState.get(playerUuid);
+        if (last != null && last && !currentlyBlocking)
+        {
+            // 从举盾变不举盾：可能是被破盾
+            markShieldDisabled(playerUuid);
+        }
+        lastBlockingState.put(playerUuid, currentlyBlocking);
     }
 
     /**
@@ -109,6 +131,7 @@ public class ShieldStateTracker
         if (Minecraft.getInstance().level == null)
         {
             cooldownUntil.clear();
+            lastBlockingState.clear();
             return;
         }
         long now = Minecraft.getInstance().level.getGameTime();
@@ -120,5 +143,16 @@ public class ShieldStateTracker
                 it.remove();
             }
         }
+        // 清理不在当前世界的玩家的姿态记录
+        lastBlockingState.keySet().removeIf(uuid ->
+        {
+            ClientLevel level = Minecraft.getInstance().level;
+            if (level == null) return true;
+            for (Player p : level.players())
+            {
+                if (p.getUUID().equals(uuid)) return false;
+            }
+            return true;
+        });
     }
 }

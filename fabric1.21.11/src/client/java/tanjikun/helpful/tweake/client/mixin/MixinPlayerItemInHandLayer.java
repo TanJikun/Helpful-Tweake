@@ -50,22 +50,19 @@ public class MixinPlayerItemInHandLayer
         if (!Configs.Tools.SHIELD_STATUS.getBooleanValue()) return;
         if (!(stack.getItem() instanceof ShieldItem)) return;
 
-        java.util.UUID uuid = ShieldRenderContext.getCurrentEntityUuid();
-        if (uuid == null || Minecraft.getInstance().level == null)
+        // 1.21.11: AvatarRenderState 继承 EntityRenderState，有 public int id 字段（实体 ID）。
+        // extractRenderState 和 submitArmWithItem 不连续调用，ThreadLocal 不可靠。
+        // 直接从 render state 的 id 通过 level.getEntity(id) 获取 Player。
+        // 普通字段访问会被 Loom remapJar 自动重映射为 intermediary 名。
+        if (Minecraft.getInstance().level == null)
         {
             ShieldRenderContext.setShieldColor(ShieldRenderContext.COLOR_AVAILABLE);
             return;
         }
 
-        Player player = null;
-        for (Player p : Minecraft.getInstance().level.players())
-        {
-            if (p.getUUID().equals(uuid))
-            {
-                player = p;
-                break;
-            }
-        }
+        // state.id 继承自 EntityRenderState（public int id）
+        net.minecraft.world.entity.Entity entity = Minecraft.getInstance().level.getEntity(state.id);
+        Player player = (entity instanceof Player) ? (Player) entity : null;
 
         boolean onCooldown;
         if (player == null)
@@ -80,10 +77,11 @@ public class MixinPlayerItemInHandLayer
         else
         {
             // 其他玩家：服务端不同步 ItemCooldowns 到其他客户端。
-            // getSecondsToDisableBlocking() 检查的是攻击者主手武器的 WEAPON 组件，
-            // 对其他玩家无意义（拿斧头就 > 0），不能用于判断其盾牌是否被破。
-            // 唯一途径：ShieldStateTracker 监听 SHIELD_BREAK 声音（BlocksAttacks.disable
-            // 通过 ServerLevel.playSound 广播 disableSound 到所有客户端）。
+            // 双重检测：
+            // 1. 姿态变化（主）：破盾时 stopUsingItem() → isBlocking 从 true 变 false
+            // 2. 声音监听（辅）：SHIELD_BREAK 声音事件
+            java.util.UUID uuid = player.getUUID();
+            ShieldStateTracker.checkBlockingChange(uuid, player.isBlocking());
             onCooldown = ShieldStateTracker.isShieldOnCooldown(uuid);
         }
 
