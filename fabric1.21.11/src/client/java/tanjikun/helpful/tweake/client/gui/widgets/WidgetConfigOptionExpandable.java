@@ -49,6 +49,11 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.betterHarvestExpanded, ExpandState::toggleBetterHarvest);
         }
+        else if (configBoolean == Configs.Tools.ARMOR_HUD)
+        {
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.armorHudExpanded, ExpandState::toggleArmorHud);
+        }
         else
         {
             super.addBooleanAndHotkeyWidgets(x, y, w, configResettable, configBoolean, keybind);

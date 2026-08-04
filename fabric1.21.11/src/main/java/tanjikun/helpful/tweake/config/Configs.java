@@ -13,6 +13,7 @@ import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.IConfigHandler;
 import fi.dy.masa.malilib.config.options.ConfigBooleanHotkeyed;
 import fi.dy.masa.malilib.config.options.ConfigDouble;
+import fi.dy.masa.malilib.config.options.ConfigOptionList;
 import fi.dy.masa.malilib.config.options.ConfigStringList;
 import fi.dy.masa.malilib.util.FileUtils;
 import fi.dy.masa.malilib.util.JsonUtils;
@@ -85,6 +86,22 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed SHIELD_STATUS =
                 new ConfigBooleanHotkeyed("shieldStatus", false, "").apply(TOOLS_KEY);
 
+        // 盔甲 HUD：在屏幕上显示身上 4 件盔甲的图标与耐久信息
+        public static final ConfigBooleanHotkeyed ARMOR_HUD =
+                new ConfigBooleanHotkeyed("armorHud", false, "").apply(TOOLS_KEY);
+
+        // 盔甲 HUD 子配置：屏幕位置
+        public static final ConfigOptionList ARMOR_HUD_POSITION =
+                new ConfigOptionList("armorHudPosition", ArmorHudPosition.HOTBAR_LEFT).apply(TOOLS_KEY);
+
+        // 盔甲 HUD 子配置：自定义坐标 X 百分比（1-100，仅当 ARMOR_HUD_POSITION=CUSTOM 时生效）
+        public static final ConfigDouble ARMOR_HUD_X =
+                new ConfigDouble("armorHudX", 50.0, 1.0, 100.0).apply(TOOLS_KEY);
+
+        // 盔甲 HUD 子配置：自定义坐标 Y 百分比（1-100，仅当 ARMOR_HUD_POSITION=CUSTOM 时生效）
+        public static final ConfigDouble ARMOR_HUD_Y =
+                new ConfigDouble("armorHudY", 50.0, 1.0, 100.0).apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 GLOBAL_MENDING,
@@ -98,7 +115,11 @@ public class Configs implements IConfigHandler
                 HARVEST_REQUIRE_HOE,
                 HARVEST_HOE_DURABILITY,
                 HARVEST_BLACKLIST,
-                SHIELD_STATUS
+                SHIELD_STATUS,
+                ARMOR_HUD,
+                ARMOR_HUD_POSITION,
+                ARMOR_HUD_X,
+                ARMOR_HUD_Y
         );
 
         /**
@@ -107,9 +128,10 @@ public class Configs implements IConfigHandler
          */
         public static List<IConfigBase> getDisplayOptions(boolean betterBoatExpanded,
                                                           boolean betterDurabilityExpanded,
-                                                          boolean betterHarvestExpanded)
+                                                          boolean betterHarvestExpanded,
+                                                          boolean armorHudExpanded)
         {
-            if (betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded)
+            if (betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded && armorHudExpanded)
             {
                 return OPTIONS;
             }
@@ -127,6 +149,12 @@ public class Configs implements IConfigHandler
                 if (!betterHarvestExpanded && (config == HARVEST_REQUIRE_HOE
                         || config == HARVEST_HOE_DURABILITY
                         || config == HARVEST_BLACKLIST))
+                {
+                    continue;
+                }
+                if (!armorHudExpanded && (config == ARMOR_HUD_POSITION
+                        || config == ARMOR_HUD_X
+                        || config == ARMOR_HUD_Y))
                 {
                     continue;
                 }

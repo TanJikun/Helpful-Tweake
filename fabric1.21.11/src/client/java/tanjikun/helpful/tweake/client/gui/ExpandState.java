@@ -9,6 +9,7 @@ public class ExpandState
     public static boolean betterBoatExpanded = false;
     public static boolean betterDurabilityExpanded = false;
     public static boolean betterHarvestExpanded = false;
+    public static boolean armorHudExpanded = false;
     private static Runnable refreshCallback;
 
     public static void setRefreshCallback(Runnable callback)
@@ -37,6 +38,15 @@ public class ExpandState
     public static void toggleBetterHarvest()
     {
         betterHarvestExpanded = !betterHarvestExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
+    }
+
+    public static void toggleArmorHud()
+    {
+        armorHudExpanded = !armorHudExpanded;
         if (refreshCallback != null)
         {
             refreshCallback.run();

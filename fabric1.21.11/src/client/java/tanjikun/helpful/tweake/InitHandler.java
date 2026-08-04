@@ -1,5 +1,6 @@
 package tanjikun.helpful.tweake;
 
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import fi.dy.masa.malilib.config.ConfigManager;
 import fi.dy.masa.malilib.event.InitializationHandler;
 import fi.dy.masa.malilib.event.InputEventHandler;
@@ -7,6 +8,7 @@ import fi.dy.masa.malilib.interfaces.IInitializationHandler;
 import fi.dy.masa.malilib.registry.Registry;
 import fi.dy.masa.malilib.util.data.ModInfo;
 import net.minecraft.client.Minecraft;
+import tanjikun.helpful.tweake.client.util.ArmorHudRenderer;
 import tanjikun.helpful.tweake.config.Configs;
 import tanjikun.helpful.tweake.event.InputHandler;
 import tanjikun.helpful.tweake.event.KeyCallbacks;
@@ -26,5 +28,8 @@ public class InitHandler implements IInitializationHandler
         InputEventHandler.getKeybindManager().registerKeybindProvider(InputHandler.getInstance());
 
         KeyCallbacks.init(Minecraft.getInstance());
+
+        // 注册盔甲 HUD 渲染回调（Fabric API 事件，无需 Mixin）
+        HudRenderCallback.EVENT.register(new ArmorHudRenderer());
     }
 }
