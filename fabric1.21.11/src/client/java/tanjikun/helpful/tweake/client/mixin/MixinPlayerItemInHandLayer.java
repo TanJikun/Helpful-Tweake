@@ -50,18 +50,14 @@ public class MixinPlayerItemInHandLayer
         if (!Configs.Tools.SHIELD_STATUS.getBooleanValue()) return;
         if (!(stack.getItem() instanceof ShieldItem)) return;
 
-        // 1.21.11: AvatarRenderState 继承 EntityRenderState，有 public int id 字段（实体 ID）。
-        // extractRenderState 和 submitArmWithItem 不连续调用，ThreadLocal 不可靠。
-        // 直接从 render state 的 id 通过 level.getEntity(id) 获取 Player。
-        // 普通字段访问会被 Loom remapJar 自动重映射为 intermediary 名。
         if (Minecraft.getInstance().level == null)
         {
             ShieldRenderContext.setShieldColor(ShieldRenderContext.COLOR_AVAILABLE);
             return;
         }
 
-        // state.id 继承自 EntityRenderState（public int id）
-        net.minecraft.world.entity.Entity entity = Minecraft.getInstance().level.getEntity(state.id);
+        int entityId = state.id;
+        net.minecraft.world.entity.Entity entity = Minecraft.getInstance().level.getEntity(entityId);
         Player player = (entity instanceof Player) ? (Player) entity : null;
 
         boolean onCooldown;

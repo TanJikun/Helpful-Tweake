@@ -17,8 +17,8 @@ import java.util.UUID;
 public class ShieldRenderContext
 {
     public static final int COLOR_NONE = 0;
-    public static final int COLOR_AVAILABLE = 0x4000FF00;  // 25% 绿色
-    public static final int COLOR_COOLDOWN = 0x40FF0000;   // 25% 红色
+    public static final int COLOR_AVAILABLE = 0xFF30FF30;  // 不透明高饱和绿
+    public static final int COLOR_COOLDOWN = 0xFFFF3030;   // 不透明高饱和红
 
     private static final ThreadLocal<UUID> currentEntityUuid = new ThreadLocal<>();
     private static final ThreadLocal<Integer> shieldColor = ThreadLocal.withInitial(() -> COLOR_NONE);

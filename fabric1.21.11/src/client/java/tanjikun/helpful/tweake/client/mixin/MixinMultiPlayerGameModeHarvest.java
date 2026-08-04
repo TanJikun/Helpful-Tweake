@@ -176,10 +176,6 @@ public class MixinMultiPlayerGameModeHarvest
             }
         }
 
-        System.out.println("[HelpfulTweake] 收获执行: " + state.getBlock() + " at " + pos
-                + ", drops=" + drops.size() + ", isPitcher=" + isPitcher
-                + ", seed=" + seed + ", hasSeed=" + hasSeed);
-
         // 给服务端玩家剩余掉落物
         for (ItemStack drop : drops)
         {
