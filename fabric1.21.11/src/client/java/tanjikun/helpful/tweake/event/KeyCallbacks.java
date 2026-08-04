@@ -22,6 +22,7 @@ public class KeyCallbacks
         Configs.Tools.BETTER_BOAT.getKeybind().setCallback(new ToggleBetterBoatCallback());
         Configs.Tools.BETTER_DURABILITY.getKeybind().setCallback(new ToggleBetterDurabilityCallback());
         Configs.Tools.BETTER_HARVEST.getKeybind().setCallback(new ToggleBetterHarvestCallback());
+        Configs.Tools.SHIELD_STATUS.getKeybind().setCallback(new ToggleShieldStatusCallback());
         Configs.Optimization.BOLD_FONT.getKeybind().setCallback(new ToggleBoldFontCallback());
     }
 
@@ -175,6 +176,24 @@ public class KeyCallbacks
                 boolean enabled = Configs.Optimization.BOLD_FONT.getBooleanValue();
                 Minecraft.getInstance().player.displayClientMessage(
                         Component.translatable("helpful_tweake.message.boldFont." + (enabled ? "enabled" : "disabled")),
+                        true);
+            }
+            return true;
+        }
+    }
+
+    private record ToggleShieldStatusCallback() implements IHotkeyCallback
+    {
+        @Override
+        public boolean onKeyAction(KeyAction action, IKeybind key)
+        {
+            Configs.Tools.SHIELD_STATUS.toggleBooleanValue();
+            Configs.saveToFile();
+            if (Minecraft.getInstance().player != null)
+            {
+                boolean enabled = Configs.Tools.SHIELD_STATUS.getBooleanValue();
+                Minecraft.getInstance().player.displayClientMessage(
+                        Component.translatable("helpful_tweake.message.shieldStatus." + (enabled ? "enabled" : "disabled")),
                         true);
             }
             return true;

@@ -52,6 +52,11 @@
 	"helpful_tweake.message.betterHarvest.enabled": "Convenient Harvest: ON",
 	"helpful_tweake.message.betterHarvest.disabled": "Convenient Harvest: OFF",
 
+	"helpful_tweake.config.tools.name.shieldStatus": "Shield Status",
+	"helpful_tweake.config.tools.comment.shieldStatus": "Overlays a color layer on shields to show their status.\nGreen = available, red = on cooldown (5s disable after axe hit).\nYour own shield cooldown is accurate.\nOther players' cooldown is detected via shield disable component\n(pose change) with sound monitoring as backup.",
+	"helpful_tweake.message.shieldStatus.enabled": "Shield Status: ON",
+	"helpful_tweake.message.shieldStatus.disabled": "Shield Status: OFF",
+
 	"helpful_tweake.config.optimization.name.boldFont": "Bold Font Optimization",
 	"helpful_tweake.config.optimization.comment.boldFont": "Fixes bold text offset issues with HD font packs.\nSwitches to cu_ prefixed bold font file and disables\nthe vanilla 1-pixel bold offset.\nRequires a resource pack with cu_ prefixed font file.\nVanilla behavior is kept when no custom font is present.",
 	"helpful_tweake.message.boldFont.enabled": "Bold Font Optimization: ON",

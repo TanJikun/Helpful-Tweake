@@ -16,7 +16,10 @@
 		"MixinTrueTypeGlyphProviderAccessor",
 		"MixinFont",
 		"MixinGlyphInfo",
-		"MixinPreparedTextBuilder"
+		"MixinClientPacketListener",
+		"MixinItemInHandRenderer",
+		"MixinPlayerItemInHandLayer",
+		"MixinShieldSpecialRenderer"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -81,6 +81,10 @@ public class Configs implements IConfigHandler
         public static final ConfigStringList HARVEST_BLACKLIST =
                 new ConfigStringList("harvestBlacklist", ImmutableList.of(), "").apply(TOOLS_KEY);
 
+        // 盾牌状态显示：在盾牌上叠加颜色层（绿色=可用，红色=冷却中）
+        public static final ConfigBooleanHotkeyed SHIELD_STATUS =
+                new ConfigBooleanHotkeyed("shieldStatus", false, "").apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 GLOBAL_MENDING,
@@ -93,7 +97,8 @@ public class Configs implements IConfigHandler
                 BETTER_HARVEST,
                 HARVEST_REQUIRE_HOE,
                 HARVEST_HOE_DURABILITY,
-                HARVEST_BLACKLIST
+                HARVEST_BLACKLIST,
+                SHIELD_STATUS
         );
 
         /**

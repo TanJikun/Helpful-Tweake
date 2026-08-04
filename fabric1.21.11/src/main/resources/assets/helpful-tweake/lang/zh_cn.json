@@ -52,6 +52,11 @@
 	"helpful_tweake.message.betterHarvest.enabled": "更方便的收获：已开启",
 	"helpful_tweake.message.betterHarvest.disabled": "更方便的收获：已关闭",
 
+	"helpful_tweake.config.tools.name.shieldStatus": "盾牌状态显示",
+	"helpful_tweake.config.tools.comment.shieldStatus": "在盾牌上叠加颜色层显示其状态。绿色表示可用，红色表示冷却中。\n被斧头攻击后盾牌会禁用5秒。自己的盾牌冷却状态精确显示，\n其他玩家通过盾牌禁用倒计时组件（姿态变化）判定，辅以声音监听补充。",
+	"helpful_tweake.message.shieldStatus.enabled": "盾牌状态显示：已开启",
+	"helpful_tweake.message.shieldStatus.disabled": "盾牌状态显示：已关闭",
+
 	"helpful_tweake.config.optimization.name.boldFont": "加粗显示优化",
 	"helpful_tweake.config.optimization.comment.boldFont": "使用高清字体包时，加粗文字会因原版1像素偏移出现错位。\n开启后自动切换到 cu_ 前缀的粗体字体文件并禁用偏移。\n材质包需提供 cu_ 前缀字体文件。无自定义字体时沿用原版。",
 	"helpful_tweake.message.boldFont.enabled": "加粗显示优化：已开启",
