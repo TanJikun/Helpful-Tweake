@@ -74,6 +74,11 @@
 	"helpful_tweake.message.armorHud.enabled": "Armor HUD: ON",
 	"helpful_tweake.message.armorHud.disabled": "Armor HUD: OFF",
 
+	"helpful_tweake.config.tools.name.rainbowSelection": "Rainbow Selection",
+	"helpful_tweake.config.tools.comment.rainbowSelection": "Replaces the block selection wireframe (the box around the\nblock you are aiming at) with a rainbow color that shifts over time.",
+	"helpful_tweake.message.rainbowSelection.enabled": "Rainbow Selection: ON",
+	"helpful_tweake.message.rainbowSelection.disabled": "Rainbow Selection: OFF",
+
 	"helpful_tweake.config.optimization.name.boldFont": "Bold Font Optimization",
 	"helpful_tweake.config.optimization.comment.boldFont": "Fixes bold text offset issues with HD font packs.\nSwitches to cu_ prefixed bold font file and disables\nthe vanilla 1-pixel bold offset.\nRequires a resource pack with cu_ prefixed font file.\nVanilla behavior is kept when no custom font is present.",
 	"helpful_tweake.message.boldFont.enabled": "Bold Font Optimization: ON",

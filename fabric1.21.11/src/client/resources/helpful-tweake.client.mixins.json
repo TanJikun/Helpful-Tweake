@@ -19,7 +19,8 @@
 		"MixinClientPacketListener",
 		"MixinItemInHandRenderer",
 		"MixinPlayerItemInHandLayer",
-		"MixinShieldSpecialRenderer"
+		"MixinShieldSpecialRenderer",
+		"MixinLevelRendererBlockOutline"
 	],
 	"injectors": {
 		"defaultRequire": 1

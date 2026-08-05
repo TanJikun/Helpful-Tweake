@@ -102,6 +102,10 @@ public class Configs implements IConfigHandler
         public static final ConfigDouble ARMOR_HUD_Y =
                 new ConfigDouble("armorHudY", 50.0, 1.0, 100.0).apply(TOOLS_KEY);
 
+        // 彩色选择框：将快捷栏当前选中格的高亮边框替换为彩虹色边框，颜色随时间滚动
+        public static final ConfigBooleanHotkeyed RAINBOW_SELECTION =
+                new ConfigBooleanHotkeyed("rainbowSelection", false, "").apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 GLOBAL_MENDING,
@@ -119,7 +123,8 @@ public class Configs implements IConfigHandler
                 ARMOR_HUD,
                 ARMOR_HUD_POSITION,
                 ARMOR_HUD_X,
-                ARMOR_HUD_Y
+                ARMOR_HUD_Y,
+                RAINBOW_SELECTION
         );
 
         /**
