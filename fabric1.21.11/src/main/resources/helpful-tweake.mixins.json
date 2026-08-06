@@ -4,7 +4,8 @@
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"ExampleMixin",
-		"MixinLivingEntityDeath"
+		"MixinLivingEntityDeath",
+		"MixinPlayerCrawl"
 	],
 	"injectors": {
 		"defaultRequire": 1

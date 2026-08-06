@@ -13,6 +13,7 @@ import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.IConfigHandler;
 import fi.dy.masa.malilib.config.options.ConfigBooleanHotkeyed;
 import fi.dy.masa.malilib.config.options.ConfigDouble;
+import fi.dy.masa.malilib.config.options.ConfigHotkey;
 import fi.dy.masa.malilib.config.options.ConfigOptionList;
 import fi.dy.masa.malilib.config.options.ConfigStringList;
 import fi.dy.masa.malilib.util.FileUtils;
@@ -106,6 +107,15 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed RAINBOW_SELECTION =
                 new ConfigBooleanHotkeyed("rainbowSelection", false, "").apply(TOOLS_KEY);
 
+        // 控制爬行：按下绑定按键时将玩家姿势切换为爬行（默认无开关，仅绑定按键）
+        // ConfigHotkey 仅含热键不含 boolean 开关，区别于 ConfigBooleanHotkeyed
+        public static final ConfigHotkey CONTROLLED_CRAWL =
+                new ConfigHotkey("controlledCrawl", "").apply(TOOLS_KEY);
+
+        // 控制爬行子配置：触发方式（按下/切换）
+        public static final ConfigOptionList CRAWL_TRIGGER_MODE =
+                new ConfigOptionList("crawlTriggerMode", CrawlTriggerMode.HOLD).apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 GLOBAL_MENDING,
@@ -124,7 +134,9 @@ public class Configs implements IConfigHandler
                 ARMOR_HUD_POSITION,
                 ARMOR_HUD_X,
                 ARMOR_HUD_Y,
-                RAINBOW_SELECTION
+                RAINBOW_SELECTION,
+                CONTROLLED_CRAWL,
+                CRAWL_TRIGGER_MODE
         );
 
         /**
@@ -134,9 +146,11 @@ public class Configs implements IConfigHandler
         public static List<IConfigBase> getDisplayOptions(boolean betterBoatExpanded,
                                                           boolean betterDurabilityExpanded,
                                                           boolean betterHarvestExpanded,
-                                                          boolean armorHudExpanded)
+                                                          boolean armorHudExpanded,
+                                                          boolean controlledCrawlExpanded)
         {
-            if (betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded && armorHudExpanded)
+            if (betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
+                    && armorHudExpanded && controlledCrawlExpanded)
             {
                 return OPTIONS;
             }
@@ -160,6 +174,10 @@ public class Configs implements IConfigHandler
                 if (!armorHudExpanded && (config == ARMOR_HUD_POSITION
                         || config == ARMOR_HUD_X
                         || config == ARMOR_HUD_Y))
+                {
+                    continue;
+                }
+                if (!controlledCrawlExpanded && config == CRAWL_TRIGGER_MODE)
                 {
                     continue;
                 }

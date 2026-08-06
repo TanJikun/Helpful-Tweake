@@ -9,14 +9,18 @@ import fi.dy.masa.malilib.gui.button.IButtonActionListener;
 import fi.dy.masa.malilib.gui.interfaces.IKeybindConfigGui;
 import fi.dy.masa.malilib.gui.widgets.WidgetConfigOption;
 import fi.dy.masa.malilib.gui.widgets.WidgetListConfigOptionsBase;
+import fi.dy.masa.malilib.hotkeys.IHotkey;
 import fi.dy.masa.malilib.hotkeys.IKeybind;
 
 import tanjikun.helpful.tweake.client.gui.ExpandState;
 import tanjikun.helpful.tweake.config.Configs;
 
 /**
- * 在 ConfigBooleanHotkeyed 行的 toggle 按钮左侧添加展开/折叠按钮。
- * 对 BETTER_BOAT 和 BETTER_DURABILITY 配置项生效，其他配置项走原版逻辑。
+ * 在指定配置行（ConfigBooleanHotkeyed 或 ConfigHotkey）的左侧添加展开/折叠按钮。
+ * 命中表：
+ *   ConfigBooleanHotkeyed —— BETTER_BOAT / BETTER_DURABILITY / BETTER_HARVEST / ARMOR_HUD
+ *   ConfigHotkey          —— CONTROLLED_CRAWL
+ * 其他配置项走原版渲染逻辑。
  */
 public class WidgetConfigOptionExpandable extends WidgetConfigOption
 {
@@ -57,6 +61,23 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
         else
         {
             super.addBooleanAndHotkeyWidgets(x, y, w, configResettable, configBoolean, keybind);
+        }
+    }
+
+    @Override
+    protected void addHotkeyConfigElements(int x, int y, int w, String label, IHotkey hotkey)
+    {
+        // CONTROLLED_CRAWL 是 ConfigHotkey（仅热键无 boolean 开关），单独加展开按钮
+        if (hotkey == Configs.Tools.CONTROLLED_CRAWL)
+        {
+            ButtonGeneric expandBtn = new ButtonGeneric(x, y, 14, 20,
+                    ExpandState.controlledCrawlExpanded ? "-" : "+");
+            this.addButton(expandBtn, new ExpandButtonListener(ExpandState::toggleControlledCrawl));
+            super.addHotkeyConfigElements(x + 16, y, w - 16, label, hotkey);
+        }
+        else
+        {
+            super.addHotkeyConfigElements(x, y, w, label, hotkey);
         }
     }
 

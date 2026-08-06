@@ -79,6 +79,13 @@
 	"helpful_tweake.message.rainbowSelection.enabled": "Rainbow Selection: ON",
 	"helpful_tweake.message.rainbowSelection.disabled": "Rainbow Selection: OFF",
 
+	"helpful_tweake.config.tools.name.controlledCrawl": "Controlled Crawl",
+	"helpful_tweake.config.tools.comment.controlledCrawl": "Press the bound key to enter the crawling pose.\nRelease (Hold mode) or press again (Toggle mode) restores vanilla behavior.\nClick +/- to configure the trigger mode.",
+	"helpful_tweake.config.tools.name.crawlTriggerMode": "    Trigger Mode",
+	"helpful_tweake.config.tools.comment.crawlTriggerMode": "Determines how the key triggers crawling.\nHold: crawl while held, vanilla logic on release.\nToggle: press once to crawl, press again to revert.",
+	"helpful_tweake.config.crawl.trigger_mode.hold": "Hold",
+	"helpful_tweake.config.crawl.trigger_mode.toggle": "Toggle",
+
 	"helpful_tweake.config.optimization.name.boldFont": "Bold Font Optimization",
 	"helpful_tweake.config.optimization.comment.boldFont": "Fixes bold text offset issues with HD font packs.\nSwitches to cu_ prefixed bold font file and disables\nthe vanilla 1-pixel bold offset.\nRequires a resource pack with cu_ prefixed font file.\nVanilla behavior is kept when no custom font is present.",
 	"helpful_tweake.message.boldFont.enabled": "Bold Font Optimization: ON",

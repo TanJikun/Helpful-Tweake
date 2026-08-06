@@ -79,6 +79,13 @@
 	"helpful_tweake.message.rainbowSelection.enabled": "彩色选择框：已开启",
 	"helpful_tweake.message.rainbowSelection.disabled": "彩色选择框：已关闭",
 
+	"helpful_tweake.config.tools.name.controlledCrawl": "控制爬行",
+	"helpful_tweake.config.tools.comment.controlledCrawl": "按下绑定按键时让玩家进入爬行姿势。\n松开按键（按下模式）或再次按键（切换模式）后恢复原版逻辑。\n点击 +/- 按钮展开配置触发方式。",
+	"helpful_tweake.config.tools.name.crawlTriggerMode": "    触发方式",
+	"helpful_tweake.config.tools.comment.crawlTriggerMode": "决定按键的触发方式。\n按下：按住时爬行，松开后遵循原版逻辑。\n切换：按一下趴下，再按一下遵循原版逻辑。",
+	"helpful_tweake.config.crawl.trigger_mode.hold": "按下",
+	"helpful_tweake.config.crawl.trigger_mode.toggle": "切换",
+
 	"helpful_tweake.config.optimization.name.boldFont": "加粗显示优化",
 	"helpful_tweake.config.optimization.comment.boldFont": "使用高清字体包时，加粗文字会因原版1像素偏移出现错位。\n开启后自动切换到 cu_ 前缀的粗体字体文件并禁用偏移。\n材质包需提供 cu_ 前缀字体文件。无自定义字体时沿用原版。",
 	"helpful_tweake.message.boldFont.enabled": "加粗显示优化：已开启",

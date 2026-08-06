@@ -6,7 +6,9 @@ import fi.dy.masa.malilib.hotkeys.IKeybind;
 import fi.dy.masa.malilib.hotkeys.KeyAction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import tanjikun.helpful.tweake.util.CrawlState;
 import tanjikun.helpful.tweake.config.Configs;
+import tanjikun.helpful.tweake.config.CrawlTriggerMode;
 import tanjikun.helpful.tweake.config.Hotkeys;
 import tanjikun.helpful.tweake.gui.GuiConfigs;
 
@@ -25,6 +27,7 @@ public class KeyCallbacks
         Configs.Tools.SHIELD_STATUS.getKeybind().setCallback(new ToggleShieldStatusCallback());
         Configs.Tools.ARMOR_HUD.getKeybind().setCallback(new ToggleArmorHudCallback());
         Configs.Tools.RAINBOW_SELECTION.getKeybind().setCallback(new ToggleRainbowSelectionCallback());
+        Configs.Tools.CONTROLLED_CRAWL.getKeybind().setCallback(new CrawlKeyCallback());
         Configs.Optimization.BOLD_FONT.getKeybind().setCallback(new ToggleBoldFontCallback());
     }
 
@@ -234,6 +237,25 @@ public class KeyCallbacks
                         Component.translatable("helpful_tweake.message.rainbowSelection." + (enabled ? "enabled" : "disabled")),
                         true);
             }
+            return true;
+        }
+    }
+
+    /**
+     * 控制爬行按键回调。
+     * HOLD 模式下不做事（爬行状态由 Mixin 实时查询 isKeybindHeld() 判定），
+     * TOGGLE 模式下切换 toggleCrawling 状态。
+     */
+    private record CrawlKeyCallback() implements IHotkeyCallback
+    {
+        @Override
+        public boolean onKeyAction(KeyAction action, IKeybind key)
+        {
+            if (Configs.Tools.CRAWL_TRIGGER_MODE.getOptionListValue() == CrawlTriggerMode.TOGGLE)
+            {
+                CrawlState.toggle();
+            }
+            // HOLD 模式下也不传播按键事件（避免被其他系统误处理）
             return true;
         }
     }
