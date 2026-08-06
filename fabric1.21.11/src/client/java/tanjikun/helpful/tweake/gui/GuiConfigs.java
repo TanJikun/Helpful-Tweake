@@ -63,9 +63,9 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
 
     public void refreshList()
     {
-        this.reCreateListWidget();
-        Objects.requireNonNull(this.getListWidget()).resetScrollbarPosition();
-        this.initGui();
+        // 只刷新列表内容，保留滚动条位置，避免展开/折叠时界面跳回顶部
+        this.clearOptions();
+        Objects.requireNonNull(this.getListWidget()).refreshEntries();
     }
 
     @Override
