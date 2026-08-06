@@ -86,6 +86,13 @@
 	"helpful_tweake.config.crawl.trigger_mode.hold": "Hold",
 	"helpful_tweake.config.crawl.trigger_mode.toggle": "Toggle",
 
+	"helpful_tweake.config.tools.name.visualExperience": "Visual Experience",
+	"helpful_tweake.config.tools.comment.visualExperience": "Shows current level XP progress and total XP above the XP bar.\nClick +/- to configure text color.",
+	"helpful_tweake.config.tools.name.experienceTextColor": "    Text Color",
+	"helpful_tweake.config.tools.comment.experienceTextColor": "Color of the XP text display.",
+	"helpful_tweake.message.visualExperience.enabled": "Visual Experience: ON",
+	"helpful_tweake.message.visualExperience.disabled": "Visual Experience: OFF",
+
 	"helpful_tweake.config.optimization.name.boldFont": "Bold Font Optimization",
 	"helpful_tweake.config.optimization.comment.boldFont": "Fixes bold text offset issues with HD font packs.\nSwitches to cu_ prefixed bold font file and disables\nthe vanilla 1-pixel bold offset.\nRequires a resource pack with cu_ prefixed font file.\nVanilla behavior is kept when no custom font is present.",
 	"helpful_tweake.message.boldFont.enabled": "Bold Font Optimization: ON",

@@ -86,6 +86,13 @@
 	"helpful_tweake.config.crawl.trigger_mode.hold": "按下",
 	"helpful_tweake.config.crawl.trigger_mode.toggle": "切换",
 
+	"helpful_tweake.config.tools.name.visualExperience": "可视化经验值",
+	"helpful_tweake.config.tools.comment.visualExperience": "在经验条上方显示当前等级经验进度和总经验值。\n点击 +/- 按钮展开配置文字颜色。",
+	"helpful_tweake.config.tools.name.experienceTextColor": "    文字颜色",
+	"helpful_tweake.config.tools.comment.experienceTextColor": "经验值文字的显示颜色。",
+	"helpful_tweake.message.visualExperience.enabled": "可视化经验值：已开启",
+	"helpful_tweake.message.visualExperience.disabled": "可视化经验值：已关闭",
+
 	"helpful_tweake.config.optimization.name.boldFont": "加粗显示优化",
 	"helpful_tweake.config.optimization.comment.boldFont": "使用高清字体包时，加粗文字会因原版1像素偏移出现错位。\n开启后自动切换到 cu_ 前缀的粗体字体文件并禁用偏移。\n材质包需提供 cu_ 前缀字体文件。无自定义字体时沿用原版。",
 	"helpful_tweake.message.boldFont.enabled": "加粗显示优化：已开启",

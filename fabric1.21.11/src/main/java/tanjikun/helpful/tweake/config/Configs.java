@@ -12,6 +12,7 @@ import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.IConfigHandler;
 import fi.dy.masa.malilib.config.options.ConfigBooleanHotkeyed;
+import fi.dy.masa.malilib.config.options.ConfigColor;
 import fi.dy.masa.malilib.config.options.ConfigDouble;
 import fi.dy.masa.malilib.config.options.ConfigHotkey;
 import fi.dy.masa.malilib.config.options.ConfigOptionList;
@@ -116,6 +117,14 @@ public class Configs implements IConfigHandler
         public static final ConfigOptionList CRAWL_TRIGGER_MODE =
                 new ConfigOptionList("crawlTriggerMode", CrawlTriggerMode.HOLD).apply(TOOLS_KEY);
 
+        // 可视化经验值：在经验条上方显示当前等级经验进度和总经验值
+        public static final ConfigBooleanHotkeyed VISUAL_EXPERIENCE =
+                new ConfigBooleanHotkeyed("visualExperience", false, "").apply(TOOLS_KEY);
+
+        // 可视化经验值子配置：文字颜色（默认 #80FF20，与原版等级数字颜色一致）
+        public static final ConfigColor EXPERIENCE_TEXT_COLOR =
+                new ConfigColor("experienceTextColor", "#80FF20").apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 GLOBAL_MENDING,
@@ -136,7 +145,9 @@ public class Configs implements IConfigHandler
                 ARMOR_HUD_Y,
                 RAINBOW_SELECTION,
                 CONTROLLED_CRAWL,
-                CRAWL_TRIGGER_MODE
+                CRAWL_TRIGGER_MODE,
+                VISUAL_EXPERIENCE,
+                EXPERIENCE_TEXT_COLOR
         );
 
         /**
@@ -147,10 +158,11 @@ public class Configs implements IConfigHandler
                                                           boolean betterDurabilityExpanded,
                                                           boolean betterHarvestExpanded,
                                                           boolean armorHudExpanded,
-                                                          boolean controlledCrawlExpanded)
+                                                          boolean controlledCrawlExpanded,
+                                                          boolean visualExperienceExpanded)
         {
             if (betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
-                    && armorHudExpanded && controlledCrawlExpanded)
+                    && armorHudExpanded && controlledCrawlExpanded && visualExperienceExpanded)
             {
                 return OPTIONS;
             }
@@ -178,6 +190,10 @@ public class Configs implements IConfigHandler
                     continue;
                 }
                 if (!controlledCrawlExpanded && config == CRAWL_TRIGGER_MODE)
+                {
+                    continue;
+                }
+                if (!visualExperienceExpanded && config == EXPERIENCE_TEXT_COLOR)
                 {
                     continue;
                 }

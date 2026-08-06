@@ -58,6 +58,11 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.armorHudExpanded, ExpandState::toggleArmorHud);
         }
+        else if (configBoolean == Configs.Tools.VISUAL_EXPERIENCE)
+        {
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.visualExperienceExpanded, ExpandState::toggleVisualExperience);
+        }
         else
         {
             super.addBooleanAndHotkeyWidgets(x, y, w, configResettable, configBoolean, keybind);

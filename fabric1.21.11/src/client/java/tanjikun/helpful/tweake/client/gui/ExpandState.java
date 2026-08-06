@@ -11,6 +11,7 @@ public class ExpandState
     public static boolean betterHarvestExpanded = false;
     public static boolean armorHudExpanded = false;
     public static boolean controlledCrawlExpanded = false;
+    public static boolean visualExperienceExpanded = false;
     private static Runnable refreshCallback;
 
     public static void setRefreshCallback(Runnable callback)
@@ -57,6 +58,15 @@ public class ExpandState
     public static void toggleControlledCrawl()
     {
         controlledCrawlExpanded = !controlledCrawlExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
+    }
+
+    public static void toggleVisualExperience()
+    {
+        visualExperienceExpanded = !visualExperienceExpanded;
         if (refreshCallback != null)
         {
             refreshCallback.run();
