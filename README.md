@@ -33,10 +33,10 @@
 
 ### 更好的攀爬
 
-- **效果**：在梯子、藤蔓等可攀爬方块上时，根据视角方向改变攀爬速度。向下看会越爬越快，向上看会越爬越快。
+- **效果**：在梯子、藤蔓等可攀爬方块上时，按住空格向上爬、按住 Shift 向下爬。视角越陡（朝上看或朝下看）爬得越快，视角水平时按键也有最小速度。同时按空格和 Shift 或都不按时遵循原版攀爬规则。
 - **默认状态**：关闭
 - **默认热键**：无
-- **灵感来源**：[better-climbing](https://github.com/artemisSystem/better-climbing)。速度阈值与分阶段计时数据参考该项目。
+- **灵感来源**：[better-climbing](https://github.com/artemisSystem/better-climbing)。速度阈值参考该项目。
 
 ### 更好的船
 

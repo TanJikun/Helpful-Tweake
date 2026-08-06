@@ -16,7 +16,7 @@
 	"helpful_tweake.config.tools.name.betterTotem": "Better Totem of Undying",
 	"helpful_tweake.config.tools.comment.betterTotem": "When dying, any item with death protection (Totem of Undying)\nin equipment slots, main/off-hand, hotbar and inventory\nis triggered, without needing to be held.\nItems inside shulker boxes and other containers are ignored.\nDamage sources that bypass invulnerability (e.g. /kill)\nare not protected, matching vanilla behavior.",
 	"helpful_tweake.config.tools.name.betterClimbing": "Better Climbing",
-	"helpful_tweake.config.tools.comment.betterClimbing": "When climbing climbable blocks, vertical speed linearly\nincreases based on look pitch.\nLooking down 20-90 degrees: speed to -0.4, after 60 ticks to -0.6.\nLooking up 20-90 degrees: speed to 0.25, after 60 ticks to 0.5.",
+	"helpful_tweake.config.tools.comment.betterClimbing": "Hold space to climb up, hold shift to climb down.\nSteeper look pitch = faster; horizontal pitch still has min speed.\nBoth or neither pressed: vanilla behavior.",
 	"helpful_tweake.config.tools.name.betterBoat": "Better Boat",
 	"helpful_tweake.config.tools.comment.betterBoat": "Allows boats to step up obstacles up to the lift height.\nClick the +/- button to configure lift height.",
 	"helpful_tweake.config.tools.name.boatLiftHeight": "    Lift Height",

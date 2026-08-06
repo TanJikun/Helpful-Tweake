@@ -16,7 +16,7 @@
 	"helpful_tweake.config.tools.name.betterTotem": "更好的不死图腾",
 	"helpful_tweake.config.tools.comment.betterTotem": "玩家死亡时，装备栏、主副手、快捷栏、背包内所有不死图腾都可触发，不需要拿在手上。\n忽略潜影盒等容器内的物品。\n原版图腾无法免疫的伤害（如/kill）仍不可触发。",
 	"helpful_tweake.config.tools.name.betterClimbing": "更好的攀爬",
-	"helpful_tweake.config.tools.comment.betterClimbing": "攀爬可攀爬方块时，根据视角倾斜方向调整纵向速度。\n向下看20°~90°：速度线性增至-0.4，持续60 tick后增至-0.6；\n向上看20°~90°：速度线性增至0.25，持续60 tick后增至0.5。",
+	"helpful_tweake.config.tools.comment.betterClimbing": "攀爬可攀爬方块时，按住空格向上爬、按住Shift向下爬。\n视角越陡（朝上或朝下看）速度越快，水平时仍有最小速度。\n同时按两个键或都不按遵循原版规则。",
 	"helpful_tweake.config.tools.name.betterBoat": "更好的船",
 	"helpful_tweake.config.tools.comment.betterBoat": "开启后船只可以越过高度不大于抬升高度的障碍。点击左侧 +/- 按钮展开配置抬升高度。",
 	"helpful_tweake.config.tools.name.boatLiftHeight": "    抬升高度",
