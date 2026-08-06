@@ -15,6 +15,7 @@ import fi.dy.masa.malilib.config.options.ConfigBooleanHotkeyed;
 import fi.dy.masa.malilib.config.options.ConfigColor;
 import fi.dy.masa.malilib.config.options.ConfigDouble;
 import fi.dy.masa.malilib.config.options.ConfigHotkey;
+import fi.dy.masa.malilib.config.options.ConfigInteger;
 import fi.dy.masa.malilib.config.options.ConfigOptionList;
 import fi.dy.masa.malilib.config.options.ConfigStringList;
 import fi.dy.masa.malilib.util.FileUtils;
@@ -125,6 +126,38 @@ public class Configs implements IConfigHandler
         public static final ConfigColor EXPERIENCE_TEXT_COLOR =
                 new ConfigColor("experienceTextColor", "#80FF20").apply(TOOLS_KEY);
 
+        // 世吞运维助手：在目标方块上方渲染旋转副本，便于远距离定位
+        // 注意：1.21.11 中 ominous_vault/ominous_trial_spawner 不是独立方块 ID，
+        //       而是 vault/trial_spawner 的 OMINOUS 属性，因此默认列表只含 vault/trial_spawner
+        public static final ConfigBooleanHotkeyed WORLD_SWALLOW_MAINTENANCE =
+                new ConfigBooleanHotkeyed("worldSwallowMaintenance", false, "").apply(TOOLS_KEY);
+
+        // 世吞运维助手子配置：渲染高度（方块自身向上偏移的格数，0-128，默认8）
+        public static final ConfigInteger WSM_RENDER_HEIGHT =
+                new ConfigInteger("wsmRenderHeight", 8, 0, 128).apply(TOOLS_KEY);
+
+        // 世吞运维助手子配置：目标方块 ID 列表
+        public static final ConfigStringList WSM_TARGET_BLOCKS =
+                new ConfigStringList("wsmTargetBlocks", ImmutableList.of(
+                        "minecraft:vault",
+                        "minecraft:trial_spawner",
+                        "minecraft:obsidian",
+                        "minecraft:crying_obsidian",
+                        "minecraft:deepslate_diamond_ore",
+                        "minecraft:diamond_ore",
+                        "minecraft:deepslate_coal_ore",
+                        "minecraft:deepslate_emerald_ore",
+                        "minecraft:ancient_debris"
+                ), "").apply(TOOLS_KEY);
+
+        // 世吞运维助手子配置：是否同时渲染含水方块
+        public static final ConfigBooleanHotkeyed WSM_RENDER_WATERLOGGED =
+                new ConfigBooleanHotkeyed("wsmRenderWaterlogged", false, "").apply(TOOLS_KEY);
+
+        // 世吞运维助手子配置：距离阈值（0-32，实际曼哈顿距离 = 该值 × 16，默认4）
+        public static final ConfigInteger WSM_DISTANCE_THRESHOLD =
+                new ConfigInteger("wsmDistanceThreshold", 4, 0, 32).apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 GLOBAL_MENDING,
@@ -147,7 +180,12 @@ public class Configs implements IConfigHandler
                 CONTROLLED_CRAWL,
                 CRAWL_TRIGGER_MODE,
                 VISUAL_EXPERIENCE,
-                EXPERIENCE_TEXT_COLOR
+                EXPERIENCE_TEXT_COLOR,
+                WORLD_SWALLOW_MAINTENANCE,
+                WSM_RENDER_HEIGHT,
+                WSM_TARGET_BLOCKS,
+                WSM_RENDER_WATERLOGGED,
+                WSM_DISTANCE_THRESHOLD
         );
 
         /**
@@ -159,10 +197,12 @@ public class Configs implements IConfigHandler
                                                           boolean betterHarvestExpanded,
                                                           boolean armorHudExpanded,
                                                           boolean controlledCrawlExpanded,
-                                                          boolean visualExperienceExpanded)
+                                                          boolean visualExperienceExpanded,
+                                                          boolean worldSwallowMaintenanceExpanded)
         {
             if (betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
-                    && armorHudExpanded && controlledCrawlExpanded && visualExperienceExpanded)
+                    && armorHudExpanded && controlledCrawlExpanded && visualExperienceExpanded
+                    && worldSwallowMaintenanceExpanded)
             {
                 return OPTIONS;
             }
@@ -194,6 +234,13 @@ public class Configs implements IConfigHandler
                     continue;
                 }
                 if (!visualExperienceExpanded && config == EXPERIENCE_TEXT_COLOR)
+                {
+                    continue;
+                }
+                if (!worldSwallowMaintenanceExpanded && (config == WSM_RENDER_HEIGHT
+                        || config == WSM_TARGET_BLOCKS
+                        || config == WSM_RENDER_WATERLOGGED
+                        || config == WSM_DISTANCE_THRESHOLD))
                 {
                     continue;
                 }

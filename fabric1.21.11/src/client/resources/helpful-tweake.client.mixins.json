@@ -20,7 +20,8 @@
 		"MixinItemInHandRenderer",
 		"MixinPlayerItemInHandLayer",
 		"MixinShieldSpecialRenderer",
-		"MixinLevelRendererBlockOutline"
+		"MixinLevelRendererBlockOutline",
+		"MixinCameraAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

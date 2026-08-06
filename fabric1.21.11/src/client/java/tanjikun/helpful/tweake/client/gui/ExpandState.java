@@ -12,6 +12,7 @@ public class ExpandState
     public static boolean armorHudExpanded = false;
     public static boolean controlledCrawlExpanded = false;
     public static boolean visualExperienceExpanded = false;
+    public static boolean worldSwallowMaintenanceExpanded = false;
     private static Runnable refreshCallback;
 
     public static void setRefreshCallback(Runnable callback)
@@ -67,6 +68,15 @@ public class ExpandState
     public static void toggleVisualExperience()
     {
         visualExperienceExpanded = !visualExperienceExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
+    }
+
+    public static void toggleWorldSwallowMaintenance()
+    {
+        worldSwallowMaintenanceExpanded = !worldSwallowMaintenanceExpanded;
         if (refreshCallback != null)
         {
             refreshCallback.run();

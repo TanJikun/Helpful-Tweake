@@ -63,6 +63,11 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.visualExperienceExpanded, ExpandState::toggleVisualExperience);
         }
+        else if (configBoolean == Configs.Tools.WORLD_SWALLOW_MAINTENANCE)
+        {
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.worldSwallowMaintenanceExpanded, ExpandState::toggleWorldSwallowMaintenance);
+        }
         else
         {
             super.addBooleanAndHotkeyWidgets(x, y, w, configResettable, configBoolean, keybind);

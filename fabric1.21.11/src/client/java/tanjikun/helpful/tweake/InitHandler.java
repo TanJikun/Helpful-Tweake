@@ -2,6 +2,7 @@ package tanjikun.helpful.tweake;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents;
 import fi.dy.masa.malilib.config.ConfigManager;
 import fi.dy.masa.malilib.event.InitializationHandler;
 import fi.dy.masa.malilib.event.InputEventHandler;
@@ -12,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import tanjikun.helpful.tweake.client.util.ArmorHudRenderer;
 import tanjikun.helpful.tweake.client.util.VisualExperienceHudRenderer;
+import tanjikun.helpful.tweake.client.util.WorldSwallowMaintenanceRenderer;
 import tanjikun.helpful.tweake.config.Configs;
 import tanjikun.helpful.tweake.config.CrawlTriggerMode;
 import tanjikun.helpful.tweake.event.InputHandler;
@@ -40,6 +42,10 @@ public class InitHandler implements IInitializationHandler
         // 注册可视化经验值 HUD 渲染回调
         HudRenderCallback.EVENT.register(new VisualExperienceHudRenderer());
 
+        // 注册世吞运维助手世界渲染回调
+        WorldSwallowMaintenanceRenderer wsmRenderer = new WorldSwallowMaintenanceRenderer();
+        WorldRenderEvents.AFTER_ENTITIES.register(wsmRenderer);
+
         // 控制爬行：客户端 tick 更新 CrawlState，让 common Mixin 能读到最新状态
         // HOLD 模式实时查询按键，TOGGLE 模式读取切换状态；计算结果写入 crawlRequested
         // 供 common 侧 MixinPlayerCrawl（同时作用于内部服务器）读取
@@ -57,5 +63,8 @@ public class InitHandler implements IInitializationHandler
                     : CrawlState.isToggleCrawling();
             CrawlState.setCrawlRequested(requested);
         });
+
+        // 世吞运维助手：定期扫描方块更新缓存
+        ClientTickEvents.END_CLIENT_TICK.register(wsmRenderer::tick);
     }
 }
