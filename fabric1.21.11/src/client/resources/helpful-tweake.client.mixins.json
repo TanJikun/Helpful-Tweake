@@ -21,7 +21,8 @@
 		"MixinPlayerItemInHandLayer",
 		"MixinShieldSpecialRenderer",
 		"MixinLevelRendererBlockOutline",
-		"MixinCameraAccessor"
+		"MixinCameraAccessor",
+		"MixinBlockEntityRenderDispatcherAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

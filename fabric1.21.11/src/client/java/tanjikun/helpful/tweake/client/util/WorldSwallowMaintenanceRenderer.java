@@ -6,24 +6,33 @@ import java.util.List;
 import java.util.Set;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
 import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.object.chest.ChestModel;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 
+import tanjikun.helpful.tweake.client.mixin.MixinBlockEntityRenderDispatcherAccessor;
 import tanjikun.helpful.tweake.client.mixin.MixinCameraAccessor;
 import tanjikun.helpful.tweake.config.Configs;
 
@@ -57,6 +66,10 @@ public class WorldSwallowMaintenanceRenderer implements WorldRenderEvents.AfterE
     private Set<Block> targetBlocks = new HashSet<>();
     private List<String> lastTargetList = null;
     private boolean lastWaterloggedFlag = false;
+
+    // 箱子/末影箱的 BakedModel 是空的（视觉由 BlockEntityRenderer 处理），
+    // renderSingleBlock 渲染不出，需用 ChestModel + ModelPart 直接渲染。
+    private ModelPart chestModelRoot;
 
     @Override
     public void afterEntities(WorldRenderContext context)
@@ -103,9 +116,79 @@ public class WorldSwallowMaintenanceRenderer implements WorldRenderEvents.AfterE
             poseStack.translate(0.5, 0.5, 0.5);
             poseStack.mulPose(Axis.XP.rotationDegrees(45.0f));
             poseStack.translate(-0.5, -0.5, -0.5);
-            dispatcher.renderSingleBlock(cb.state, poseStack, bufferSource,
-                                         LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+
+            if (isChestLike(cb.state))
+            {
+                // 箱子/末影箱：BakedModel 为空，用 ChestModel + ModelPart 渲染。
+                // ModelPart 内部自动按 SCALE_FACTOR(1/16) 缩放，无需额外 scale。
+                // 纹理走图集系统，需用 Material.buffer() 获取 UV 重映射的 VertexConsumer。
+                ensureChestModel();
+                Material material = getChestMaterial(cb.state);
+                MaterialSet materialSet = ((MixinBlockEntityRenderDispatcherAccessor)
+                    mc.getBlockEntityRenderDispatcher()).getMaterials();
+                VertexConsumer buffer = material.buffer(materialSet, bufferSource,
+                    RenderTypes::entityCutoutNoCull);
+                chestModelRoot.render(poseStack, buffer,
+                                      LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+            }
+            else
+            {
+                dispatcher.renderSingleBlock(cb.state, poseStack, bufferSource,
+                                             LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+            }
             poseStack.popPose();
+        }
+    }
+
+    /**
+     * 判断是否为箱子类方块（BakedModel 为空，需用 ChestModel 渲染）。
+     * 覆盖普通箱子、陷阱箱、铜箱子（均为 ChestBlock 子类）和末影箱。
+     */
+    private boolean isChestLike(BlockState state)
+    {
+        Block block = state.getBlock();
+        return block instanceof ChestBlock || block == Blocks.ENDER_CHEST;
+    }
+
+    /**
+     * 获取箱子 Material（图集纹理 + RenderType 信息）。
+     * 用 Sheets 预定义的 Material，确保纹理已注册到图集。
+     */
+    private Material getChestMaterial(BlockState state)
+    {
+        Block block = state.getBlock();
+        if (block == Blocks.ENDER_CHEST)
+        {
+            return Sheets.ENDER_CHEST_LOCATION;
+        }
+        if (block == Blocks.TRAPPED_CHEST)
+        {
+            return Sheets.CHEST_TRAP_LOCATION;
+        }
+        if (block == Blocks.COPPER_CHEST)
+        {
+            return Sheets.COPPER_CHEST_LOCATION;
+        }
+        if (block == Blocks.EXPOSED_COPPER_CHEST)
+        {
+            return Sheets.EXPOSED_COPPER_CHEST_LOCATION;
+        }
+        if (block == Blocks.WEATHERED_COPPER_CHEST)
+        {
+            return Sheets.WEATHERED_COPPER_CHEST_LOCATION;
+        }
+        if (block == Blocks.OXIDIZED_COPPER_CHEST)
+        {
+            return Sheets.OXIDIZED_COPPER_CHEST_LOCATION;
+        }
+        return Sheets.CHEST_LOCATION;
+    }
+
+    private void ensureChestModel()
+    {
+        if (chestModelRoot == null)
+        {
+            chestModelRoot = ChestModel.createSingleBodyLayer().bakeRoot();
         }
     }
 
