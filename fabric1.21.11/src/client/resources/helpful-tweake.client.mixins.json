@@ -22,7 +22,8 @@
 		"MixinShieldSpecialRenderer",
 		"MixinLevelRendererBlockOutline",
 		"MixinCameraAccessor",
-		"MixinBlockEntityRenderDispatcherAccessor"
+		"MixinBlockEntityRenderDispatcherAccessor",
+		"MixinTransparentBedrock"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -154,9 +154,21 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed WSM_RENDER_WATERLOGGED =
                 new ConfigBooleanHotkeyed("wsmRenderWaterlogged", false, "").apply(TOOLS_KEY);
 
-        // 世吞运维助手子配置：距离阈值（0-32，实际曼哈顿距离 = 该值 × 16，默认4）
+        // 世吞运维助手子配置：距离阈值（0-32，实际曼哈顿距离 = 该值×16，默认4）
         public static final ConfigInteger WSM_DISTANCE_THRESHOLD =
                 new ConfigInteger("wsmDistanceThreshold", 4, 0, 32).apply(TOOLS_KEY);
+
+        // 世吞运维助手子配置：透明基岩（开启后所有基岩变透明，被挡住的方块可见）
+        public static final ConfigBooleanHotkeyed WSM_TRANSPARENT_BEDROCK =
+                new ConfigBooleanHotkeyed("wsmTransparentBedrock", false, "").apply(TOOLS_KEY);
+
+        // 世吞运维助手子配置：清海带（需安装 Litematica，未安装时配置项红色禁用）
+        public static final ConfigBooleanHotkeyed WSM_CLEAR_KELP =
+                new ConfigBooleanHotkeyed("wsmClearKelp", false, "").apply(TOOLS_KEY);
+
+        // 清海带子子配置：3D 曼哈顿距离阈值（1-128，默认4）
+        public static final ConfigInteger WSM_CLEAR_KELP_DISTANCE =
+                new ConfigInteger("wsmClearKelpDistance", 4, 1, 128).apply(TOOLS_KEY);
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
@@ -185,7 +197,10 @@ public class Configs implements IConfigHandler
                 WSM_RENDER_HEIGHT,
                 WSM_TARGET_BLOCKS,
                 WSM_RENDER_WATERLOGGED,
-                WSM_DISTANCE_THRESHOLD
+                WSM_DISTANCE_THRESHOLD,
+                WSM_TRANSPARENT_BEDROCK,
+                WSM_CLEAR_KELP,
+                WSM_CLEAR_KELP_DISTANCE
         );
 
         /**
@@ -198,11 +213,12 @@ public class Configs implements IConfigHandler
                                                           boolean armorHudExpanded,
                                                           boolean controlledCrawlExpanded,
                                                           boolean visualExperienceExpanded,
-                                                          boolean worldSwallowMaintenanceExpanded)
+                                                          boolean worldSwallowMaintenanceExpanded,
+                                                          boolean clearKelpExpanded)
         {
             if (betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
                     && armorHudExpanded && controlledCrawlExpanded && visualExperienceExpanded
-                    && worldSwallowMaintenanceExpanded)
+                    && worldSwallowMaintenanceExpanded && clearKelpExpanded)
             {
                 return OPTIONS;
             }
@@ -240,7 +256,15 @@ public class Configs implements IConfigHandler
                 if (!worldSwallowMaintenanceExpanded && (config == WSM_RENDER_HEIGHT
                         || config == WSM_TARGET_BLOCKS
                         || config == WSM_RENDER_WATERLOGGED
-                        || config == WSM_DISTANCE_THRESHOLD))
+                        || config == WSM_DISTANCE_THRESHOLD
+                        || config == WSM_TRANSPARENT_BEDROCK
+                        || config == WSM_CLEAR_KELP
+                        || config == WSM_CLEAR_KELP_DISTANCE))
+                {
+                    continue;
+                }
+                // 清海带子子配置：仅在清海带展开时显示
+                if (!clearKelpExpanded && config == WSM_CLEAR_KELP_DISTANCE)
                 {
                     continue;
                 }

@@ -12,6 +12,7 @@ import fi.dy.masa.malilib.util.data.ModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import tanjikun.helpful.tweake.client.util.ArmorHudRenderer;
+import tanjikun.helpful.tweake.client.util.KelpBreaker;
 import tanjikun.helpful.tweake.client.util.VisualExperienceHudRenderer;
 import tanjikun.helpful.tweake.client.util.WorldSwallowMaintenanceRenderer;
 import tanjikun.helpful.tweake.config.Configs;
@@ -23,6 +24,7 @@ import tanjikun.helpful.tweake.util.CrawlState;
 
 public class InitHandler implements IInitializationHandler
 {
+    private static boolean lastTransparentBedrock = false;
     @Override
     public void registerModHandlers()
     {
@@ -62,9 +64,24 @@ public class InitHandler implements IInitializationHandler
                     ? Configs.Tools.CONTROLLED_CRAWL.getKeybind().isKeybindHeld()
                     : CrawlState.isToggleCrawling();
             CrawlState.setCrawlRequested(requested);
+
+            // 透明基岩：配置切换时触发区块重渲染（父配置项关闭时也需重渲染恢复）
+            boolean currentTransparentBedrock = Configs.Tools.WORLD_SWALLOW_MAINTENANCE.getBooleanValue()
+                    && Configs.Tools.WSM_TRANSPARENT_BEDROCK.getBooleanValue();
+            if (currentTransparentBedrock != lastTransparentBedrock)
+            {
+                lastTransparentBedrock = currentTransparentBedrock;
+                if (mc.level != null)
+                {
+                    mc.levelRenderer.allChanged();
+                }
+            }
         });
 
         // 世吞运维助手：定期扫描方块更新缓存
         ClientTickEvents.END_CLIENT_TICK.register(wsmRenderer::tick);
+
+        // 清海带：每 tick 扫描并破坏 Litematica 选区内海带
+        ClientTickEvents.END_CLIENT_TICK.register(new KelpBreaker());
     }
 }
