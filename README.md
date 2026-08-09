@@ -1,12 +1,12 @@
 # Helpful Tweake
 
-基于 [MaLiLib](https://github.com/sakura-ryoko/malilib) 的客户端端 Minecraft 辅助模组，提供实用工具与优化。
+基于 [MaLiLib](https://github.com/sakura-ryoko/malilib) 的客户端端 Minecraft 辅助模组，提供实用工具与优化。默认Alt+x打开配置界面，若安装[模组菜单（modmenu）](https://modrinth.com/mod/mOgUt4GM)则可通过[模组菜单（modmenu）](https://modrinth.com/mod/mOgUt4GM)打开配置界面
 
 ## 依赖
 
 必要依赖：[Fabric API](https://modrinth.com/mod/fabric-api)、[MaLiLib](https://modrinth.com/mod/malilib)
 
-可选依赖：[模组菜单（modmenu）](https://modrinth.com/mod/mOgUt4GM)
+可选依赖：[模组菜单（modmenu）](https://modrinth.com/mod/mOgUt4GM)、[投影(Litematica)](https://modrinth.com/mod/litematica)
 
 ## 功能-工具
 
