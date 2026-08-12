@@ -79,13 +79,13 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
         }
         else if (currentTab == ConfigGuiTab.TOOLS)
         {
-            configs = Configs.Tools.getDisplayOptions(ExpandState.betterBoatExpanded, ExpandState.betterDurabilityExpanded, ExpandState.betterHarvestExpanded, ExpandState.armorHudExpanded, ExpandState.controlledCrawlExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.clearKelpExpanded);
+            configs = Configs.Tools.getDisplayOptions(ExpandState.betterAutoJumpExpanded, ExpandState.betterBoatExpanded, ExpandState.betterDurabilityExpanded, ExpandState.betterHarvestExpanded, ExpandState.armorHudExpanded, ExpandState.controlledCrawlExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.clearKelpExpanded);
         }
         else if (currentTab == ConfigGuiTab.OPTIMIZATION)
         {
             configs = Configs.Optimization.getDisplayOptions(
                     ExpandState.entityRenderOptimizationExpanded,
-                    ExpandState.skipInvisibleEntitiesExpanded);
+                    ExpandState.skipDistantEntitiesExpanded);
         }
         else
         {
@@ -105,8 +105,8 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
     public List<ConfigOptionWrapper> getAllConfigs()
     {
         List<ConfigOptionWrapper> configs = new ArrayList<>();
-        configs.addAll(ConfigOptionWrapper.createFor(Configs.Tools.getDisplayOptions(ExpandState.betterBoatExpanded, ExpandState.betterDurabilityExpanded, ExpandState.betterHarvestExpanded, ExpandState.armorHudExpanded, ExpandState.controlledCrawlExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.clearKelpExpanded)));
-        configs.addAll(ConfigOptionWrapper.createFor(Configs.Optimization.getDisplayOptions(ExpandState.entityRenderOptimizationExpanded, ExpandState.skipInvisibleEntitiesExpanded)));
+        configs.addAll(ConfigOptionWrapper.createFor(Configs.Tools.getDisplayOptions(ExpandState.betterAutoJumpExpanded, ExpandState.betterBoatExpanded, ExpandState.betterDurabilityExpanded, ExpandState.betterHarvestExpanded, ExpandState.armorHudExpanded, ExpandState.controlledCrawlExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.clearKelpExpanded)));
+        configs.addAll(ConfigOptionWrapper.createFor(Configs.Optimization.getDisplayOptions(ExpandState.entityRenderOptimizationExpanded, ExpandState.skipDistantEntitiesExpanded)));
         configs.addAll(ConfigOptionWrapper.createFor(Hotkeys.HOTKEY_LIST));
         return configs;
     }

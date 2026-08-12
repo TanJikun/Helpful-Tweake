@@ -41,6 +41,10 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed BETTER_AUTO_JUMP =
                 new ConfigBooleanHotkeyed("betterAutoJump", false, "").apply(TOOLS_KEY);
 
+        // 更好的自动跳跃子配置：潜行不上坡（开启后潜行时无法登上任意高度的东西，哪怕是地毯）
+        public static final ConfigBooleanHotkeyed SNEAK_NO_SLOPE =
+                new ConfigBooleanHotkeyed("sneakNoSlope", true, "").apply(TOOLS_KEY);
+
         // 全局经验修补：装备栏/主副手/快捷栏/背包内所有经验修补物品都能在吸收经验时修复
         public static final ConfigBooleanHotkeyed GLOBAL_MENDING =
                 new ConfigBooleanHotkeyed("globalMending", false, "").apply(TOOLS_KEY);
@@ -172,6 +176,7 @@ public class Configs implements IConfigHandler
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
+                SNEAK_NO_SLOPE,
                 GLOBAL_MENDING,
                 BETTER_TOTEM,
                 BETTER_CLIMBING,
@@ -207,7 +212,8 @@ public class Configs implements IConfigHandler
          * 返回显示用配置列表。子配置项仅在对应主配置展开时显示。
          * 持久化始终使用 OPTIONS（包含全部配置项）。
          */
-        public static List<IConfigBase> getDisplayOptions(boolean betterBoatExpanded,
+        public static List<IConfigBase> getDisplayOptions(boolean betterAutoJumpExpanded,
+                                                          boolean betterBoatExpanded,
                                                           boolean betterDurabilityExpanded,
                                                           boolean betterHarvestExpanded,
                                                           boolean armorHudExpanded,
@@ -216,7 +222,7 @@ public class Configs implements IConfigHandler
                                                           boolean worldSwallowMaintenanceExpanded,
                                                           boolean clearKelpExpanded)
         {
-            if (betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
+            if (betterAutoJumpExpanded && betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
                     && armorHudExpanded && controlledCrawlExpanded && visualExperienceExpanded
                     && worldSwallowMaintenanceExpanded && clearKelpExpanded)
             {
@@ -225,6 +231,10 @@ public class Configs implements IConfigHandler
             List<IConfigBase> filtered = new java.util.ArrayList<>();
             for (IConfigBase config : OPTIONS)
             {
+                if (!betterAutoJumpExpanded && config == SNEAK_NO_SLOPE)
+                {
+                    continue;
+                }
                 if (!betterBoatExpanded && config == BOAT_LIFT_HEIGHT)
                 {
                     continue;
@@ -284,19 +294,29 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed ENTITY_RENDER_OPTIMIZATION =
                 new ConfigBooleanHotkeyed("entityRenderOptimization", false, "").apply(OPTIMIZATION_KEY);
 
-        // 实体渲染优化子配置：阻止不可见实体渲染（被方块遮挡或超出距离阈值的实体不渲染，方块实体不受影响）
+        // 实体渲染优化子配置：阻止不可见实体渲染（被方块遮挡的实体不渲染，方块实体不受影响）
         public static final ConfigBooleanHotkeyed SKIP_INVISIBLE_ENTITIES =
                 new ConfigBooleanHotkeyed("skipInvisibleEntities", false, "").apply(OPTIMIZATION_KEY);
 
-        // 阻止不可见实体渲染子子配置：距离阈值（1-128，默认32）
-        public static final ConfigInteger SKIP_INVISIBLE_ENTITIES_DISTANCE =
-                new ConfigInteger("skipInvisibleEntitiesDistance", 32, 1, 128).apply(OPTIMIZATION_KEY);
+        // 实体渲染优化子配置：阻止过远实体渲染（与玩家距离超过阈值的实体不渲染）
+        public static final ConfigBooleanHotkeyed SKIP_DISTANT_ENTITIES =
+                new ConfigBooleanHotkeyed("skipDistantEntities", false, "").apply(OPTIMIZATION_KEY);
+
+        // 阻止过远实体渲染子子配置：距离阈值（1-128，默认32）
+        public static final ConfigInteger SKIP_DISTANT_ENTITIES_DISTANCE =
+                new ConfigInteger("skipDistantEntitiesDistance", 32, 1, 128).apply(OPTIMIZATION_KEY);
+
+        // 实体渲染优化子配置：堆叠实体渲染优化（同坐标同类型实体仅渲染一个）
+        public static final ConfigBooleanHotkeyed STACK_ENTITY_RENDER_OPTIMIZATION =
+                new ConfigBooleanHotkeyed("stackEntityRenderOptimization", false, "").apply(OPTIMIZATION_KEY);
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BOLD_FONT,
                 ENTITY_RENDER_OPTIMIZATION,
                 SKIP_INVISIBLE_ENTITIES,
-                SKIP_INVISIBLE_ENTITIES_DISTANCE
+                SKIP_DISTANT_ENTITIES,
+                SKIP_DISTANT_ENTITIES_DISTANCE,
+                STACK_ENTITY_RENDER_OPTIMIZATION
         );
 
         /**
@@ -304,22 +324,25 @@ public class Configs implements IConfigHandler
          * 持久化始终使用 OPTIONS（包含全部配置项）。
          */
         public static List<IConfigBase> getDisplayOptions(boolean entityRenderOptimizationExpanded,
-                                                           boolean skipInvisibleEntitiesExpanded)
+                                                           boolean skipDistantEntitiesExpanded)
         {
-            if (entityRenderOptimizationExpanded && skipInvisibleEntitiesExpanded)
+            if (entityRenderOptimizationExpanded && skipDistantEntitiesExpanded)
             {
                 return OPTIONS;
             }
             List<IConfigBase> filtered = new java.util.ArrayList<>();
             for (IConfigBase config : OPTIONS)
             {
-                // skipInvisibleEntities 仅在 entityRenderOptimization 展开时显示
-                if (!entityRenderOptimizationExpanded && config == SKIP_INVISIBLE_ENTITIES)
+                // level1 子配置项仅在 entityRenderOptimization 展开时显示
+                if (!entityRenderOptimizationExpanded
+                        && (config == SKIP_INVISIBLE_ENTITIES
+                            || config == SKIP_DISTANT_ENTITIES
+                            || config == STACK_ENTITY_RENDER_OPTIMIZATION))
                 {
                     continue;
                 }
-                // skipInvisibleEntitiesDistance 仅在 skipInvisibleEntities 展开时显示
-                if (!skipInvisibleEntitiesExpanded && config == SKIP_INVISIBLE_ENTITIES_DISTANCE)
+                // skipDistantEntitiesDistance 仅在 skipDistantEntities 展开时显示
+                if (!skipDistantEntitiesExpanded && config == SKIP_DISTANT_ENTITIES_DISTANCE)
                 {
                     continue;
                 }

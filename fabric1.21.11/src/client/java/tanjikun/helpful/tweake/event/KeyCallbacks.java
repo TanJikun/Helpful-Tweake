@@ -31,6 +31,8 @@ public class KeyCallbacks
         Configs.Optimization.BOLD_FONT.getKeybind().setCallback(new ToggleBoldFontCallback());
         Configs.Optimization.ENTITY_RENDER_OPTIMIZATION.getKeybind().setCallback(new ToggleEntityRenderOptimizationCallback());
         Configs.Optimization.SKIP_INVISIBLE_ENTITIES.getKeybind().setCallback(new ToggleSkipInvisibleEntitiesCallback());
+        Configs.Optimization.SKIP_DISTANT_ENTITIES.getKeybind().setCallback(new ToggleSkipDistantEntitiesCallback());
+        Configs.Optimization.STACK_ENTITY_RENDER_OPTIMIZATION.getKeybind().setCallback(new ToggleStackEntityRenderOptimizationCallback());
     }
 
     private record OpenGuiCallback(Minecraft mc) implements IHotkeyCallback
@@ -219,6 +221,42 @@ public class KeyCallbacks
                 boolean enabled = Configs.Optimization.SKIP_INVISIBLE_ENTITIES.getBooleanValue();
                 Minecraft.getInstance().player.displayClientMessage(
                         Component.translatable("helpful_tweake.message.skipInvisibleEntities." + (enabled ? "enabled" : "disabled")),
+                        true);
+            }
+            return true;
+        }
+    }
+
+    private record ToggleSkipDistantEntitiesCallback() implements IHotkeyCallback
+    {
+        @Override
+        public boolean onKeyAction(KeyAction action, IKeybind key)
+        {
+            Configs.Optimization.SKIP_DISTANT_ENTITIES.toggleBooleanValue();
+            Configs.saveToFile();
+            if (Minecraft.getInstance().player != null)
+            {
+                boolean enabled = Configs.Optimization.SKIP_DISTANT_ENTITIES.getBooleanValue();
+                Minecraft.getInstance().player.displayClientMessage(
+                        Component.translatable("helpful_tweake.message.skipDistantEntities." + (enabled ? "enabled" : "disabled")),
+                        true);
+            }
+            return true;
+        }
+    }
+
+    private record ToggleStackEntityRenderOptimizationCallback() implements IHotkeyCallback
+    {
+        @Override
+        public boolean onKeyAction(KeyAction action, IKeybind key)
+        {
+            Configs.Optimization.STACK_ENTITY_RENDER_OPTIMIZATION.toggleBooleanValue();
+            Configs.saveToFile();
+            if (Minecraft.getInstance().player != null)
+            {
+                boolean enabled = Configs.Optimization.STACK_ENTITY_RENDER_OPTIMIZATION.getBooleanValue();
+                Minecraft.getInstance().player.displayClientMessage(
+                        Component.translatable("helpful_tweake.message.stackEntityRenderOptimization." + (enabled ? "enabled" : "disabled")),
                         true);
             }
             return true;

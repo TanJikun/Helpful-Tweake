@@ -27,9 +27,11 @@ import tanjikun.helpful.tweake.config.Configs;
 /**
  * 在指定配置行（ConfigBooleanHotkeyed 或 ConfigHotkey）的左侧添加展开/折叠按钮。
  * 命中表：
- *   ConfigBooleanHotkeyed —— BETTER_BOAT / BETTER_DURABILITY / BETTER_HARVEST / ARMOR_HUD
- *                             / VISUAL_EXPERIENCE / WORLD_SWALLOW_MAINTENANCE / WSM_CLEAR_KELP
+ *   ConfigBooleanHotkeyed —— BETTER_AUTO_JUMP / BETTER_BOAT / BETTER_DURABILITY
+ *                             / BETTER_HARVEST / ARMOR_HUD / VISUAL_EXPERIENCE
+ *                             / WORLD_SWALLOW_MAINTENANCE / WSM_CLEAR_KELP
  *                             / ENTITY_RENDER_OPTIMIZATION / SKIP_INVISIBLE_ENTITIES
+ *                             / SKIP_DISTANT_ENTITIES
  *   ConfigHotkey          —— CONTROLLED_CRAWL
  * 其他配置项走原版渲染逻辑。
  *
@@ -52,6 +54,7 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
 
     // 子配置项名称（控件额外缩进 16px）
     private static final Set<String> SUB_CONFIG_NAMES = Set.of(
+            "sneakNoSlope",
             "boatLiftHeight",
             "durabilityUnbreakingCalc",
             "harvestRequireHoe", "harvestHoeDurability", "harvestBlacklist",
@@ -60,13 +63,15 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "experienceTextColor",
             "wsmRenderHeight", "wsmTargetBlocks", "wsmRenderWaterlogged",
             "wsmDistanceThreshold", "wsmTransparentBedrock", "wsmClearKelp",
-            "skipInvisibleEntities"
+            "skipInvisibleEntities",
+            "skipDistantEntities",
+            "stackEntityRenderOptimization"
     );
 
     // 子子配置项名称（控件额外缩进 32px）
     private static final Set<String> SUB_SUB_CONFIG_NAMES = Set.of(
             "wsmClearKelpDistance",
-            "skipInvisibleEntitiesDistance"
+            "skipDistantEntitiesDistance"
     );
 
     /**
@@ -142,7 +147,12 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
                                               IConfigResettable configResettable,
                                               IConfigBoolean configBoolean, IKeybind keybind)
     {
-        if (configBoolean == Configs.Tools.BETTER_BOAT)
+        if (configBoolean == Configs.Tools.BETTER_AUTO_JUMP)
+        {
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.betterAutoJumpExpanded, ExpandState::toggleBetterAutoJump);
+        }
+        else if (configBoolean == Configs.Tools.BETTER_BOAT)
         {
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.betterBoatExpanded, ExpandState::toggleBetterBoat);
@@ -184,11 +194,11 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.entityRenderOptimizationExpanded, ExpandState::toggleEntityRenderOptimization);
         }
-        else if (configBoolean == Configs.Optimization.SKIP_INVISIBLE_ENTITIES)
+        else if (configBoolean == Configs.Optimization.SKIP_DISTANT_ENTITIES)
         {
-            // skipInvisibleEntities 是子配置项（level 1），需额外缩进 getIndent() - CONTROL_INDENT = 16px
+            // skipDistantEntities 是子配置项（level 1），需额外缩进 getIndent() - CONTROL_INDENT = 16px
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
-                    ExpandState.skipInvisibleEntitiesExpanded, ExpandState::toggleSkipInvisibleEntities,
+                    ExpandState.skipDistantEntitiesExpanded, ExpandState::toggleSkipDistantEntities,
                     getIndent() - CONTROL_INDENT);
         }
         else

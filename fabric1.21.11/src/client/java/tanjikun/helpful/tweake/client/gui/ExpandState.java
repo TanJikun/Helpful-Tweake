@@ -6,6 +6,7 @@ package tanjikun.helpful.tweake.client.gui;
  */
 public class ExpandState
 {
+    public static boolean betterAutoJumpExpanded = false;
     public static boolean betterBoatExpanded = false;
     public static boolean betterDurabilityExpanded = false;
     public static boolean betterHarvestExpanded = false;
@@ -15,12 +16,21 @@ public class ExpandState
     public static boolean worldSwallowMaintenanceExpanded = false;
     public static boolean clearKelpExpanded = false;
     public static boolean entityRenderOptimizationExpanded = false;
-    public static boolean skipInvisibleEntitiesExpanded = false;
+    public static boolean skipDistantEntitiesExpanded = false;
     private static Runnable refreshCallback;
 
     public static void setRefreshCallback(Runnable callback)
     {
         refreshCallback = callback;
+    }
+
+    public static void toggleBetterAutoJump()
+    {
+        betterAutoJumpExpanded = !betterAutoJumpExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
     }
 
     public static void toggleBetterBoat()
@@ -104,9 +114,9 @@ public class ExpandState
         }
     }
 
-    public static void toggleSkipInvisibleEntities()
+    public static void toggleSkipDistantEntities()
     {
-        skipInvisibleEntitiesExpanded = !skipInvisibleEntitiesExpanded;
+        skipDistantEntitiesExpanded = !skipDistantEntitiesExpanded;
         if (refreshCallback != null)
         {
             refreshCallback.run();
