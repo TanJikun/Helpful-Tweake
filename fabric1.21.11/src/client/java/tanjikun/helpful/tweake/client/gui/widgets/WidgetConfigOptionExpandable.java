@@ -29,6 +29,7 @@ import tanjikun.helpful.tweake.config.Configs;
  * 命中表：
  *   ConfigBooleanHotkeyed —— BETTER_BOAT / BETTER_DURABILITY / BETTER_HARVEST / ARMOR_HUD
  *                             / VISUAL_EXPERIENCE / WORLD_SWALLOW_MAINTENANCE / WSM_CLEAR_KELP
+ *                             / ENTITY_RENDER_OPTIMIZATION / SKIP_INVISIBLE_ENTITIES
  *   ConfigHotkey          —— CONTROLLED_CRAWL
  * 其他配置项走原版渲染逻辑。
  *
@@ -58,12 +59,14 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "crawlTriggerMode",
             "experienceTextColor",
             "wsmRenderHeight", "wsmTargetBlocks", "wsmRenderWaterlogged",
-            "wsmDistanceThreshold", "wsmTransparentBedrock", "wsmClearKelp"
+            "wsmDistanceThreshold", "wsmTransparentBedrock", "wsmClearKelp",
+            "skipInvisibleEntities"
     );
 
     // 子子配置项名称（控件额外缩进 32px）
     private static final Set<String> SUB_SUB_CONFIG_NAMES = Set.of(
-            "wsmClearKelpDistance"
+            "wsmClearKelpDistance",
+            "skipInvisibleEntitiesDistance"
     );
 
     /**
@@ -174,6 +177,18 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             // wsmClearKelp 是子配置项（level 1），需额外缩进 getIndent() - CONTROL_INDENT = 16px
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.clearKelpExpanded, ExpandState::toggleClearKelp,
+                    getIndent() - CONTROL_INDENT);
+        }
+        else if (configBoolean == Configs.Optimization.ENTITY_RENDER_OPTIMIZATION)
+        {
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.entityRenderOptimizationExpanded, ExpandState::toggleEntityRenderOptimization);
+        }
+        else if (configBoolean == Configs.Optimization.SKIP_INVISIBLE_ENTITIES)
+        {
+            // skipInvisibleEntities 是子配置项（level 1），需额外缩进 getIndent() - CONTROL_INDENT = 16px
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.skipInvisibleEntitiesExpanded, ExpandState::toggleSkipInvisibleEntities,
                     getIndent() - CONTROL_INDENT);
         }
         else

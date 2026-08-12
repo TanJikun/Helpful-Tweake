@@ -6,9 +6,7 @@
 		"ExampleClientMixin",
 		"MixinLivingEntity",
 		"MixinMinecraft",
-		"MixinExperienceOrb",
 		"MixinLivingEntityClimb",
-		"MixinEntityBoatStep",
 		"MixinGuiGraphicsDurability",
 		"MixinMultiPlayerGameModeHarvest",
 		"MixinMinecraftAccessor",
@@ -23,7 +21,8 @@
 		"MixinLevelRendererBlockOutline",
 		"MixinCameraAccessor",
 		"MixinBlockEntityRenderDispatcherAccessor",
-		"MixinTransparentBedrock"
+		"MixinTransparentBedrock",
+		"MixinEntityRenderDispatcher"
 	],
 	"injectors": {
 		"defaultRequire": 1

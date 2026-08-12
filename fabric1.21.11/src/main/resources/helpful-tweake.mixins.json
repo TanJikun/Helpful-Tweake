@@ -5,7 +5,9 @@
 	"mixins": [
 		"ExampleMixin",
 		"MixinLivingEntityDeath",
-		"MixinPlayerCrawl"
+		"MixinPlayerCrawl",
+		"MixinExperienceOrb",
+		"MixinEntityBoatStep"
 	],
 	"injectors": {
 		"defaultRequire": 1

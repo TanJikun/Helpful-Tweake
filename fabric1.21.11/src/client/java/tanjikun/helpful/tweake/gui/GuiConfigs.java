@@ -83,7 +83,9 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
         }
         else if (currentTab == ConfigGuiTab.OPTIMIZATION)
         {
-            configs = Configs.Optimization.OPTIONS;
+            configs = Configs.Optimization.getDisplayOptions(
+                    ExpandState.entityRenderOptimizationExpanded,
+                    ExpandState.skipInvisibleEntitiesExpanded);
         }
         else
         {
@@ -104,7 +106,7 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
     {
         List<ConfigOptionWrapper> configs = new ArrayList<>();
         configs.addAll(ConfigOptionWrapper.createFor(Configs.Tools.getDisplayOptions(ExpandState.betterBoatExpanded, ExpandState.betterDurabilityExpanded, ExpandState.betterHarvestExpanded, ExpandState.armorHudExpanded, ExpandState.controlledCrawlExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.clearKelpExpanded)));
-        configs.addAll(ConfigOptionWrapper.createFor(Configs.Optimization.OPTIONS));
+        configs.addAll(ConfigOptionWrapper.createFor(Configs.Optimization.getDisplayOptions(ExpandState.entityRenderOptimizationExpanded, ExpandState.skipInvisibleEntitiesExpanded)));
         configs.addAll(ConfigOptionWrapper.createFor(Hotkeys.HOTKEY_LIST));
         return configs;
     }

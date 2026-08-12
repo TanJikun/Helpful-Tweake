@@ -49,8 +49,8 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	// MaLiLib - GUI/keybind/config library (client-side)
-	modImplementation "maven.modrinth:malilib:${project.malilib_version}"
+	// MaLiLib - GUI/keybind/config library (client-only)
+	modClientImplementation "maven.modrinth:malilib:${project.malilib_version}"
 
 	// Mod Menu - soft dependency for config screen integration
 	modCompileOnly "maven.modrinth:modmenu:${project.modmenu_version}"

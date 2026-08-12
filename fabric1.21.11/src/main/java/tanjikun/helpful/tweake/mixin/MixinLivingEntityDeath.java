@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import tanjikun.helpful.tweake.config.Configs;
+import tanjikun.helpful.tweake.config.CommonConfigs;
 
 /**
  * 更好的不死图腾：当功能开启时，玩家死亡触发图腾时，从装备栏、主副手、快捷栏、背包中
@@ -57,7 +57,7 @@ public class MixinLivingEntityDeath
     private void helpfulTweake$useTotemFromAnywhere(DamageSource source,
                                                      CallbackInfoReturnable<Boolean> cir)
     {
-        if (!Configs.Tools.BETTER_TOTEM.getBooleanValue())
+        if (!CommonConfigs.betterTotem)
         {
             // 功能关闭，走原版逻辑
             return;

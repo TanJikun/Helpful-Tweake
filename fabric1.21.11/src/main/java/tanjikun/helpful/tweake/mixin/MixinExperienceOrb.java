@@ -1,4 +1,4 @@
-package tanjikun.helpful.tweake.client.mixin;
+package tanjikun.helpful.tweake.mixin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import tanjikun.helpful.tweake.config.Configs;
+import tanjikun.helpful.tweake.config.CommonConfigs;
 
 /**
  * 全局经验修补：当功能开启时，玩家拾取经验球后，装备栏/主副手/快捷栏/背包内
@@ -31,6 +31,9 @@ import tanjikun.helpful.tweake.config.Configs;
  * 本 Mixin 在功能开启时完全替代原版逻辑，扩展候选池到全背包 42 格
  * （6 装备槽 + 36 主背包/快捷栏），并自行实现"随机选一个、按比例消耗 xp"的循环。
  * 此为基于经验修补原理的独立重写，未照搬原版代码。
+ *
+ * 双端 Mixin：此 Mixin 在 main source set，同时作用于客户端和专用服务器。
+ * 配置值通过 CommonConfigs 读取，客户端由 MaLiLib 同步，服务端由 JSON 文件提供。
  *
  * ponytail: Mixin 方法名使用 intermediary（method_35051）而非 named（repairPlayerItems）
  * 已知上限: 本项目用 officialMojangMappings 但 Loom 1.17 未生成 refmap，导致 Mixin 注解
@@ -48,7 +51,7 @@ public class MixinExperienceOrb
     private static void helpfulTweake$repairAllItems(ServerPlayer player, int xp,
                                                      CallbackInfoReturnable<Integer> cir)
     {
-        if (!Configs.Tools.GLOBAL_MENDING.getBooleanValue())
+        if (!CommonConfigs.globalMending)
         {
             // 功能关闭，走原版逻辑
             return;

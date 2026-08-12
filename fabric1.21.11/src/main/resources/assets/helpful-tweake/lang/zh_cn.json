@@ -118,5 +118,16 @@
 	"helpful_tweake.config.optimization.name.boldFont": "加粗显示优化",
 	"helpful_tweake.config.optimization.comment.boldFont": "使用高清字体包时，加粗文字会因原版1像素偏移出现错位。\n开启后自动切换到 cu_ 前缀的粗体字体文件并禁用偏移。\n材质包需提供 cu_ 前缀字体文件。无自定义字体时沿用原版。",
 	"helpful_tweake.message.boldFont.enabled": "加粗显示优化：已开启",
-	"helpful_tweake.message.boldFont.disabled": "加粗显示优化：已关闭"
+	"helpful_tweake.message.boldFont.disabled": "加粗显示优化：已关闭",
+
+	"helpful_tweake.config.optimization.name.entityRenderOptimization": "实体渲染优化",
+	"helpful_tweake.config.optimization.comment.entityRenderOptimization": "提供跳过不可见实体渲染的选项，\n减少不必要的渲染开销。\n点击 +/- 按钮展开配置子项。",
+	"helpful_tweake.config.optimization.name.skipInvisibleEntities": "    阻止不可见实体渲染",
+	"helpful_tweake.config.optimization.comment.skipInvisibleEntities": "开启后跳过渲染被方块挡住或超出距离\n阈值的实体，提升性能。方块实体\n（如箱子、信标）不受影响。\n点击 +/- 展开距离阈值。",
+	"helpful_tweake.config.optimization.name.skipInvisibleEntitiesDistance": "        距离阈值",
+	"helpful_tweake.config.optimization.comment.skipInvisibleEntitiesDistance": "与玩家距离超过此值的实体不渲染。\n范围1-128，默认32。",
+	"helpful_tweake.message.entityRenderOptimization.enabled": "实体渲染优化：已开启",
+	"helpful_tweake.message.entityRenderOptimization.disabled": "实体渲染优化：已关闭",
+	"helpful_tweake.message.skipInvisibleEntities.enabled": "阻止不可见实体渲染：已开启",
+	"helpful_tweake.message.skipInvisibleEntities.disabled": "阻止不可见实体渲染：已关闭"
 }

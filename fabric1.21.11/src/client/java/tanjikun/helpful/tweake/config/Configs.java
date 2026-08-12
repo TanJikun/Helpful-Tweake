@@ -280,9 +280,53 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed BOLD_FONT =
                 new ConfigBooleanHotkeyed("boldFont", true, "").apply(OPTIMIZATION_KEY);
 
+        // 实体渲染优化：开启后可通过子配置项跳过不可见实体的渲染
+        public static final ConfigBooleanHotkeyed ENTITY_RENDER_OPTIMIZATION =
+                new ConfigBooleanHotkeyed("entityRenderOptimization", false, "").apply(OPTIMIZATION_KEY);
+
+        // 实体渲染优化子配置：阻止不可见实体渲染（被方块遮挡或超出距离阈值的实体不渲染，方块实体不受影响）
+        public static final ConfigBooleanHotkeyed SKIP_INVISIBLE_ENTITIES =
+                new ConfigBooleanHotkeyed("skipInvisibleEntities", false, "").apply(OPTIMIZATION_KEY);
+
+        // 阻止不可见实体渲染子子配置：距离阈值（1-128，默认32）
+        public static final ConfigInteger SKIP_INVISIBLE_ENTITIES_DISTANCE =
+                new ConfigInteger("skipInvisibleEntitiesDistance", 32, 1, 128).apply(OPTIMIZATION_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
-                BOLD_FONT
+                BOLD_FONT,
+                ENTITY_RENDER_OPTIMIZATION,
+                SKIP_INVISIBLE_ENTITIES,
+                SKIP_INVISIBLE_ENTITIES_DISTANCE
         );
+
+        /**
+         * 返回显示用配置列表。子配置项仅在对应主配置展开时显示。
+         * 持久化始终使用 OPTIONS（包含全部配置项）。
+         */
+        public static List<IConfigBase> getDisplayOptions(boolean entityRenderOptimizationExpanded,
+                                                           boolean skipInvisibleEntitiesExpanded)
+        {
+            if (entityRenderOptimizationExpanded && skipInvisibleEntitiesExpanded)
+            {
+                return OPTIONS;
+            }
+            List<IConfigBase> filtered = new java.util.ArrayList<>();
+            for (IConfigBase config : OPTIONS)
+            {
+                // skipInvisibleEntities 仅在 entityRenderOptimization 展开时显示
+                if (!entityRenderOptimizationExpanded && config == SKIP_INVISIBLE_ENTITIES)
+                {
+                    continue;
+                }
+                // skipInvisibleEntitiesDistance 仅在 skipInvisibleEntities 展开时显示
+                if (!skipInvisibleEntitiesExpanded && config == SKIP_INVISIBLE_ENTITIES_DISTANCE)
+                {
+                    continue;
+                }
+                filtered.add(config);
+            }
+            return filtered;
+        }
     }
 
     public static void loadFromFile()

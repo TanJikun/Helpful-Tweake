@@ -7,6 +7,8 @@ import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import tanjikun.helpful.tweake.config.CommonConfigs;
+
 public class HelpfulTweake implements ModInitializer {
 	public static final String MOD_ID = "helpful-tweake";
 
@@ -17,8 +19,8 @@ public class HelpfulTweake implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		// Client-side initialization is handled by HelpfulTweakeClient,
-		// because MaLiLib depends on client-only classes.
+		// 双端：加载服务端配置（客户端值会被 MaLiLib 同步覆盖）
+		CommonConfigs.loadFromFile();
 		LOGGER.info("Helpful Tweake initialized.");
 	}
 

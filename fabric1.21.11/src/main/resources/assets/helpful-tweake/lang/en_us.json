@@ -118,5 +118,16 @@
 	"helpful_tweake.config.optimization.name.boldFont": "Bold Font Optimization",
 	"helpful_tweake.config.optimization.comment.boldFont": "Fixes bold text offset issues with HD font packs.\nSwitches to cu_ prefixed bold font file and disables\nthe vanilla 1-pixel bold offset.\nRequires a resource pack with cu_ prefixed font file.\nVanilla behavior is kept when no custom font is present.",
 	"helpful_tweake.message.boldFont.enabled": "Bold Font Optimization: ON",
-	"helpful_tweake.message.boldFont.disabled": "Bold Font Optimization: OFF"
+	"helpful_tweake.message.boldFont.disabled": "Bold Font Optimization: OFF",
+
+	"helpful_tweake.config.optimization.name.entityRenderOptimization": "Entity Render Optimization",
+	"helpful_tweake.config.optimization.comment.entityRenderOptimization": "Provides options to skip rendering invisible entities,\nreducing unnecessary rendering overhead.\nClick +/- to expand sub-options.",
+	"helpful_tweake.config.optimization.name.skipInvisibleEntities": "    Skip Invisible Entities",
+	"helpful_tweake.config.optimization.comment.skipInvisibleEntities": "When enabled, skips rendering entities occluded by\nblocks or beyond the distance threshold for\nperformance. Block entities (chests, beacons)\nare not affected. Click +/- to expand\ndistance threshold.",
+	"helpful_tweake.config.optimization.name.skipInvisibleEntitiesDistance": "        Distance Threshold",
+	"helpful_tweake.config.optimization.comment.skipInvisibleEntitiesDistance": "Entities farther than this value from the player\nare not rendered. Range 1-128, default 32.",
+	"helpful_tweake.message.entityRenderOptimization.enabled": "Entity Render Optimization: ON",
+	"helpful_tweake.message.entityRenderOptimization.disabled": "Entity Render Optimization: OFF",
+	"helpful_tweake.message.skipInvisibleEntities.enabled": "Skip Invisible Entities: ON",
+	"helpful_tweake.message.skipInvisibleEntities.disabled": "Skip Invisible Entities: OFF"
 }

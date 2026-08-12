@@ -1,12 +1,17 @@
 package tanjikun.helpful.tweake.client;
 
 import net.fabricmc.api.ClientModInitializer;
-import fi.dy.masa.malilib.event.InitializationHandler;
-import tanjikun.helpful.tweake.InitHandler;
+import net.fabricmc.loader.api.FabricLoader;
+import tanjikun.helpful.tweake.HelpfulTweake;
 
 public class HelpfulTweakeClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		InitializationHandler.getInstance().registerInitializationHandler(new InitHandler());
+		if (!FabricLoader.getInstance().isModLoaded("malilib")) {
+			HelpfulTweake.LOGGER.error("Helpful Tweake requires MaLiLib on the client. Install MaLiLib to enable client features.");
+			return;
+		}
+		// InitHandler imports MaLiLib, JVM loads it lazily here (after isModLoaded check)
+		tanjikun.helpful.tweake.InitHandler.registerMalilib();
 	}
 }

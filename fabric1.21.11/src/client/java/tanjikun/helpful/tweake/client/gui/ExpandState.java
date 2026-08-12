@@ -14,6 +14,8 @@ public class ExpandState
     public static boolean visualExperienceExpanded = false;
     public static boolean worldSwallowMaintenanceExpanded = false;
     public static boolean clearKelpExpanded = false;
+    public static boolean entityRenderOptimizationExpanded = false;
+    public static boolean skipInvisibleEntitiesExpanded = false;
     private static Runnable refreshCallback;
 
     public static void setRefreshCallback(Runnable callback)
@@ -87,6 +89,24 @@ public class ExpandState
     public static void toggleClearKelp()
     {
         clearKelpExpanded = !clearKelpExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
+    }
+
+    public static void toggleEntityRenderOptimization()
+    {
+        entityRenderOptimizationExpanded = !entityRenderOptimizationExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
+    }
+
+    public static void toggleSkipInvisibleEntities()
+    {
+        skipInvisibleEntitiesExpanded = !skipInvisibleEntitiesExpanded;
         if (refreshCallback != null)
         {
             refreshCallback.run();
