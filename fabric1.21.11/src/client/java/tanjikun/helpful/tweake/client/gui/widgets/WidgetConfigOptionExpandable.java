@@ -62,7 +62,8 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "crawlTriggerMode",
             "experienceTextColor",
             "wsmRenderHeight", "wsmTargetBlocks", "wsmRenderWaterlogged",
-            "wsmDistanceThreshold", "wsmTransparentBedrock", "wsmClearKelp",
+            "wsmDistanceThreshold", "wsmTransparentBedrock",
+            "wsmDisableLiquidInteraction", "wsmClearKelp",
             "skipInvisibleEntities",
             "skipDistantEntities",
             "stackEntityRenderOptimization"

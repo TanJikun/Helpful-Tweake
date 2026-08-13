@@ -23,6 +23,7 @@ import tanjikun.helpful.tweake.config.CrawlTriggerMode;
 import tanjikun.helpful.tweake.event.InputHandler;
 import tanjikun.helpful.tweake.event.KeyCallbacks;
 import tanjikun.helpful.tweake.gui.GuiConfigs;
+import tanjikun.helpful.tweake.ServerFlagHolder;
 import tanjikun.helpful.tweake.util.CrawlState;
 
 public class InitHandler implements IInitializationHandler
@@ -77,6 +78,11 @@ public class InitHandler implements IInitializationHandler
             CommonConfigs.globalMending = Configs.Tools.GLOBAL_MENDING.getBooleanValue();
             CommonConfigs.betterBoat = Configs.Tools.BETTER_BOAT.getBooleanValue();
             CommonConfigs.boatLiftHeight = Configs.Tools.BOAT_LIFT_HEIGHT.getDoubleValue();
+
+            // 同步禁用水与岩浆互动配置到 ServerFlagHolder（供 common 侧 Mixin 读取）
+            ServerFlagHolder.disableLiquidInteraction =
+                    Configs.Tools.WORLD_SWALLOW_MAINTENANCE.getBooleanValue()
+                    && Configs.Tools.WSM_DISABLE_LIQUID_INTERACTION.getBooleanValue();
 
             LocalPlayer player = mc.player;
             if (player == null)

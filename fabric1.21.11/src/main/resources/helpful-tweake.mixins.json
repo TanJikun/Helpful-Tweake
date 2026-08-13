@@ -7,7 +7,8 @@
 		"MixinLivingEntityDeath",
 		"MixinPlayerCrawl",
 		"MixinExperienceOrb",
-		"MixinEntityBoatStep"
+		"MixinEntityBoatStep",
+		"MixinDisableLiquidInteraction"
 	],
 	"injectors": {
 		"defaultRequire": 1

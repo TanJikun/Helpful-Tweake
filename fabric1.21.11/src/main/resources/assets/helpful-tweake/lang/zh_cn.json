@@ -107,6 +107,8 @@
 	"helpful_tweake.config.tools.comment.wsmDistanceThreshold": "只有水平曼哈顿距离不超过此值×16的方块才渲染副本。\n范围0-32，默认4（即64格）。",
 	"helpful_tweake.config.tools.name.wsmTransparentBedrock": "    透明基岩",
 	"helpful_tweake.config.tools.comment.wsmTransparentBedrock": "开启后所有基岩方块变透明，\n被基岩挡住的方块会显示出来。",
+	"helpful_tweake.config.tools.name.wsmDisableLiquidInteraction": "    禁用水与岩浆互动",
+	"helpful_tweake.config.tools.comment.wsmDisableLiquidInteraction": "开启后水与岩浆接触不再生成黑曜石、\n圆石或石头。\n需要服务端安装本模组才能生效。",
 	"helpful_tweake.config.tools.name.wsmClearKelp": "    清海带",
 	"helpful_tweake.config.tools.comment.wsmClearKelp": "开启后自动破坏 Litematica 选区内、\n3D曼哈顿距离不超过阈值的海带。\n需安装 Litematica 模组，未安装时\n配置项红色禁用且功能无法触发。\n点击+/-按钮展开距离阈值。",
 	"helpful_tweake.config.tools.name.wsmClearKelpDistance": "        清海带距离",

@@ -166,6 +166,10 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed WSM_TRANSPARENT_BEDROCK =
                 new ConfigBooleanHotkeyed("wsmTransparentBedrock", false, "").apply(TOOLS_KEY);
 
+        // 世吞运维助手子配置：禁用水与岩浆互动（需服务端支持）
+        public static final ConfigBooleanHotkeyed WSM_DISABLE_LIQUID_INTERACTION =
+                new ConfigBooleanHotkeyed("wsmDisableLiquidInteraction", false, "").apply(TOOLS_KEY);
+
         // 世吞运维助手子配置：清海带（需安装 Litematica，未安装时配置项红色禁用）
         public static final ConfigBooleanHotkeyed WSM_CLEAR_KELP =
                 new ConfigBooleanHotkeyed("wsmClearKelp", false, "").apply(TOOLS_KEY);
@@ -204,6 +208,7 @@ public class Configs implements IConfigHandler
                 WSM_RENDER_WATERLOGGED,
                 WSM_DISTANCE_THRESHOLD,
                 WSM_TRANSPARENT_BEDROCK,
+                WSM_DISABLE_LIQUID_INTERACTION,
                 WSM_CLEAR_KELP,
                 WSM_CLEAR_KELP_DISTANCE
         );
@@ -268,6 +273,7 @@ public class Configs implements IConfigHandler
                         || config == WSM_RENDER_WATERLOGGED
                         || config == WSM_DISTANCE_THRESHOLD
                         || config == WSM_TRANSPARENT_BEDROCK
+                        || config == WSM_DISABLE_LIQUID_INTERACTION
                         || config == WSM_CLEAR_KELP
                         || config == WSM_CLEAR_KELP_DISTANCE))
                 {

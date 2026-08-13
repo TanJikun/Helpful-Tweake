@@ -107,6 +107,8 @@
 	"helpful_tweake.config.tools.comment.wsmDistanceThreshold": "Only render copies for blocks within this value x 16\nhorizontal Manhattan distance. Range 0-32, default 4 (64 blocks).",
 	"helpful_tweake.config.tools.name.wsmTransparentBedrock": "    Transparent Bedrock",
 	"helpful_tweake.config.tools.comment.wsmTransparentBedrock": "When enabled, all bedrock becomes transparent,\nrevealing blocks behind it.",
+	"helpful_tweake.config.tools.name.wsmDisableLiquidInteraction": "    Disable Liquid Interaction",
+	"helpful_tweake.config.tools.comment.wsmDisableLiquidInteraction": "When enabled, water and lava will no longer\nreact to form obsidian, cobblestone, or stone.\nRequires server-side mod support.",
 	"helpful_tweake.config.tools.name.wsmClearKelp": "    Clear Kelp",
 	"helpful_tweake.config.tools.comment.wsmClearKelp": "Automatically breaks kelp inside Litematica\nselections within the 3D Manhattan distance.\nRequires Litematica mod; shown in red and\ndisabled when not installed. Click +/- to\nexpand distance threshold.",
 	"helpful_tweake.config.tools.name.wsmClearKelpDistance": "        Clear Kelp Distance",
