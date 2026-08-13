@@ -1,10 +1,12 @@
 # Helpful Tweake
 
-基于 [MaLiLib](https://github.com/sakura-ryoko/malilib) 的客户端端 Minecraft 辅助模组，提供实用工具与优化。默认Alt+x打开配置界面，若安装[模组菜单（modmenu）](https://modrinth.com/mod/mOgUt4GM)则可通过[模组菜单（modmenu）](https://modrinth.com/mod/mOgUt4GM)打开配置界面
+我的世界fabric生电辅助模组，提供实用工具与优化。默认Alt+x打开配置界面，若安装[模组菜单（modmenu）](https://modrinth.com/mod/mOgUt4GM)则可通过[模组菜单（modmenu）](https://modrinth.com/mod/mOgUt4GM)打开配置界面。本模组部分功能需服务端也安装，但大部分功能仅需客户端安装，***<u>在有些服务器可能被视为作弊，使用前请先征得服主同意</u>***。被ban本人概不负责。
+
+本模组因没有测试环境无法确认服务端安装功能能否生效，目前仅保证单人档功能完整，在线征集长期可用测试环境。
 
 ## 依赖
 
-必要依赖：[Fabric API](https://modrinth.com/mod/fabric-api)、[MaLiLib](https://modrinth.com/mod/malilib)
+必要依赖：[Fabric API](https://modrinth.com/mod/fabric-api)、[MaLiLib](https://modrinth.com/mod/malilib)(仅客户端需要安装，服务端因无法安装次前置只能更改配置文件)
 
 可选依赖：[模组菜单（modmenu）](https://modrinth.com/mod/mOgUt4GM)、[投影(Litematica)](https://modrinth.com/mod/litematica)
 
@@ -110,7 +112,7 @@
 
 ## 世吞运维助手
 
-- **效果**：在指定的方块正上方额外显示一个旋转了45°的方块副本，让你在远处也能一眼定位到这些关键方块的位置。默认方块：宝库、试炼刷怪笼、黑曜石、哭泣的黑曜石、深层钻石矿、钻石矿、深层煤矿、深层绿宝石矿和远古残骸。另有其他子功能，详见下文
+- **主要功能**：在指定的方块正上方额外显示一个旋转了45°的方块副本，让你在远处也能一眼定位到这些关键方块的位置。默认方块：宝库、试炼刷怪笼、黑曜石、哭泣的黑曜石、深层钻石矿、钻石矿、深层煤矿、深层绿宝石矿和远古残骸。另有其他子功能，详见下文
 - **默认状态**：关闭
 - **默认热键**：无
 
