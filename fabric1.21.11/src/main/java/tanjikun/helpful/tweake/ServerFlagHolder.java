@@ -7,4 +7,5 @@ package tanjikun.helpful.tweake;
 public class ServerFlagHolder
 {
     public static boolean disableLiquidInteraction = false;
+    public static boolean showUncompletedAdvancements = false;
 }

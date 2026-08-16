@@ -8,7 +8,9 @@
 		"MixinPlayerCrawl",
 		"MixinExperienceOrb",
 		"MixinEntityBoatStep",
-		"MixinDisableLiquidInteraction"
+		"MixinDisableLiquidInteraction",
+		"MixinAdvancementVisibility",
+		"MixinPlayerAdvancements"
 	],
 	"injectors": {
 		"defaultRequire": 1

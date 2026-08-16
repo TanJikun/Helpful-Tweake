@@ -30,8 +30,8 @@ import tanjikun.helpful.tweake.config.Configs;
  *   ConfigBooleanHotkeyed —— BETTER_AUTO_JUMP / BETTER_BOAT / BETTER_DURABILITY
  *                             / BETTER_HARVEST / ARMOR_HUD / VISUAL_EXPERIENCE
  *                             / WORLD_SWALLOW_MAINTENANCE / WSM_CLEAR_KELP
- *                             / ENTITY_RENDER_OPTIMIZATION / SKIP_INVISIBLE_ENTITIES
- *                             / SKIP_DISTANT_ENTITIES
+ *                             / ENTITY_RENDER_OPTIMIZATION / SKIP_DISTANT_ENTITIES
+ *                             / BETTER_ADVANCEMENTS
  *   ConfigHotkey          —— CONTROLLED_CRAWL
  * 其他配置项走原版渲染逻辑。
  *
@@ -46,7 +46,7 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
 
     // 依赖 Litematica 模组的配置项名称
     private static final Set<String> LITEMATICA_DEPENDENT_NAMES =
-            Set.of("wsmClearKelp", "wsmClearKelpDistance");
+            Set.of("wsmClearKelp", "wsmClearKelpDistance", "wsmClearKelpSelectionOnly");
 
     // 仅单机模式可用的配置项名称
     private static final Set<String> SINGLEPLAYER_ONLY_NAMES =
@@ -66,12 +66,14 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "wsmDisableLiquidInteraction", "wsmClearKelp",
             "skipInvisibleEntities",
             "skipDistantEntities",
-            "stackEntityRenderOptimization"
+            "stackEntityRenderOptimization",
+            "showUncompletedAdvancements"
     );
 
     // 子子配置项名称（控件额外缩进 32px）
     private static final Set<String> SUB_SUB_CONFIG_NAMES = Set.of(
             "wsmClearKelpDistance",
+            "wsmClearKelpSelectionOnly",
             "skipDistantEntitiesDistance"
     );
 
@@ -201,6 +203,11 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.skipDistantEntitiesExpanded, ExpandState::toggleSkipDistantEntities,
                     getIndent() - CONTROL_INDENT);
+        }
+        else if (configBoolean == Configs.Tools.BETTER_ADVANCEMENTS)
+        {
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.betterAdvancementsExpanded, ExpandState::toggleBetterAdvancements);
         }
         else
         {

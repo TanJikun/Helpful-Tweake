@@ -68,8 +68,10 @@ public class KelpBreaker implements ClientTickEvents.EndTick
             return;
         }
 
+        boolean selectionOnly = Configs.Tools.WSM_CLEAR_KELP_SELECTION_ONLY.getBooleanValue();
+
         refreshSelectionCache();
-        if (cachedBoxes == null || cachedBoxes.isEmpty())
+        if (selectionOnly && (cachedBoxes == null || cachedBoxes.isEmpty()))
         {
             return;
         }
@@ -105,7 +107,7 @@ public class KelpBreaker implements ClientTickEvents.EndTick
                 {
                     if (scanned++ >= MAX_BLOCKS_PER_TICK)
                     {
-                        return; // 本 tick 扫描上限已达，下 tick 继续
+                        break;
                     }
                     mutable.set(px + dx, py + dy, pz + dz);
                     BlockState state = mc.level.getBlockState(mutable);
@@ -117,9 +119,9 @@ public class KelpBreaker implements ClientTickEvents.EndTick
                         continue;
                     }
 
-                    // 条件2：在 Litematica 选区内
+                    // 条件2：开启"仅清理选区内"时，必须在 Litematica 选区内
                     // 条件3：3D 曼哈顿距离 <= maxDistance（已由循环结构保证）
-                    if (!isInSelection(mutable))
+                    if (selectionOnly && !isInSelection(mutable))
                     {
                         continue;
                     }
@@ -132,7 +134,7 @@ public class KelpBreaker implements ClientTickEvents.EndTick
                     ));
                     if (++broken >= MAX_BREAK_PER_TICK)
                     {
-                        return; // 本 tick 破坏上限已达
+                        break;
                     }
                 }
             }

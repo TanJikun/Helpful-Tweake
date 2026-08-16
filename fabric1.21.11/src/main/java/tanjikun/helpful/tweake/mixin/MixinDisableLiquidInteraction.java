@@ -13,27 +13,37 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import tanjikun.helpful.tweake.ServerFlagHolder;
 
 /**
- * 禁用水与岩浆互动：开启后水与岩浆接触不再生成黑曜石、圆石或石头。
+ * 禁用水与岩浆互动：开启后水与岩浆接触不再生成黑曜石、圆石或石头（玄武岩同理）。
  *
- * 原理：LiquidBlock.shouldSpreadLiquid（method_10316）是液体流动时检查与异种液体互动的核心方法。
- * 该方法在检测到水-岩浆接触时，将方块替换为黑曜石/圆石/石头并返回 false（阻止流动）。
- * 注入 HEAD 返回 true（允许流动，跳过互动），液体将正常流动而不生成任何副产物。
+ * 原理：LiquidBlock.shouldSpreadLiquid（method_10316）在岩浆检测到相邻水/蓝冰时，
+ * 调用 Level.setBlockAndUpdate（method_8501）把岩浆自身替换为黑曜石/圆石/玄武岩，再返回 false。
+ * 在 setBlockAndUpdate 调用前取消并返回 false：跳过固体方块生成，岩浆保留且不流动，
+ * 水的正常流动不受影响（水非 LAVA，原方法直接返回 true）。
+ *
+ * ponytail: 只覆盖 LiquidBlock 侧互动；若水流到岩浆位置时 FlowingFluid 有独立互动逻辑，
+ * 需追加拦截。已知 ceiling：水可能仍替换岩浆，届时扩展。
  *
  * 注意：此 Mixin 在 common 源码集中，服务端必须安装本模组才能生效。
  * 配置状态通过 ServerFlagHolder 从客户端同步（单机模式下客户端=服务端）。
  *
- * ponytail: Mixin 方法名使用 intermediary + remap = false（项目无 refmap，详见 project_memory）
+ * ponytail: Mixin 注解字符串使用 intermediary + remap = false（项目无 refmap，详见 project_memory）
  */
 @Mixin(LiquidBlock.class)
 public class MixinDisableLiquidInteraction
 {
-    @Inject(method = "method_10316", at = @At("HEAD"), cancellable = true, remap = false)
-    private void helpfulTweake$disableLiquidInteraction$shouldSpreadLiquid(
+    @Inject(
+            method = "method_10316",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/class_1937;method_8501(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Z"),
+            cancellable = true,
+            remap = false
+    )
+    private void helpfulTweake$cancelSolidFormation(
             Level level, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir)
     {
         if (ServerFlagHolder.disableLiquidInteraction)
         {
-            cir.setReturnValue(true);
+            cir.setReturnValue(false);
         }
     }
 }

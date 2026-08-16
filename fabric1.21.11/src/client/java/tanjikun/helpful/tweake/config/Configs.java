@@ -151,7 +151,10 @@ public class Configs implements IConfigHandler
                         "minecraft:diamond_ore",
                         "minecraft:deepslate_coal_ore",
                         "minecraft:deepslate_emerald_ore",
-                        "minecraft:ancient_debris"
+                        "minecraft:ancient_debris",
+                        "minecraft:reinforced_deepslate",
+                        "minecraft:heavy_core",
+                        "minecraft:ender_chest"
                 ), "").apply(TOOLS_KEY);
 
         // 世吞运维助手子配置：是否同时渲染含水方块
@@ -177,6 +180,18 @@ public class Configs implements IConfigHandler
         // 清海带子子配置：3D 曼哈顿距离阈值（1-128，默认4）
         public static final ConfigInteger WSM_CLEAR_KELP_DISTANCE =
                 new ConfigInteger("wsmClearKelpDistance", 4, 1, 128).apply(TOOLS_KEY);
+
+        // 清海带子子配置：仅清理选区内（默认开启），关闭后只检测与玩家的距离
+        public static final ConfigBooleanHotkeyed WSM_CLEAR_KELP_SELECTION_ONLY =
+                new ConfigBooleanHotkeyed("wsmClearKelpSelectionOnly", true, "").apply(TOOLS_KEY);
+
+        // 更好的进度：容器型主配置，本身只统一管理子功能，不直接提供效果
+        public static final ConfigBooleanHotkeyed BETTER_ADVANCEMENTS =
+                new ConfigBooleanHotkeyed("betterAdvancements", false, "").apply(TOOLS_KEY);
+
+        // 更好的进度子配置：未完成进度显示（开启后在进度页面显示所有进度，包括隐藏的未完成进度）
+        public static final ConfigBooleanHotkeyed SHOW_UNCOMPLETED_ADVANCEMENTS =
+                new ConfigBooleanHotkeyed("showUncompletedAdvancements", false, "").apply(TOOLS_KEY);
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
@@ -210,7 +225,10 @@ public class Configs implements IConfigHandler
                 WSM_TRANSPARENT_BEDROCK,
                 WSM_DISABLE_LIQUID_INTERACTION,
                 WSM_CLEAR_KELP,
-                WSM_CLEAR_KELP_DISTANCE
+                WSM_CLEAR_KELP_DISTANCE,
+                WSM_CLEAR_KELP_SELECTION_ONLY,
+                BETTER_ADVANCEMENTS,
+                SHOW_UNCOMPLETED_ADVANCEMENTS
         );
 
         /**
@@ -225,11 +243,12 @@ public class Configs implements IConfigHandler
                                                           boolean controlledCrawlExpanded,
                                                           boolean visualExperienceExpanded,
                                                           boolean worldSwallowMaintenanceExpanded,
-                                                          boolean clearKelpExpanded)
+                                                          boolean clearKelpExpanded,
+                                                          boolean betterAdvancementsExpanded)
         {
             if (betterAutoJumpExpanded && betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
                     && armorHudExpanded && controlledCrawlExpanded && visualExperienceExpanded
-                    && worldSwallowMaintenanceExpanded && clearKelpExpanded)
+                    && worldSwallowMaintenanceExpanded && clearKelpExpanded && betterAdvancementsExpanded)
             {
                 return OPTIONS;
             }
@@ -275,12 +294,19 @@ public class Configs implements IConfigHandler
                         || config == WSM_TRANSPARENT_BEDROCK
                         || config == WSM_DISABLE_LIQUID_INTERACTION
                         || config == WSM_CLEAR_KELP
-                        || config == WSM_CLEAR_KELP_DISTANCE))
+                        || config == WSM_CLEAR_KELP_DISTANCE
+                        || config == WSM_CLEAR_KELP_SELECTION_ONLY))
                 {
                     continue;
                 }
                 // 清海带子子配置：仅在清海带展开时显示
-                if (!clearKelpExpanded && config == WSM_CLEAR_KELP_DISTANCE)
+                if (!clearKelpExpanded && (config == WSM_CLEAR_KELP_DISTANCE
+                        || config == WSM_CLEAR_KELP_SELECTION_ONLY))
+                {
+                    continue;
+                }
+                // 未完成进度显示仅在更好的进度展开时显示
+                if (!betterAdvancementsExpanded && config == SHOW_UNCOMPLETED_ADVANCEMENTS)
                 {
                     continue;
                 }

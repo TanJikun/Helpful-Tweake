@@ -22,7 +22,8 @@
 		"MixinCameraAccessor",
 		"MixinBlockEntityRenderDispatcherAccessor",
 		"MixinTransparentBedrock",
-		"MixinEntityRenderDispatcher"
+		"MixinEntityRenderDispatcher",
+		"MixinShowAllAdvancements"
 	],
 	"injectors": {
 		"defaultRequire": 1

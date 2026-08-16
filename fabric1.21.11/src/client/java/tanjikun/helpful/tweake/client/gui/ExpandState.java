@@ -17,6 +17,7 @@ public class ExpandState
     public static boolean clearKelpExpanded = false;
     public static boolean entityRenderOptimizationExpanded = false;
     public static boolean skipDistantEntitiesExpanded = false;
+    public static boolean betterAdvancementsExpanded = false;
     private static Runnable refreshCallback;
 
     public static void setRefreshCallback(Runnable callback)
@@ -117,6 +118,15 @@ public class ExpandState
     public static void toggleSkipDistantEntities()
     {
         skipDistantEntitiesExpanded = !skipDistantEntitiesExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
+    }
+
+    public static void toggleBetterAdvancements()
+    {
+        betterAdvancementsExpanded = !betterAdvancementsExpanded;
         if (refreshCallback != null)
         {
             refreshCallback.run();

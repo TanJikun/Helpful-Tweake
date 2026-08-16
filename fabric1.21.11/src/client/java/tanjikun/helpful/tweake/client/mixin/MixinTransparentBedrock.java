@@ -1,6 +1,8 @@
 package tanjikun.helpful.tweake.client.mixin;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -122,6 +124,20 @@ public class MixinTransparentBedrock
                 && (Object) this == Blocks.BEDROCK.defaultBlockState())
         {
             cir.setReturnValue(true);
+        }
+    }
+
+    // getShadeBrightness（method_26210）：AO（环境光遮蔽）计算用此方法判断方块对周围面的遮蔽程度。
+    // 基岩默认返回 0.2（强遮蔽），导致周围基岩越多、面越暗。返回 1.0 让 AO 不把基岩当作遮蔽源。
+    @Inject(method = "method_26210", at = @At("HEAD"), cancellable = true, remap = false)
+    private void helpfulTweake$transparentBedrock$getShadeBrightness(
+            BlockGetter level, BlockPos pos, CallbackInfoReturnable<Float> cir)
+    {
+        if (Configs.Tools.WORLD_SWALLOW_MAINTENANCE.getBooleanValue()
+                && Configs.Tools.WSM_TRANSPARENT_BEDROCK.getBooleanValue()
+                && (Object) this == Blocks.BEDROCK.defaultBlockState())
+        {
+            cir.setReturnValue(1.0f);
         }
     }
 }
