@@ -23,7 +23,10 @@
 		"MixinBlockEntityRenderDispatcherAccessor",
 		"MixinTransparentBedrock",
 		"MixinEntityRenderDispatcher",
-		"MixinShowAllAdvancements"
+		"MixinShowAllAdvancements",
+		"MixinAdvancementWidgetDrawHover",
+		"MixinAdvancementTabDetails",
+		"MixinAdvancementsScreenInteraction"
 	],
 	"injectors": {
 		"defaultRequire": 1

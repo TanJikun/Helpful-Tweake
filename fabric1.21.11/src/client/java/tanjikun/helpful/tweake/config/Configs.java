@@ -193,6 +193,10 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed SHOW_UNCOMPLETED_ADVANCEMENTS =
                 new ConfigBooleanHotkeyed("showUncompletedAdvancements", false, "").apply(TOOLS_KEY);
 
+        // 更好的进度子配置：进度详细信息显示（悬停累加型进度时右侧显示各子项完成状态）
+        public static final ConfigBooleanHotkeyed SHOW_ADVANCEMENT_DETAILS =
+                new ConfigBooleanHotkeyed("showAdvancementDetails", false, "").apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 SNEAK_NO_SLOPE,
@@ -228,7 +232,8 @@ public class Configs implements IConfigHandler
                 WSM_CLEAR_KELP_DISTANCE,
                 WSM_CLEAR_KELP_SELECTION_ONLY,
                 BETTER_ADVANCEMENTS,
-                SHOW_UNCOMPLETED_ADVANCEMENTS
+                SHOW_UNCOMPLETED_ADVANCEMENTS,
+                SHOW_ADVANCEMENT_DETAILS
         );
 
         /**
@@ -307,6 +312,11 @@ public class Configs implements IConfigHandler
                 }
                 // 未完成进度显示仅在更好的进度展开时显示
                 if (!betterAdvancementsExpanded && config == SHOW_UNCOMPLETED_ADVANCEMENTS)
+                {
+                    continue;
+                }
+                // 进度详细信息显示仅在更好的进度展开时显示
+                if (!betterAdvancementsExpanded && config == SHOW_ADVANCEMENT_DETAILS)
                 {
                     continue;
                 }
