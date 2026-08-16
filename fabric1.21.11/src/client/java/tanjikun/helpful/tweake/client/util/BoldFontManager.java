@@ -22,6 +22,7 @@ import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.gui.font.providers.TrueTypeGlyphProviderDefinition;
 import net.minecraft.resources.Identifier;
 
+import tanjikun.helpful.tweake.HelpfulTweake;
 import tanjikun.helpful.tweake.client.mixin.MixinFontManagerAccessor;
 import tanjikun.helpful.tweake.client.mixin.MixinMinecraftAccessor;
 import tanjikun.helpful.tweake.client.mixin.MixinTrueTypeGlyphProviderAccessor;
@@ -67,6 +68,7 @@ public class BoldFontManager
         if (ttfProvider == null)
         {
             state = STATE_NO_CUSTOM_FONT;
+            logState();
             return;
         }
 
@@ -99,6 +101,7 @@ public class BoldFontManager
         {
             // cu_ 文件不存在：禁用原版加粗（不偏移、不加粗）
             state = STATE_CUSTOM_FONT_NO_CU;
+            logState();
             return;
         }
 
@@ -120,43 +123,63 @@ public class BoldFontManager
 
             boldGlyphSource = boldFontSet.source(false);
             state = STATE_CU_AVAILABLE;
+            logState();
         }
         catch (Exception e)
         {
             // 加载失败，回退到禁用原版加粗
             state = STATE_CUSTOM_FONT_NO_CU;
+            HelpfulTweake.LOGGER.warn("BoldFontManager: cu_ 字体加载失败，回退到禁用偏移模式", e);
         }
+    }
+
+    /**
+     * 输出状态日志，便于从 latest.log 确认功能生效情况。
+     */
+    private static void logState()
+    {
+        HelpfulTweake.LOGGER.info("加粗显示优化状态: {}", switch (state)
+        {
+            case STATE_NO_CUSTOM_FONT -> "未检测到自定义 TrueType 字体（不干预）";
+            case STATE_CUSTOM_FONT_NO_CU -> "有自定义字体但无 cu_ 粗体文件（禁用原版偏移）";
+            case STATE_CU_AVAILABLE -> "cu_ 粗体字体已加载";
+            default -> "未初始化";
+        });
     }
 
     /**
      * 从 default.json 中查找第一个 type=ttf 的 provider。
      * 返回 null 表示无自定义 TrueType 字体。
+     *
+     * getResourceStack 返回顺序：index 0 = 最高优先级包，末尾 = vanilla
+     * （字节码验证：MultiPackResourceManager 按 packs 顺序尾部追加 namespace 列表，
+     *  getResourceStack 从 size-1 倒序遍历构建结果）。
+     * 从高到低找第一个 ttf，与原版字体 providers 合并顺序一致。
      */
     private static JsonObject findTrueTypeProvider(ResourceManager rm)
     {
         Identifier defaultFontId = Identifier.fromNamespaceAndPath("minecraft", "font/default.json");
         List<Resource> resources = rm.getResourceStack(defaultFontId);
-        if (resources.isEmpty()) return null;
 
-        // 取最高优先级
-        Resource resource = resources.get(resources.size() - 1);
-        try (Reader reader = new InputStreamReader(resource.open(), StandardCharsets.UTF_8))
+        for (Resource resource : resources)
         {
-            JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
-            JsonArray providers = root.getAsJsonArray("providers");
-            if (providers == null) return null;
-            for (JsonElement elem : providers)
+            try (Reader reader = new InputStreamReader(resource.open(), StandardCharsets.UTF_8))
             {
-                JsonObject provider = elem.getAsJsonObject();
-                if ("ttf".equals(provider.get("type").getAsString()))
+                JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
+                JsonArray providers = root.getAsJsonArray("providers");
+                if (providers == null) continue;
+                for (JsonElement elem : providers)
                 {
-                    return provider;
+                    JsonObject provider = elem.getAsJsonObject();
+                    if ("ttf".equals(provider.get("type").getAsString()))
+                    {
+                        return provider;
+                    }
                 }
             }
-        }
-        catch (Exception e)
-        {
-            return null;
+            catch (Exception ignored)
+            {
+            }
         }
         return null;
     }
