@@ -197,6 +197,10 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed SHOW_ADVANCEMENT_DETAILS =
                 new ConfigBooleanHotkeyed("showAdvancementDetails", false, "").apply(TOOLS_KEY);
 
+        // 更好的进度子配置：更大的进度界面（进度窗口尽量撑满屏幕但四周留边距）
+        public static final ConfigBooleanHotkeyed BIGGER_ADVANCEMENTS_SCREEN =
+                new ConfigBooleanHotkeyed("biggerAdvancementsScreen", false, "").apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 SNEAK_NO_SLOPE,
@@ -233,7 +237,8 @@ public class Configs implements IConfigHandler
                 WSM_CLEAR_KELP_SELECTION_ONLY,
                 BETTER_ADVANCEMENTS,
                 SHOW_UNCOMPLETED_ADVANCEMENTS,
-                SHOW_ADVANCEMENT_DETAILS
+                SHOW_ADVANCEMENT_DETAILS,
+                BIGGER_ADVANCEMENTS_SCREEN
         );
 
         /**
@@ -317,6 +322,11 @@ public class Configs implements IConfigHandler
                 }
                 // 进度详细信息显示仅在更好的进度展开时显示
                 if (!betterAdvancementsExpanded && config == SHOW_ADVANCEMENT_DETAILS)
+                {
+                    continue;
+                }
+                // 更大的进度界面仅在更好的进度展开时显示
+                if (!betterAdvancementsExpanded && config == BIGGER_ADVANCEMENTS_SCREEN)
                 {
                     continue;
                 }

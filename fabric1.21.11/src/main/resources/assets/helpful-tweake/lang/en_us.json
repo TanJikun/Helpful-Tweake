@@ -128,6 +128,8 @@
 	"helpful_tweake.config.tools.comment.showUncompletedAdvancements": "Shows all advancements in the advancement screen,\nincluding hidden uncompleted ones (e.g. 'How Did We\nGet Here?', 'A Voluntary Exile'). Uncompleted use\nwhite background, completed use yellow, matching\nvanilla coloring.",
 	"helpful_tweake.config.tools.name.showAdvancementDetails": "    Advancement Details Display",
 	"helpful_tweake.config.tools.comment.showAdvancementDetails": "When hovering over accumulative advancements\n(e.g. 'Adventuring Time', 'Monsters Hunted' with\nmultiple sub-goals), shows a list of sub-item\ncompletion status on the right side of the\nadvancement screen. Red = uncompleted, green =\ncompleted. Red on top, green on bottom, same\ncolor sorted alphabetically.",
+	"helpful_tweake.config.tools.name.biggerAdvancementsScreen": "    Bigger Advancements Screen",
+	"helpful_tweake.config.tools.comment.biggerAdvancementsScreen": "Enlarges the advancement window to nearly fill\nthe screen, leaving a small margin on each side,\nso more of the advancement tree is visible at\nonce. Turn off to restore the vanilla window\nsize.",
 	"helpful_tweake.message.betterAdvancements.enabled": "Better Advancements: ON",
 	"helpful_tweake.message.betterAdvancements.disabled": "Better Advancements: OFF",
 

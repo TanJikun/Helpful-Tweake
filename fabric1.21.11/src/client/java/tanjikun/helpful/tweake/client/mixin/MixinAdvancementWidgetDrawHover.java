@@ -29,6 +29,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 
 import tanjikun.helpful.tweake.client.util.AdvancementDetailState;
+import tanjikun.helpful.tweake.client.util.AdvancementScreenSize;
 import tanjikun.helpful.tweake.client.util.IAdvancementDetailRenderer;
 import tanjikun.helpful.tweake.config.Configs;
 
@@ -133,10 +134,12 @@ public class MixinAdvancementWidgetDrawHover implements IAdvancementDetailRender
         int screenH = mc.getWindow().getGuiScaledHeight();
 
         int panelW = 140;
-        int panelX = windowX + 252 + 8;
+        // 优先放窗口右外侧；更大的进度界面开启时窗口接近满屏，回退为窗口内右缘
+        // （windowWidth() 关闭时返回原版 252，即保持原布局）
+        int panelX = windowX + AdvancementScreenSize.windowWidth() + 8;
         if (panelX + panelW > screenW)
         {
-            panelX = screenW - panelW - 4;
+            panelX = Math.max(windowX + 13, screenW - panelW - 4);
         }
 
         int lineH = 12;

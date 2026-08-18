@@ -127,6 +127,8 @@
 	"helpful_tweake.config.tools.comment.showUncompletedAdvancements": "开启后在进度页面显示所有进度，\n包括原版隐藏的未完成进度\n（如\"为什么会变成这样呢？\"、\n\"自我放逐\"等）。未完成用白底，\n已完成用黄底，沿用原版上色。",
 	"helpful_tweake.config.tools.name.showAdvancementDetails": "    进度详细信息显示",
 	"helpful_tweake.config.tools.comment.showAdvancementDetails": "鼠标悬停在累加型进度（如\n\"探索的时光\"、\"资深怪物猎人\"等\n多子目标进度）上时，在进度页面\n右侧显示各子项完成状态列表。\n红色表示未完成，绿色表示已完成，\n红色在上绿色在下，同色按拼音序。",
+	"helpful_tweake.config.tools.name.biggerAdvancementsScreen": "    更大的进度界面",
+	"helpful_tweake.config.tools.comment.biggerAdvancementsScreen": "开启后进度界面窗口大幅放大，\n尽量撑满屏幕但四周留出边距，\n一次可以看到更多进度树内容。\n关闭后恢复原版窗口大小。",
 	"helpful_tweake.message.betterAdvancements.enabled": "更好的进度：已开启",
 	"helpful_tweake.message.betterAdvancements.disabled": "更好的进度：已关闭",
 

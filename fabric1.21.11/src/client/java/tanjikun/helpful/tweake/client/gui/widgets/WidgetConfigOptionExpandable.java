@@ -68,7 +68,8 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "skipDistantEntities",
             "stackEntityRenderOptimization",
             "showUncompletedAdvancements",
-            "showAdvancementDetails"
+            "showAdvancementDetails",
+            "biggerAdvancementsScreen"
     );
 
     // 子子配置项名称（控件额外缩进 32px）

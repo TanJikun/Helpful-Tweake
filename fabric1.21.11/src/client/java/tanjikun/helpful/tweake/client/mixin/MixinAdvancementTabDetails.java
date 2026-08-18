@@ -14,6 +14,7 @@ import net.minecraft.client.gui.screens.advancements.AdvancementTab;
 import net.minecraft.client.gui.screens.advancements.AdvancementWidget;
 
 import tanjikun.helpful.tweake.client.util.AdvancementDetailState;
+import tanjikun.helpful.tweake.client.util.AdvancementScreenSize;
 import tanjikun.helpful.tweake.client.util.IAdvancementDetailRenderer;
 import tanjikun.helpful.tweake.config.Configs;
 
@@ -60,10 +61,12 @@ public class MixinAdvancementTabDetails
         int sx = (int) this.scrollX;
         int sy = (int) this.scrollY;
 
-        // 检测悬停目标（复刻原版 tooltip 显示范围：tab 内容区 0~234 / 0~113）
+        // 检测悬停目标（复刻原版 tooltip 显示范围：tab 内容区；
+        // 更大的进度界面开启时 contentWidth/Height 返回放大后的值，关闭时为原版 234/113）
         AdvancementDetailState.hoverId = null;
         AdvancementDetailState.hoverAccumulative = false;
-        if (mouseX > 0 && mouseX < 234 && mouseY > 0 && mouseY < 113)
+        if (mouseX > 0 && mouseX < AdvancementScreenSize.contentWidth()
+                && mouseY > 0 && mouseY < AdvancementScreenSize.contentHeight())
         {
             for (Map.Entry<AdvancementHolder, AdvancementWidget> entry : widgets.entrySet())
             {
