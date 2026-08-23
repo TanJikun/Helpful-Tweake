@@ -133,6 +133,11 @@
 	"helpful_tweake.message.betterAdvancements.enabled": "Better Advancements: ON",
 	"helpful_tweake.message.betterAdvancements.disabled": "Better Advancements: OFF",
 
+	"helpful_tweake.config.tools.name.creativeShiftToHotbar": "Creative Shift to Hotbar",
+	"helpful_tweake.config.tools.comment.creativeShiftToHotbar": "When enabled, shift+left-clicking an item in the\ncreative inventory tabs moves a single item\ndirectly into the hotbar instead of picking\nup a full stack on the cursor. The inventory\ntab and normal containers are not affected.",
+	"helpful_tweake.message.creativeShiftToHotbar.enabled": "Creative Shift to Hotbar: ON",
+	"helpful_tweake.message.creativeShiftToHotbar.disabled": "Creative Shift to Hotbar: OFF",
+
 	"helpful_tweake.config.optimization.name.boldFont": "Bold Font Optimization",
 	"helpful_tweake.config.optimization.comment.boldFont": "Fixes bold text offset issues with HD font packs.\nSwitches to cu_ prefixed bold font file and disables\nthe vanilla 1-pixel bold offset.\nRequires a resource pack with cu_ prefixed font file.\nVanilla behavior is kept when no custom font is present.",
 	"helpful_tweake.message.boldFont.enabled": "Bold Font Optimization: ON",

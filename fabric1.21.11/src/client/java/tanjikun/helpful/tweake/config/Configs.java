@@ -201,6 +201,10 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed BIGGER_ADVANCEMENTS_SCREEN =
                 new ConfigBooleanHotkeyed("biggerAdvancementsScreen", false, "").apply(TOOLS_KEY);
 
+        // 创造 Shift 移入快捷栏：开启后创造物品栏物品标签页中 shift+左键直接把 1 个物品放入快捷栏
+        public static final ConfigBooleanHotkeyed CREATIVE_SHIFT_TO_HOTBAR =
+                new ConfigBooleanHotkeyed("creativeShiftToHotbar", false, "").apply(TOOLS_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 SNEAK_NO_SLOPE,
@@ -238,7 +242,8 @@ public class Configs implements IConfigHandler
                 BETTER_ADVANCEMENTS,
                 SHOW_UNCOMPLETED_ADVANCEMENTS,
                 SHOW_ADVANCEMENT_DETAILS,
-                BIGGER_ADVANCEMENTS_SCREEN
+                BIGGER_ADVANCEMENTS_SCREEN,
+                CREATIVE_SHIFT_TO_HOTBAR
         );
 
         /**

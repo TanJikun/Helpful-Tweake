@@ -132,6 +132,11 @@
 	"helpful_tweake.message.betterAdvancements.enabled": "更好的进度：已开启",
 	"helpful_tweake.message.betterAdvancements.disabled": "更好的进度：已关闭",
 
+	"helpful_tweake.config.tools.name.creativeShiftToHotbar": "创造 Shift 移入快捷栏",
+	"helpful_tweake.config.tools.comment.creativeShiftToHotbar": "开启后，创造物品栏的物品标签页中\nshift+左键物品将直接把 1 个该物品\n放入快捷栏，而不是拿取一组到光标上。\n物品栏标签页与普通容器不受影响。",
+	"helpful_tweake.message.creativeShiftToHotbar.enabled": "创造 Shift 移入快捷栏：已开启",
+	"helpful_tweake.message.creativeShiftToHotbar.disabled": "创造 Shift 移入快捷栏：已关闭",
+
 	"helpful_tweake.config.optimization.name.boldFont": "加粗显示优化",
 	"helpful_tweake.config.optimization.comment.boldFont": "使用高清字体包时，加粗文字会因原版1像素偏移出现错位。\n开启后自动切换到 cu_ 前缀的粗体字体文件并禁用偏移。\n材质包需提供 cu_ 前缀字体文件。无自定义字体时沿用原版。",
 	"helpful_tweake.message.boldFont.enabled": "加粗显示优化：已开启",

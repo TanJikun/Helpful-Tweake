@@ -28,7 +28,8 @@
 		"MixinAdvancementTabDetails",
 		"MixinAdvancementsScreenInteraction",
 		"MixinAdvancementsScreenBigger",
-		"MixinAdvancementTabBigger"
+		"MixinAdvancementTabBigger",
+		"MixinCreativeModeInventoryScreen"
 	],
 	"injectors": {
 		"defaultRequire": 1
