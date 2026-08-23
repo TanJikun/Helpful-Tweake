@@ -4,40 +4,58 @@ import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.ShapeRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.BlockOutlineRenderState;
+import net.minecraft.client.renderer.state.LevelRenderState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import tanjikun.helpful.tweake.config.Configs;
 
 /**
- * 彩色选择框：将准心所对方块的线框选择框替换为彩虹色，3种颜色同时存在并沿
- * 对角线方向从 xyz 正方向角流向负方向角，颜色随时间滚动。
+ * 彩色选择框：将准心所对方块的线框选择框替换为彩虹色，3种颜色同时存在。
+ * 颜色按边分组滚动：从 xyz 正方向角相邻的3条边出发，经中间6条边，
+ * 最后到达 xyz 负方向角相邻的3条边，随时间循环流动。
  *
- * 用 @Redirect 完全替换 ShapeRenderer.renderShape 调用，自己实现渲染逻辑，
- * 为每个顶点根据其位置计算不同颜色，实现"同时存在3种颜色"的效果。
+ * 用 @Inject 在 renderBlockOutline（method_62210）入口拦截并 ci.cancel()，
+ * 完全接管原版选择框渲染，自己经 RenderTypes.lines() 标准管线提交顶点。
+ *
+ * 为什么这样注入（光影兼容，参考 BlockOutlineCustomizer 的做法）：
+ *   旧实现 @Redirect renderHitOutline 内部的 ShapeRenderer.renderShape 调用，
+ *   光影（Iris 等）接管渲染管线后不再走这条原版调用链，Redirect 落空导致失效；
+ *   HEAD + cancel 只在方法入口抢占，不依赖原版方法体的任何调用结构，且
+ *   RenderTypes.lines() 走标准 BufferSource 管线，光影包会正常处理该几何体。
  *
  * 核心思路（参考光影包 rainbow.glsl 的三角波合成，用自己的实现）：
  *   1. 三角波彩虹：tri(x) = clamp(|((x mod 6)+6) mod 6 - 3| - 1, 0, 1)
- *      三个通道相位差2，周期6。每个顶点根据位置参数 p=(x+y+z)/3 偏移相位，
- *      位置跨度对应2个相位单位（1/3周期），3个通道刚好覆盖3种颜色。
- *      正方向角(1,1,1) p=1 相位领先2，负方向角(0,0,0) p=0 相位落后，
- *      随时间整体偏移，颜色从正方向流向负方向。
- *   2. 线宽加粗：在原版线宽基础上 ×1.3 加粗。
- *   3. 远处更细：按 1/distance 衰减线宽，保持视觉粗细比例恒定。
+ *      三个通道相位差2，周期6，产生完整色环。
+ *   2. 按边着色（非按顶点）：每条边用其中点位置和 s=(x+y+z) 做相位偏移，
+ *      整条边同色。单位立方体的12条边按 s 恰好分成3组：
+ *        正方向角(1,1,1)相邻3条边 s=2.5（相位领先，最先变色）
+ *        中间6条边               s=1.5
+ *        负方向角(0,0,0)相邻3条边 s=0.5（相位落后，最后变色）
+ *      随时间整体偏移相位，颜色从正方向角出发，经其相邻3条边、中间6条边，
+ *      最后流到负方向角相邻的3条边。3组相位差各1（1/6周期），3种颜色同存。
+ *   3. 线宽加粗：在原版线宽基础上 ×1.3 加粗。
+ *   4. 远处更细：按 1/distance 衰减线宽，保持视觉粗细比例恒定。
  *
- * 关键发现（字节码验证）：renderShape 第8个参数是线宽（setLineWidth），
- *   不是 alpha。颜色 alpha 由 setColor(int) 的 ARGB int 值决定。
- *   原版调用链：addVertex → setColor(int) → setNormal(Pose, Vector3f) → setLineWidth(float)
+ * ponytail: Mixin 方法名使用 intermediary，已验证存在
+ * 已知上限: 无 refmap 环境，method_62210 写死；升级 Loom 生成 refmap 后可改 named 名。
  *
- * ponytail: Mixin 方法名与 target 字符串使用 intermediary
- * 已知上限: Loom 1.17 + officialMojangMappings 无 refmap，注解字符串无法重映射。
- * 升级路径: 升级 Loom 或改用 layered mappings 生成 refmap 后，可改回 named 名。
+ * ponytail: cancel 后未复刻原版 DEBUG_SHAPES 调试形状与 highContrast
+ * 黑色衬底层（无障碍高对比模式只画彩虹单层）。两者均为非默认路径，
+ * 生产环境不可达/彩虹本身对比度已足够。升级路径：需要时在注入方法里
+ * 按 state.highContrast() 补画 secondaryBlockOutline 衬底层。
  */
 @Mixin(LevelRenderer.class)
 public class MixinLevelRendererBlockOutline
@@ -54,26 +72,33 @@ public class MixinLevelRendererBlockOutline
     /** 彩虹滚动周期（毫秒），6秒一循环。 */
     private static final long PERIOD_MS = 6000L;
 
-    @Redirect(
-        method = "method_22712",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/class_9974;method_62296(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_265;DDDIF)V",
-            remap = false
-        ),
-        remap = false
-    )
-    private static void helpfulTweake$redirectRenderShape(
-            PoseStack pose, VertexConsumer consumer, VoxelShape shape,
-            double x, double y, double z, int color, float lineWidth)
+    @Inject(method = "method_62210", at = @At("HEAD"), cancellable = true, remap = false)
+    private void helpfulTweake$renderRainbowOutline(MultiBufferSource.BufferSource bufferSource,
+            PoseStack poseStack, boolean translucentPass, LevelRenderState levelRenderState, CallbackInfo ci)
     {
         if (!Configs.Tools.RAINBOW_SELECTION.getBooleanValue())
         {
-            ShapeRenderer.renderShape(pose, consumer, shape, x, y, z, color, lineWidth);
             return;
         }
 
-        PoseStack.Pose poseEntry = pose.last();
+        // 复刻原版 renderBlockOutline 的前置过滤：无目标或非本趟半透明 pass 时不接管
+        BlockOutlineRenderState state = levelRenderState.blockOutlineRenderState;
+        if (state == null || state.isTranslucent() != translucentPass)
+        {
+            return;
+        }
+
+        ci.cancel();
+
+        Vec3 cameraPos = levelRenderState.cameraRenderState.pos;
+        BlockPos pos = state.pos();
+        VoxelShape shape = state.shape();
+        double x = pos.getX() - cameraPos.x;
+        double y = pos.getY() - cameraPos.y;
+        double z = pos.getZ() - cameraPos.z;
+
+        PoseStack.Pose poseEntry = poseStack.last();
+        VertexConsumer consumer = bufferSource.getBuffer(RenderTypes.lines());
 
         // 距离衰减线宽：远处线条更细，保持视觉粗细比例恒定
         double distance = Math.sqrt(x * x + y * y + z * z);
@@ -90,7 +115,8 @@ public class MixinLevelRendererBlockOutline
                 widthScale = MIN_SCALE;
             }
         }
-        float finalWidth = lineWidth * WIDTH_BOOST * widthScale;
+        float finalWidth = Minecraft.getInstance().getWindow().getAppropriateLineWidth()
+                * WIDTH_BOOST * widthScale;
 
         // 时间相位（6秒一周期）
         float timePhase = ((System.currentTimeMillis() % PERIOD_MS) / (float) PERIOD_MS) * 6.0F;
@@ -102,27 +128,27 @@ public class MixinLevelRendererBlockOutline
                     (float) (maxY - minY),
                     (float) (maxZ - minZ)).normalize();
 
-            // 顶点1颜色：位置参数 p=(x+y+z)/3，相位 = timePhase + p*2
-            // 正方向角 p 大→相位领先，颜色先变化→颜色从正方向流向负方向
-            float p1 = (float) ((minX + minY + minZ) / 3.0);
-            int c1 = rainbowTri(timePhase + p1 * 2.0F);
-
-            // 顶点2颜色
-            float p2 = (float) ((maxX + maxY + maxZ) / 3.0);
-            int c2 = rainbowTri(timePhase + p2 * 2.0F);
+            // 边中点位置和 s=(x+y+z)：整条边同色，单位立方体12条边分成3组
+            // 正角边 s=2.5 相位领先先变色，中间边 s=1.5，负角边 s=0.5 最后变色，
+            // 颜色从正方向角相邻3条边→中间6条边→负方向角相邻3条边滚动
+            float s = (float) (minX + minY + minZ + maxX + maxY + maxZ) / 2.0F;
+            int color = rainbowTri(timePhase + s);
 
             // 渲染顶点1
             consumer.addVertex(poseEntry, (float) (minX + x), (float) (minY + y), (float) (minZ + z))
-                    .setColor(c1)
+                    .setColor(color)
                     .setNormal(poseEntry, normal)
                     .setLineWidth(finalWidth);
 
             // 渲染顶点2
             consumer.addVertex(poseEntry, (float) (maxX + x), (float) (maxY + y), (float) (maxZ + z))
-                    .setColor(c2)
+                    .setColor(color)
                     .setNormal(poseEntry, normal)
                     .setLineWidth(finalWidth);
         });
+
+        // 原版在渲染后立即提交 lines 批次，这里保持一致，确保每帧绘制
+        bufferSource.endBatch(RenderTypes.lines());
     }
 
     /**
