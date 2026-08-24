@@ -109,10 +109,6 @@ public class Configs implements IConfigHandler
         public static final ConfigDouble ARMOR_HUD_Y =
                 new ConfigDouble("armorHudY", 50.0, 1.0, 100.0).apply(TOOLS_KEY);
 
-        // 彩色选择框：将快捷栏当前选中格的高亮边框替换为彩虹色边框，颜色随时间滚动
-        public static final ConfigBooleanHotkeyed RAINBOW_SELECTION =
-                new ConfigBooleanHotkeyed("rainbowSelection", false, "").apply(TOOLS_KEY);
-
         // 控制爬行：按下绑定按键时将玩家姿势切换为爬行（默认无开关，仅绑定按键）
         // ConfigHotkey 仅含热键不含 boolean 开关，区别于 ConfigBooleanHotkeyed
         public static final ConfigHotkey CONTROLLED_CRAWL =
@@ -205,7 +201,15 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed CREATIVE_SHIFT_TO_HOTBAR =
                 new ConfigBooleanHotkeyed("creativeShiftToHotbar", false, "").apply(TOOLS_KEY);
 
-        public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
+        // 更好的漏斗矿车：容器型主配置，本身只统一管理子功能，不直接提供效果
+        public static final ConfigBooleanHotkeyed BETTER_HOPPER_MINECART =
+                new ConfigBooleanHotkeyed("betterHopperMinecart", false, "").apply(TOOLS_KEY);
+
+        // 更好的漏斗矿车子配置：碰撞箱（F3+B 显示碰撞箱时，漏斗矿车额外显示掉落物吸取范围框）
+        public static final ConfigBooleanHotkeyed BETTER_HOPPER_MINECART_HITBOX =
+                new ConfigBooleanHotkeyed("betterHopperMinecartHitbox", false, "").apply(TOOLS_KEY);
+
+        public static ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 SNEAK_NO_SLOPE,
                 GLOBAL_MENDING,
@@ -224,7 +228,6 @@ public class Configs implements IConfigHandler
                 ARMOR_HUD_POSITION,
                 ARMOR_HUD_X,
                 ARMOR_HUD_Y,
-                RAINBOW_SELECTION,
                 CONTROLLED_CRAWL,
                 CRAWL_TRIGGER_MODE,
                 VISUAL_EXPERIENCE,
@@ -243,7 +246,9 @@ public class Configs implements IConfigHandler
                 SHOW_UNCOMPLETED_ADVANCEMENTS,
                 SHOW_ADVANCEMENT_DETAILS,
                 BIGGER_ADVANCEMENTS_SCREEN,
-                CREATIVE_SHIFT_TO_HOTBAR
+                CREATIVE_SHIFT_TO_HOTBAR,
+                BETTER_HOPPER_MINECART,
+                BETTER_HOPPER_MINECART_HITBOX
         );
 
         /**
@@ -259,11 +264,13 @@ public class Configs implements IConfigHandler
                                                           boolean visualExperienceExpanded,
                                                           boolean worldSwallowMaintenanceExpanded,
                                                           boolean clearKelpExpanded,
-                                                          boolean betterAdvancementsExpanded)
+                                                          boolean betterAdvancementsExpanded,
+                                                          boolean betterHopperMinecartExpanded)
         {
             if (betterAutoJumpExpanded && betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
                     && armorHudExpanded && controlledCrawlExpanded && visualExperienceExpanded
-                    && worldSwallowMaintenanceExpanded && clearKelpExpanded && betterAdvancementsExpanded)
+                    && worldSwallowMaintenanceExpanded && clearKelpExpanded && betterAdvancementsExpanded
+                    && betterHopperMinecartExpanded)
             {
                 return OPTIONS;
             }
@@ -332,6 +339,11 @@ public class Configs implements IConfigHandler
                 }
                 // 更大的进度界面仅在更好的进度展开时显示
                 if (!betterAdvancementsExpanded && config == BIGGER_ADVANCEMENTS_SCREEN)
+                {
+                    continue;
+                }
+                // 碰撞箱子配置仅在更好的漏斗矿车展开时显示
+                if (!betterHopperMinecartExpanded && config == BETTER_HOPPER_MINECART_HITBOX)
                 {
                     continue;
                 }

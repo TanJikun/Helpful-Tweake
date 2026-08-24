@@ -31,7 +31,7 @@ import tanjikun.helpful.tweake.config.Configs;
  *                             / BETTER_HARVEST / ARMOR_HUD / VISUAL_EXPERIENCE
  *                             / WORLD_SWALLOW_MAINTENANCE / WSM_CLEAR_KELP
  *                             / ENTITY_RENDER_OPTIMIZATION / SKIP_DISTANT_ENTITIES
- *                             / BETTER_ADVANCEMENTS
+ *                             / BETTER_ADVANCEMENTS / BETTER_HOPPER_MINECART
  *   ConfigHotkey          —— CONTROLLED_CRAWL
  * 其他配置项走原版渲染逻辑。
  *
@@ -69,7 +69,8 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "stackEntityRenderOptimization",
             "showUncompletedAdvancements",
             "showAdvancementDetails",
-            "biggerAdvancementsScreen"
+            "biggerAdvancementsScreen",
+            "betterHopperMinecartHitbox"
     );
 
     // 子子配置项名称（控件额外缩进 32px）
@@ -210,6 +211,11 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
         {
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.betterAdvancementsExpanded, ExpandState::toggleBetterAdvancements);
+        }
+        else if (configBoolean == Configs.Tools.BETTER_HOPPER_MINECART)
+        {
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.betterHopperMinecartExpanded, ExpandState::toggleBetterHopperMinecart);
         }
         else
         {

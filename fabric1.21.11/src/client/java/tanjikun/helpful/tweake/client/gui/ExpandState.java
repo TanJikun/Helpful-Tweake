@@ -18,6 +18,7 @@ public class ExpandState
     public static boolean entityRenderOptimizationExpanded = false;
     public static boolean skipDistantEntitiesExpanded = false;
     public static boolean betterAdvancementsExpanded = false;
+    public static boolean betterHopperMinecartExpanded = false;
     private static Runnable refreshCallback;
 
     public static void setRefreshCallback(Runnable callback)
@@ -127,6 +128,15 @@ public class ExpandState
     public static void toggleBetterAdvancements()
     {
         betterAdvancementsExpanded = !betterAdvancementsExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
+    }
+
+    public static void toggleBetterHopperMinecart()
+    {
+        betterHopperMinecartExpanded = !betterHopperMinecartExpanded;
         if (refreshCallback != null)
         {
             refreshCallback.run();

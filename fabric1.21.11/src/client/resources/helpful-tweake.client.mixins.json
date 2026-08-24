@@ -18,7 +18,6 @@
 		"MixinItemInHandRenderer",
 		"MixinPlayerItemInHandLayer",
 		"MixinShieldSpecialRenderer",
-		"MixinLevelRendererBlockOutline",
 		"MixinCameraAccessor",
 		"MixinBlockEntityRenderDispatcherAccessor",
 		"MixinTransparentBedrock",
@@ -29,7 +28,8 @@
 		"MixinAdvancementsScreenInteraction",
 		"MixinAdvancementsScreenBigger",
 		"MixinAdvancementTabBigger",
-		"MixinCreativeModeInventoryScreen"
+		"MixinCreativeModeInventoryScreen",
+		"MixinEntityHitboxDebugRenderer"
 	],
 	"injectors": {
 		"defaultRequire": 1

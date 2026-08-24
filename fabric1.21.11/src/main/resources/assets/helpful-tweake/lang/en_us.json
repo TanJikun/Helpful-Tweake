@@ -77,11 +77,6 @@
 	"helpful_tweake.message.armorHud.enabled": "Armor HUD: ON",
 	"helpful_tweake.message.armorHud.disabled": "Armor HUD: OFF",
 
-	"helpful_tweake.config.tools.name.rainbowSelection": "Rainbow Selection",
-	"helpful_tweake.config.tools.comment.rainbowSelection": "Replaces the block selection wireframe (the box around the\nblock you are aiming at) with a rainbow color that shifts over time.",
-	"helpful_tweake.message.rainbowSelection.enabled": "Rainbow Selection: ON",
-	"helpful_tweake.message.rainbowSelection.disabled": "Rainbow Selection: OFF",
-
 	"helpful_tweake.config.tools.name.controlledCrawl": "Controlled Crawl",
 	"helpful_tweake.config.tools.comment.controlledCrawl": "Press the bound key to enter the crawling pose.\nRelease (Hold mode) or press again (Toggle mode) restores vanilla behavior.\nClick +/- to configure the trigger mode.",
 	"helpful_tweake.config.tools.name.crawlTriggerMode": "    Trigger Mode",
@@ -137,6 +132,13 @@
 	"helpful_tweake.config.tools.comment.creativeShiftToHotbar": "When enabled, shift+left-clicking an item in the\ncreative inventory tabs moves a single item\ndirectly into the hotbar instead of picking\nup a full stack on the cursor. The inventory\ntab and normal containers are not affected.",
 	"helpful_tweake.message.creativeShiftToHotbar.enabled": "Creative Shift to Hotbar: ON",
 	"helpful_tweake.message.creativeShiftToHotbar.disabled": "Creative Shift to Hotbar: OFF",
+
+	"helpful_tweake.config.tools.name.betterHopperMinecart": "Better Hopper Minecart",
+	"helpful_tweake.config.tools.comment.betterHopperMinecart": "A collection of hopper minecart features.\nProvides no effect on its own.\nClick +/- to expand sub-features.",
+	"helpful_tweake.message.betterHopperMinecart.enabled": "Better Hopper Minecart: ON",
+	"helpful_tweake.message.betterHopperMinecart.disabled": "Better Hopper Minecart: OFF",
+	"helpful_tweake.config.tools.name.betterHopperMinecartHitbox": "    Hitbox",
+	"helpful_tweake.config.tools.comment.betterHopperMinecartHitbox": "When enabled, with hitboxes visible (F3+B),\nhopper minecarts display an extra cyan box\nmarking their item pickup range. Items entering\nthe box can be collected by the minecart.\nThe range covers the contact area around the\ncart plus the suction column above it.\nDisplay only, does not change pickup logic.\nRequires the master toggle to be enabled.",
 
 	"helpful_tweake.config.optimization.name.boldFont": "Bold Font Optimization",
 	"helpful_tweake.config.optimization.comment.boldFont": "Fixes bold text offset issues with HD font packs.\nSwitches to cu_ prefixed bold font file and disables\nthe vanilla 1-pixel bold offset.\nRequires a resource pack with cu_ prefixed font file.\nVanilla behavior is kept when no custom font is present.",

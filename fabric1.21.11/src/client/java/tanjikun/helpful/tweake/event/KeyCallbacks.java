@@ -26,7 +26,6 @@ public class KeyCallbacks
         Configs.Tools.BETTER_HARVEST.getKeybind().setCallback(new ToggleBetterHarvestCallback());
         Configs.Tools.SHIELD_STATUS.getKeybind().setCallback(new ToggleShieldStatusCallback());
         Configs.Tools.ARMOR_HUD.getKeybind().setCallback(new ToggleArmorHudCallback());
-        Configs.Tools.RAINBOW_SELECTION.getKeybind().setCallback(new ToggleRainbowSelectionCallback());
         Configs.Tools.CONTROLLED_CRAWL.getKeybind().setCallback(new CrawlKeyCallback());
         Configs.Optimization.BOLD_FONT.getKeybind().setCallback(new ToggleBoldFontCallback());
         Configs.Optimization.ENTITY_RENDER_OPTIMIZATION.getKeybind().setCallback(new ToggleEntityRenderOptimizationCallback());
@@ -293,24 +292,6 @@ public class KeyCallbacks
                 boolean enabled = Configs.Tools.ARMOR_HUD.getBooleanValue();
                 Minecraft.getInstance().player.displayClientMessage(
                         Component.translatable("helpful_tweake.message.armorHud." + (enabled ? "enabled" : "disabled")),
-                        true);
-            }
-            return true;
-        }
-    }
-
-    private record ToggleRainbowSelectionCallback() implements IHotkeyCallback
-    {
-        @Override
-        public boolean onKeyAction(KeyAction action, IKeybind key)
-        {
-            Configs.Tools.RAINBOW_SELECTION.toggleBooleanValue();
-            Configs.saveToFile();
-            if (Minecraft.getInstance().player != null)
-            {
-                boolean enabled = Configs.Tools.RAINBOW_SELECTION.getBooleanValue();
-                Minecraft.getInstance().player.displayClientMessage(
-                        Component.translatable("helpful_tweake.message.rainbowSelection." + (enabled ? "enabled" : "disabled")),
                         true);
             }
             return true;
