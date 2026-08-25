@@ -19,6 +19,8 @@ public class ExpandState
     public static boolean skipDistantEntitiesExpanded = false;
     public static boolean betterAdvancementsExpanded = false;
     public static boolean betterHopperMinecartExpanded = false;
+    public static boolean suckRangeDisplayExpanded = false;
+    public static boolean hopperLockedDisplayExpanded = false;
     private static Runnable refreshCallback;
 
     public static void setRefreshCallback(Runnable callback)
@@ -137,6 +139,24 @@ public class ExpandState
     public static void toggleBetterHopperMinecart()
     {
         betterHopperMinecartExpanded = !betterHopperMinecartExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
+    }
+
+    public static void toggleSuckRangeDisplay()
+    {
+        suckRangeDisplayExpanded = !suckRangeDisplayExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
+    }
+
+    public static void toggleHopperLockedDisplay()
+    {
+        hopperLockedDisplayExpanded = !hopperLockedDisplayExpanded;
         if (refreshCallback != null)
         {
             refreshCallback.run();

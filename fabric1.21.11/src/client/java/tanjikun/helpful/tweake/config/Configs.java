@@ -205,9 +205,21 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed BETTER_HOPPER_MINECART =
                 new ConfigBooleanHotkeyed("betterHopperMinecart", false, "").apply(TOOLS_KEY);
 
-        // 更好的漏斗矿车子配置：碰撞箱（F3+B 显示碰撞箱时，漏斗矿车额外显示掉落物吸取范围框）
+        // 更好的漏斗矿车子配置：吸取范围显示（F3+B 显示碰撞箱时，漏斗矿车额外显示掉落物吸取范围框）
         public static final ConfigBooleanHotkeyed BETTER_HOPPER_MINECART_HITBOX =
                 new ConfigBooleanHotkeyed("betterHopperMinecartHitbox", false, "").apply(TOOLS_KEY);
+
+        // 吸取范围显示的子子配置：框线颜色
+        public static final ConfigColor HOPPER_SUCK_RANGE_COLOR =
+                new ConfigColor("hopperSuckRangeColor", "#00FF00").apply(TOOLS_KEY);
+
+        // 吸取范围显示的子子配置：漏斗矿车锁定显示（被激活铁轨锁定时换色显示）
+        public static final ConfigBooleanHotkeyed HOPPER_MINECART_LOCKED_DISPLAY =
+                new ConfigBooleanHotkeyed("hopperMinecartLockedDisplay", false, "").apply(TOOLS_KEY);
+
+        // 漏斗矿车锁定显示的子子子配置：锁定时的框线颜色
+        public static final ConfigColor HOPPER_LOCKED_COLOR =
+                new ConfigColor("hopperLockedColor", "#FF0000").apply(TOOLS_KEY);
 
         public static ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
@@ -248,7 +260,10 @@ public class Configs implements IConfigHandler
                 BIGGER_ADVANCEMENTS_SCREEN,
                 CREATIVE_SHIFT_TO_HOTBAR,
                 BETTER_HOPPER_MINECART,
-                BETTER_HOPPER_MINECART_HITBOX
+                BETTER_HOPPER_MINECART_HITBOX,
+                HOPPER_SUCK_RANGE_COLOR,
+                HOPPER_MINECART_LOCKED_DISPLAY,
+                HOPPER_LOCKED_COLOR
         );
 
         /**
@@ -265,12 +280,14 @@ public class Configs implements IConfigHandler
                                                           boolean worldSwallowMaintenanceExpanded,
                                                           boolean clearKelpExpanded,
                                                           boolean betterAdvancementsExpanded,
-                                                          boolean betterHopperMinecartExpanded)
+                                                          boolean betterHopperMinecartExpanded,
+                                                          boolean suckRangeDisplayExpanded,
+                                                          boolean hopperLockedDisplayExpanded)
         {
             if (betterAutoJumpExpanded && betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
                     && armorHudExpanded && controlledCrawlExpanded && visualExperienceExpanded
                     && worldSwallowMaintenanceExpanded && clearKelpExpanded && betterAdvancementsExpanded
-                    && betterHopperMinecartExpanded)
+                    && betterHopperMinecartExpanded && suckRangeDisplayExpanded && hopperLockedDisplayExpanded)
             {
                 return OPTIONS;
             }
@@ -344,6 +361,17 @@ public class Configs implements IConfigHandler
                 }
                 // 碰撞箱子配置仅在更好的漏斗矿车展开时显示
                 if (!betterHopperMinecartExpanded && config == BETTER_HOPPER_MINECART_HITBOX)
+                {
+                    continue;
+                }
+                // 框线颜色、漏斗矿车锁定显示仅在吸取范围显示展开时显示
+                if (!suckRangeDisplayExpanded
+                        && (config == HOPPER_SUCK_RANGE_COLOR || config == HOPPER_MINECART_LOCKED_DISPLAY))
+                {
+                    continue;
+                }
+                // 锁定框线颜色仅在漏斗矿车锁定显示展开时显示
+                if (!hopperLockedDisplayExpanded && config == HOPPER_LOCKED_COLOR)
                 {
                     continue;
                 }

@@ -15,6 +15,7 @@ import fi.dy.masa.malilib.gui.button.ButtonGeneric;
 import fi.dy.masa.malilib.gui.button.IButtonActionListener;
 import fi.dy.masa.malilib.gui.interfaces.IKeybindConfigGui;
 import fi.dy.masa.malilib.gui.widgets.WidgetBase;
+import fi.dy.masa.malilib.gui.widgets.WidgetColorIndicator;
 import fi.dy.masa.malilib.gui.widgets.WidgetConfigOption;
 import fi.dy.masa.malilib.gui.widgets.WidgetListConfigOptionsBase;
 import fi.dy.masa.malilib.gui.wrappers.TextFieldType;
@@ -32,6 +33,7 @@ import tanjikun.helpful.tweake.config.Configs;
  *                             / WORLD_SWALLOW_MAINTENANCE / WSM_CLEAR_KELP
  *                             / ENTITY_RENDER_OPTIMIZATION / SKIP_DISTANT_ENTITIES
  *                             / BETTER_ADVANCEMENTS / BETTER_HOPPER_MINECART
+ *                             / BETTER_HOPPER_MINECART_HITBOX / HOPPER_MINECART_LOCKED_DISPLAY
  *   ConfigHotkey          —— CONTROLLED_CRAWL
  * 其他配置项走原版渲染逻辑。
  *
@@ -77,7 +79,14 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
     private static final Set<String> SUB_SUB_CONFIG_NAMES = Set.of(
             "wsmClearKelpDistance",
             "wsmClearKelpSelectionOnly",
-            "skipDistantEntitiesDistance"
+            "skipDistantEntitiesDistance",
+            "hopperSuckRangeColor",
+            "hopperMinecartLockedDisplay"
+    );
+
+    // 子子子配置项名称（控件额外缩进 48px）
+    private static final Set<String> SUB_SUB_SUB_CONFIG_NAMES = Set.of(
+            "hopperLockedColor"
     );
 
     /**
@@ -112,10 +121,21 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
                 this.textField.textField().active = false;
             }
         }
+
+        // 颜色指示块（点击打开调色板）在父类 addConfigOption 构造期间已用未缩进的
+        // colorDisplayPosX 创建并 addWidget，此处统一右移层级缩进量对齐
+        int colorIndent = getIndent();
+        for (WidgetBase w : this.subWidgets)
+        {
+            if (w instanceof WidgetColorIndicator)
+            {
+                w.setPosition(w.getX() + colorIndent, w.getY());
+            }
+        }
     }
 
     /**
-     * 返回当前配置项的层级深度：0 = 主配置项，1 = 子配置项，2 = 子子配置项。
+     * 返回当前配置项的层级深度：0 = 主配置项，1 = 子配置项，2 = 子子配置项，3 = 子子子配置项。
      */
     private int getConfigLevel()
     {
@@ -129,6 +149,10 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             return 0;
         }
         String name = config.getName();
+        if (SUB_SUB_SUB_CONFIG_NAMES.contains(name))
+        {
+            return 3;
+        }
         if (SUB_SUB_CONFIG_NAMES.contains(name))
         {
             return 2;
@@ -216,6 +240,20 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
         {
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.betterHopperMinecartExpanded, ExpandState::toggleBetterHopperMinecart);
+        }
+        else if (configBoolean == Configs.Tools.BETTER_HOPPER_MINECART_HITBOX)
+        {
+            // 吸取范围显示是子配置项（level 1），需额外缩进 getIndent() - CONTROL_INDENT = 16px
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.suckRangeDisplayExpanded, ExpandState::toggleSuckRangeDisplay,
+                    getIndent() - CONTROL_INDENT);
+        }
+        else if (configBoolean == Configs.Tools.HOPPER_MINECART_LOCKED_DISPLAY)
+        {
+            // 漏斗矿车锁定显示是子子配置项（level 2），需额外缩进 getIndent() - CONTROL_INDENT = 32px
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.hopperLockedDisplayExpanded, ExpandState::toggleHopperLockedDisplay,
+                    getIndent() - CONTROL_INDENT);
         }
         else
         {
