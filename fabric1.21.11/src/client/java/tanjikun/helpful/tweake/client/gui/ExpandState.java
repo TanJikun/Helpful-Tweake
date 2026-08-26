@@ -21,6 +21,7 @@ public class ExpandState
     public static boolean betterHopperMinecartExpanded = false;
     public static boolean suckRangeDisplayExpanded = false;
     public static boolean hopperLockedDisplayExpanded = false;
+    public static boolean hopperContainerHighlightExpanded = false;
     private static Runnable refreshCallback;
 
     public static void setRefreshCallback(Runnable callback)
@@ -157,6 +158,15 @@ public class ExpandState
     public static void toggleHopperLockedDisplay()
     {
         hopperLockedDisplayExpanded = !hopperLockedDisplayExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
+    }
+
+    public static void toggleHopperContainerHighlight()
+    {
+        hopperContainerHighlightExpanded = !hopperContainerHighlightExpanded;
         if (refreshCallback != null)
         {
             refreshCallback.run();

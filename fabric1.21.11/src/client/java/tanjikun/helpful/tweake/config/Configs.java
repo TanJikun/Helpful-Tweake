@@ -221,6 +221,18 @@ public class Configs implements IConfigHandler
         public static final ConfigColor HOPPER_LOCKED_COLOR =
                 new ConfigColor("hopperLockedColor", "#FF0000").apply(TOOLS_KEY);
 
+        // 更好的漏斗矿车子配置：吸取容器高亮（为漏斗矿车正在吸取的容器描边）
+        public static final ConfigBooleanHotkeyed HOPPER_CONTAINER_HIGHLIGHT =
+                new ConfigBooleanHotkeyed("hopperContainerHighlight", false, "").apply(TOOLS_KEY);
+
+        // 吸取容器高亮的子配置：描边颜色
+        public static final ConfigColor HOPPER_CONTAINER_HIGHLIGHT_COLOR =
+                new ConfigColor("hopperContainerHighlightColor", "#00FF00").apply(TOOLS_KEY);
+
+        // 吸取容器高亮的子配置：描边宽度（1-10，默认2）
+        public static final ConfigInteger HOPPER_CONTAINER_HIGHLIGHT_WIDTH =
+                new ConfigInteger("hopperContainerHighlightWidth", 2, 1, 10).apply(TOOLS_KEY);
+
         public static ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 SNEAK_NO_SLOPE,
@@ -263,7 +275,10 @@ public class Configs implements IConfigHandler
                 BETTER_HOPPER_MINECART_HITBOX,
                 HOPPER_SUCK_RANGE_COLOR,
                 HOPPER_MINECART_LOCKED_DISPLAY,
-                HOPPER_LOCKED_COLOR
+                HOPPER_LOCKED_COLOR,
+                HOPPER_CONTAINER_HIGHLIGHT,
+                HOPPER_CONTAINER_HIGHLIGHT_COLOR,
+                HOPPER_CONTAINER_HIGHLIGHT_WIDTH
         );
 
         /**
@@ -282,12 +297,14 @@ public class Configs implements IConfigHandler
                                                           boolean betterAdvancementsExpanded,
                                                           boolean betterHopperMinecartExpanded,
                                                           boolean suckRangeDisplayExpanded,
-                                                          boolean hopperLockedDisplayExpanded)
+                                                          boolean hopperLockedDisplayExpanded,
+                                                          boolean hopperContainerHighlightExpanded)
         {
             if (betterAutoJumpExpanded && betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
                     && armorHudExpanded && controlledCrawlExpanded && visualExperienceExpanded
                     && worldSwallowMaintenanceExpanded && clearKelpExpanded && betterAdvancementsExpanded
-                    && betterHopperMinecartExpanded && suckRangeDisplayExpanded && hopperLockedDisplayExpanded)
+                    && betterHopperMinecartExpanded && suckRangeDisplayExpanded && hopperLockedDisplayExpanded
+                    && hopperContainerHighlightExpanded)
             {
                 return OPTIONS;
             }
@@ -375,6 +392,16 @@ public class Configs implements IConfigHandler
                 {
                     continue;
                 }
+                // 吸取容器高亮仅在更好的漏斗矿车展开时显示，其颜色子配置仅在自身展开时显示
+                if (!betterHopperMinecartExpanded && config == HOPPER_CONTAINER_HIGHLIGHT)
+                {
+                    continue;
+                }
+                if (!hopperContainerHighlightExpanded
+                        && (config == HOPPER_CONTAINER_HIGHLIGHT_COLOR || config == HOPPER_CONTAINER_HIGHLIGHT_WIDTH))
+                {
+                    continue;
+                }
                 filtered.add(config);
             }
             return filtered;
@@ -387,13 +414,9 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed BOLD_FONT =
                 new ConfigBooleanHotkeyed("boldFont", true, "").apply(OPTIMIZATION_KEY);
 
-        // 实体渲染优化：开启后可通过子配置项跳过不可见实体的渲染
+        // 实体渲染优化：开启后可通过子配置项跳过过远/堆叠实体的渲染
         public static final ConfigBooleanHotkeyed ENTITY_RENDER_OPTIMIZATION =
                 new ConfigBooleanHotkeyed("entityRenderOptimization", false, "").apply(OPTIMIZATION_KEY);
-
-        // 实体渲染优化子配置：阻止不可见实体渲染（被方块遮挡的实体不渲染，方块实体不受影响）
-        public static final ConfigBooleanHotkeyed SKIP_INVISIBLE_ENTITIES =
-                new ConfigBooleanHotkeyed("skipInvisibleEntities", false, "").apply(OPTIMIZATION_KEY);
 
         // 实体渲染优化子配置：阻止过远实体渲染（与玩家距离超过阈值的实体不渲染）
         public static final ConfigBooleanHotkeyed SKIP_DISTANT_ENTITIES =
@@ -410,7 +433,6 @@ public class Configs implements IConfigHandler
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BOLD_FONT,
                 ENTITY_RENDER_OPTIMIZATION,
-                SKIP_INVISIBLE_ENTITIES,
                 SKIP_DISTANT_ENTITIES,
                 SKIP_DISTANT_ENTITIES_DISTANCE,
                 STACK_ENTITY_RENDER_OPTIMIZATION
@@ -432,8 +454,7 @@ public class Configs implements IConfigHandler
             {
                 // level1 子配置项仅在 entityRenderOptimization 展开时显示
                 if (!entityRenderOptimizationExpanded
-                        && (config == SKIP_INVISIBLE_ENTITIES
-                            || config == SKIP_DISTANT_ENTITIES
+                        && (config == SKIP_DISTANT_ENTITIES
                             || config == STACK_ENTITY_RENDER_OPTIMIZATION))
                 {
                     continue;

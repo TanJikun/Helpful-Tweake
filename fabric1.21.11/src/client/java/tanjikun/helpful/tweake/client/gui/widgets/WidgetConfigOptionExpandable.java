@@ -66,13 +66,13 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "wsmRenderHeight", "wsmTargetBlocks", "wsmRenderWaterlogged",
             "wsmDistanceThreshold", "wsmTransparentBedrock",
             "wsmDisableLiquidInteraction", "wsmClearKelp",
-            "skipInvisibleEntities",
             "skipDistantEntities",
             "stackEntityRenderOptimization",
             "showUncompletedAdvancements",
             "showAdvancementDetails",
             "biggerAdvancementsScreen",
-            "betterHopperMinecartHitbox"
+            "betterHopperMinecartHitbox",
+            "hopperContainerHighlight"
     );
 
     // 子子配置项名称（控件额外缩进 32px）
@@ -81,7 +81,9 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "wsmClearKelpSelectionOnly",
             "skipDistantEntitiesDistance",
             "hopperSuckRangeColor",
-            "hopperMinecartLockedDisplay"
+            "hopperMinecartLockedDisplay",
+            "hopperContainerHighlightColor",
+            "hopperContainerHighlightWidth"
     );
 
     // 子子子配置项名称（控件额外缩进 48px）
@@ -253,6 +255,13 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             // 漏斗矿车锁定显示是子子配置项（level 2），需额外缩进 getIndent() - CONTROL_INDENT = 32px
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.hopperLockedDisplayExpanded, ExpandState::toggleHopperLockedDisplay,
+                    getIndent() - CONTROL_INDENT);
+        }
+        else if (configBoolean == Configs.Tools.HOPPER_CONTAINER_HIGHLIGHT)
+        {
+            // 吸取容器高亮是子配置项（level 1），需额外缩进 getIndent() - CONTROL_INDENT = 16px
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.hopperContainerHighlightExpanded, ExpandState::toggleHopperContainerHighlight,
                     getIndent() - CONTROL_INDENT);
         }
         else

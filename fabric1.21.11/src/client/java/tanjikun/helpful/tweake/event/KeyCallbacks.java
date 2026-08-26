@@ -29,7 +29,6 @@ public class KeyCallbacks
         Configs.Tools.CONTROLLED_CRAWL.getKeybind().setCallback(new CrawlKeyCallback());
         Configs.Optimization.BOLD_FONT.getKeybind().setCallback(new ToggleBoldFontCallback());
         Configs.Optimization.ENTITY_RENDER_OPTIMIZATION.getKeybind().setCallback(new ToggleEntityRenderOptimizationCallback());
-        Configs.Optimization.SKIP_INVISIBLE_ENTITIES.getKeybind().setCallback(new ToggleSkipInvisibleEntitiesCallback());
         Configs.Optimization.SKIP_DISTANT_ENTITIES.getKeybind().setCallback(new ToggleSkipDistantEntitiesCallback());
         Configs.Optimization.STACK_ENTITY_RENDER_OPTIMIZATION.getKeybind().setCallback(new ToggleStackEntityRenderOptimizationCallback());
     }
@@ -202,24 +201,6 @@ public class KeyCallbacks
                 boolean enabled = Configs.Optimization.ENTITY_RENDER_OPTIMIZATION.getBooleanValue();
                 Minecraft.getInstance().player.displayClientMessage(
                         Component.translatable("helpful_tweake.message.entityRenderOptimization." + (enabled ? "enabled" : "disabled")),
-                        true);
-            }
-            return true;
-        }
-    }
-
-    private record ToggleSkipInvisibleEntitiesCallback() implements IHotkeyCallback
-    {
-        @Override
-        public boolean onKeyAction(KeyAction action, IKeybind key)
-        {
-            Configs.Optimization.SKIP_INVISIBLE_ENTITIES.toggleBooleanValue();
-            Configs.saveToFile();
-            if (Minecraft.getInstance().player != null)
-            {
-                boolean enabled = Configs.Optimization.SKIP_INVISIBLE_ENTITIES.getBooleanValue();
-                Minecraft.getInstance().player.displayClientMessage(
-                        Component.translatable("helpful_tweake.message.skipInvisibleEntities." + (enabled ? "enabled" : "disabled")),
                         true);
             }
             return true;

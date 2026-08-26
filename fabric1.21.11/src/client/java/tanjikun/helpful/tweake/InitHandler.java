@@ -15,7 +15,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
 import tanjikun.helpful.tweake.client.util.ArmorHudRenderer;
 import tanjikun.helpful.tweake.client.util.EntityRenderStackCache;
-import tanjikun.helpful.tweake.client.util.EntityVisibilityCache;
+import tanjikun.helpful.tweake.client.util.HopperContainerHighlightRenderer;
 import tanjikun.helpful.tweake.client.util.KelpBreaker;
 import tanjikun.helpful.tweake.client.util.VisualExperienceHudRenderer;
 import tanjikun.helpful.tweake.client.util.WorldSwallowMaintenanceRenderer;
@@ -65,11 +65,11 @@ public class InitHandler implements IInitializationHandler
         WorldSwallowMaintenanceRenderer wsmRenderer = new WorldSwallowMaintenanceRenderer();
         WorldRenderEvents.AFTER_ENTITIES.register(wsmRenderer);
 
+        // 注册吸取容器高亮世界渲染回调
+        WorldRenderEvents.AFTER_ENTITIES.register(new HopperContainerHighlightRenderer());
+
         // 堆叠实体渲染优化：每帧渲染结束后清空缓存，为下一帧准备
         WorldRenderEvents.AFTER_ENTITIES.register(context -> EntityRenderStackCache.clear());
-
-        // 实体可见性缓存：每帧递增帧计数器并定期清理过期 entry
-        WorldRenderEvents.AFTER_ENTITIES.register(context -> EntityVisibilityCache.tick());
 
         // 控制爬行：客户端 tick 更新 CrawlState，让 common Mixin 能读到最新状态
         // HOLD 模式实时查询按键，TOGGLE 模式读取切换状态；计算结果写入 crawlRequested
