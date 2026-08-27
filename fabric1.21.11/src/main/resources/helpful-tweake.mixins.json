@@ -9,6 +9,7 @@
 		"MixinExperienceOrb",
 		"MixinEntityBoatStep",
 		"MixinDisableLiquidInteraction",
+		"MixinBucketItem",
 		"MixinAdvancementVisibility",
 		"MixinPlayerAdvancements"
 	],

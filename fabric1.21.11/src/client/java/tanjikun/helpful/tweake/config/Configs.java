@@ -65,6 +65,10 @@ public class Configs implements IConfigHandler
         public static final ConfigDouble BOAT_LIFT_HEIGHT =
                 new ConfigDouble("boatLiftHeight", 0.0, 0.0, 200.0).apply(TOOLS_KEY);
 
+        // 背包内无限水：快捷栏+副手+背包内共有两桶及以上的水（含鱼桶）时，生存模式放水不消耗桶中的水
+        public static final ConfigBooleanHotkeyed INFINITE_WATER =
+                new ConfigBooleanHotkeyed("infiniteWater", false, "").apply(TOOLS_KEY);
+
         // 更好的耐久显示：在物品上显示剩余耐久数字，颜色与耐久条一致
         public static final ConfigBooleanHotkeyed BETTER_DURABILITY =
                 new ConfigBooleanHotkeyed("betterDurability", false, "").apply(TOOLS_KEY);
@@ -241,6 +245,7 @@ public class Configs implements IConfigHandler
                 BETTER_CLIMBING,
                 BETTER_BOAT,
                 BOAT_LIFT_HEIGHT,
+                INFINITE_WATER,
                 BETTER_DURABILITY,
                 DURABILITY_UNBREAKING_CALC,
                 BETTER_HARVEST,

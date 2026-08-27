@@ -80,6 +80,7 @@ public class InitHandler implements IInitializationHandler
             CommonConfigs.globalMending = Configs.Tools.GLOBAL_MENDING.getBooleanValue();
             CommonConfigs.betterBoat = Configs.Tools.BETTER_BOAT.getBooleanValue();
             CommonConfigs.boatLiftHeight = Configs.Tools.BOAT_LIFT_HEIGHT.getDoubleValue();
+            CommonConfigs.infiniteWater = Configs.Tools.INFINITE_WATER.getBooleanValue();
 
             // 同步禁用水与岩浆互动配置到 ServerFlagHolder（供 common 侧 Mixin 读取）
             ServerFlagHolder.disableLiquidInteraction =

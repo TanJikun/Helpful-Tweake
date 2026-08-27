@@ -22,6 +22,7 @@ public class KeyCallbacks
         Configs.Tools.BETTER_TOTEM.getKeybind().setCallback(new ToggleBetterTotemCallback());
         Configs.Tools.BETTER_CLIMBING.getKeybind().setCallback(new ToggleBetterClimbingCallback());
         Configs.Tools.BETTER_BOAT.getKeybind().setCallback(new ToggleBetterBoatCallback());
+        Configs.Tools.INFINITE_WATER.getKeybind().setCallback(new ToggleInfiniteWaterCallback());
         Configs.Tools.BETTER_DURABILITY.getKeybind().setCallback(new ToggleBetterDurabilityCallback());
         Configs.Tools.BETTER_HARVEST.getKeybind().setCallback(new ToggleBetterHarvestCallback());
         Configs.Tools.SHIELD_STATUS.getKeybind().setCallback(new ToggleShieldStatusCallback());
@@ -127,6 +128,24 @@ public class KeyCallbacks
                 boolean enabled = Configs.Tools.BETTER_BOAT.getBooleanValue();
                 Minecraft.getInstance().player.displayClientMessage(
                         Component.translatable("helpful_tweake.message.betterBoat." + (enabled ? "enabled" : "disabled")),
+                        true);
+            }
+            return true;
+        }
+    }
+
+    private record ToggleInfiniteWaterCallback() implements IHotkeyCallback
+    {
+        @Override
+        public boolean onKeyAction(KeyAction action, IKeybind key)
+        {
+            Configs.Tools.INFINITE_WATER.toggleBooleanValue();
+            Configs.saveToFile();
+            if (Minecraft.getInstance().player != null)
+            {
+                boolean enabled = Configs.Tools.INFINITE_WATER.getBooleanValue();
+                Minecraft.getInstance().player.displayClientMessage(
+                        Component.translatable("helpful_tweake.message.infiniteWater." + (enabled ? "enabled" : "disabled")),
                         true);
             }
             return true;

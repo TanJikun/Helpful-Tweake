@@ -24,6 +24,8 @@
 	"helpful_tweake.config.tools.comment.betterBoat": "Allows boats to step up obstacles up to the lift height.\nClick the +/- button to configure lift height.",
 	"helpful_tweake.config.tools.name.boatLiftHeight": "    Lift Height",
 	"helpful_tweake.config.tools.comment.boatLiftHeight": "The maximum height of obstacles a boat can step up over.\nRange 0-200, default 0.",
+	"helpful_tweake.config.tools.name.infiniteWater": "Infinite Water",
+	"helpful_tweake.config.tools.comment.infiniteWater": "With 2+ water-filled buckets (water or fish buckets) across hotbar,\noffhand and inventory, placing water in survival won't empty the bucket:\nwater buckets stay filled, fish buckets become water buckets.\nCreative mode is unaffected.",
 	"helpful_tweake.config.hotkeys.name.openGuiSettings": "Open config GUI",
 	"helpful_tweake.config.hotkeys.comment.openGuiSettings": "Opens the Helpful Tweake config GUI",
 	"helpful_tweake.message.betterAutoJump.enabled": "Better Auto Jump: ON",
@@ -36,6 +38,8 @@
 	"helpful_tweake.message.betterClimbing.disabled": "Better Climbing: OFF",
 	"helpful_tweake.message.betterBoat.enabled": "Better Boat: ON",
 	"helpful_tweake.message.betterBoat.disabled": "Better Boat: OFF",
+	"helpful_tweake.message.infiniteWater.enabled": "Infinite Water: ON",
+	"helpful_tweake.message.infiniteWater.disabled": "Infinite Water: OFF",
 
 	"helpful_tweake.config.tools.name.betterDurability": "Better Durability",
 	"helpful_tweake.config.tools.comment.betterDurability": "Shows remaining durability as a number on items,\ncolored to match the durability bar.\nClick the +/- button to configure Unbreaking estimation.",

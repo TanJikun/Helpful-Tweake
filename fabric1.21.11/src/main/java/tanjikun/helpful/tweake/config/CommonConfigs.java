@@ -28,6 +28,7 @@ public class CommonConfigs
     public static boolean globalMending = false;
     public static boolean betterBoat = false;
     public static double boatLiftHeight = 0.0;
+    public static boolean infiniteWater = false;
 
     /**
      * 从 JSON 文件加载配置（服务端调用）。
@@ -51,6 +52,7 @@ public class CommonConfigs
                 globalMending = obj.has("globalMending") && obj.get("globalMending").getAsBoolean();
                 betterBoat = obj.has("betterBoat") && obj.get("betterBoat").getAsBoolean();
                 boatLiftHeight = obj.has("boatLiftHeight") ? obj.get("boatLiftHeight").getAsDouble() : 0.0;
+                infiniteWater = obj.has("infiniteWater") && obj.get("infiniteWater").getAsBoolean();
             }
         }
         catch (Exception e)
@@ -70,6 +72,7 @@ public class CommonConfigs
         obj.addProperty("globalMending", globalMending);
         obj.addProperty("betterBoat", betterBoat);
         obj.addProperty("boatLiftHeight", boatLiftHeight);
+        obj.addProperty("infiniteWater", infiniteWater);
         try
         {
             Files.writeString(configPath, GSON.toJson(obj));
