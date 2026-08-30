@@ -38,7 +38,9 @@ import tanjikun.helpful.tweake.config.Configs;
  * 其他配置项走原版渲染逻辑。
  *
  * 所有配置项的控件（开关、热键、输入框等）统一右移 16px，与有展开按钮的配置项对齐。
- * 子配置项额外再缩进 16px（共 32px），子子配置项再缩进 16px（共 48px），与标签文字对齐。
+ * 子配置项额外再缩进 16px（共 32px），子子配置项再缩进 16px（共 48px），与标签文字缩进匹配。
+ * 缩进策略：控件簇整体右移层级缩进量并保持原版宽度不变（不压缩），
+ * 确保同一层级的所有行（滑块、布尔、文本列表、展开行）右边缘对齐。
  * 当 Litematica 未安装时，清海带及其子子配置项的标签显示为红色、按钮/文本框禁用。
  * 单机模式专用功能（更方便的收获）的标签也显示为红色。
  */
@@ -63,9 +65,10 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "armorHudPosition", "armorHudX", "armorHudY",
             "crawlTriggerMode",
             "experienceTextColor",
-            "wsmRenderHeight", "wsmTargetBlocks", "wsmRenderWaterlogged",
-            "wsmDistanceThreshold", "wsmTransparentBedrock",
+            "wsmRenderCopy",
+            "wsmTransparentBedrock",
             "wsmDisableLiquidInteraction", "wsmClearKelp",
+            "skipInvisibleEntities",
             "skipDistantEntities",
             "stackEntityRenderOptimization",
             "showUncompletedAdvancements",
@@ -77,6 +80,8 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
 
     // 子子配置项名称（控件额外缩进 32px）
     private static final Set<String> SUB_SUB_CONFIG_NAMES = Set.of(
+            "wsmRenderHeight", "wsmTargetBlocks", "wsmRenderWaterlogged",
+            "wsmDistanceThreshold",
             "wsmClearKelpDistance",
             "wsmClearKelpSelectionOnly",
             "skipDistantEntitiesDistance",
@@ -214,6 +219,13 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.worldSwallowMaintenanceExpanded, ExpandState::toggleWorldSwallowMaintenance);
         }
+        else if (configBoolean == Configs.Tools.WSM_RENDER_COPY)
+        {
+            // wsmRenderCopy 是子配置项（level 1），需额外缩进 getIndent() - CONTROL_INDENT = 16px
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.renderCopyExpanded, ExpandState::toggleRenderCopy,
+                    getIndent() - CONTROL_INDENT);
+        }
         else if (configBoolean == Configs.Tools.WSM_CLEAR_KELP)
         {
             // wsmClearKelp 是子配置项（level 1），需额外缩进 getIndent() - CONTROL_INDENT = 16px
@@ -267,7 +279,7 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
         else
         {
             int indent = getIndent();
-            super.addBooleanAndHotkeyWidgets(x + indent, y, w - indent,
+            super.addBooleanAndHotkeyWidgets(x + indent, y, w,
                     configResettable, configBoolean, keybind);
         }
     }
@@ -281,12 +293,12 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             ButtonGeneric expandBtn = new ButtonGeneric(x, y, 14, 20,
                     ExpandState.controlledCrawlExpanded ? "-" : "+");
             this.addButton(expandBtn, new ExpandButtonListener(ExpandState::toggleControlledCrawl));
-            super.addHotkeyConfigElements(x + 16, y, w - 16, label, hotkey);
+            super.addHotkeyConfigElements(x + 16, y, w, label, hotkey);
         }
         else
         {
             int indent = getIndent();
-            super.addHotkeyConfigElements(x + indent, y, w - indent, label, hotkey);
+            super.addHotkeyConfigElements(x + indent, y, w, label, hotkey);
         }
     }
 
@@ -327,9 +339,8 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
         else
         {
             // 普通按钮（文本列表、布尔值、选项列表、锁定列表、颜色列表等）：
-            // 主按钮右移并缩小宽度，重置按钮右移
+            // 主按钮右移但保持宽度，重置按钮右移，与滑块行整体右移策略一致
             button.setPosition(button.getX() + indent, button.getY());
-            button.setWidth(button.getWidth() - indent);
             super.addConfigButtonEntry(x + indent, y, configResettable, button);
         }
     }
@@ -390,7 +401,7 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
     {
         ButtonGeneric expandBtn = new ButtonGeneric(x + extraIndent, y, 14, 20, expanded ? "-" : "+");
         this.addButton(expandBtn, new ExpandButtonListener(toggleAction));
-        super.addBooleanAndHotkeyWidgets(x + 16 + extraIndent, y, w - 16 - extraIndent,
+        super.addBooleanAndHotkeyWidgets(x + 16 + extraIndent, y, w,
                 configResettable, configBoolean, keybind);
     }
 

@@ -74,7 +74,8 @@ public class WorldSwallowMaintenanceRenderer implements WorldRenderEvents.AfterE
     @Override
     public void afterEntities(WorldRenderContext context)
     {
-        if (!Configs.Tools.WORLD_SWALLOW_MAINTENANCE.getBooleanValue())
+        if (!Configs.Tools.WORLD_SWALLOW_MAINTENANCE.getBooleanValue()
+                || !Configs.Tools.WSM_RENDER_COPY.getBooleanValue())
         {
             return;
         }
@@ -198,7 +199,8 @@ public class WorldSwallowMaintenanceRenderer implements WorldRenderEvents.AfterE
      */
     public void tick(Minecraft mc)
     {
-        if (!Configs.Tools.WORLD_SWALLOW_MAINTENANCE.getBooleanValue())
+        if (!Configs.Tools.WORLD_SWALLOW_MAINTENANCE.getBooleanValue()
+                || !Configs.Tools.WSM_RENDER_COPY.getBooleanValue())
         {
             if (!cachedBlocks.isEmpty())
             {

@@ -130,17 +130,21 @@ public class Configs implements IConfigHandler
         public static final ConfigColor EXPERIENCE_TEXT_COLOR =
                 new ConfigColor("experienceTextColor", "#80FF20").apply(TOOLS_KEY);
 
-        // 世吞运维助手：在目标方块上方渲染旋转副本，便于远距离定位
+        // 世吞运维助手：容器型主配置，本身不直接提供效果，统一管理子功能
         // 注意：1.21.11 中 ominous_vault/ominous_trial_spawner 不是独立方块 ID，
         //       而是 vault/trial_spawner 的 OMINOUS 属性，因此默认列表只含 vault/trial_spawner
         public static final ConfigBooleanHotkeyed WORLD_SWALLOW_MAINTENANCE =
                 new ConfigBooleanHotkeyed("worldSwallowMaintenance", false, "").apply(TOOLS_KEY);
 
-        // 世吞运维助手子配置：渲染高度（方块自身向上偏移的格数，0-128，默认8）
+        // 世吞运维助手子配置：渲染副本（在目标方块上方渲染旋转副本，便于远距离定位）
+        public static final ConfigBooleanHotkeyed WSM_RENDER_COPY =
+                new ConfigBooleanHotkeyed("wsmRenderCopy", false, "").apply(TOOLS_KEY);
+
+        // 渲染副本子子配置：渲染高度（方块自身向上偏移的格数，0-128，默认8）
         public static final ConfigInteger WSM_RENDER_HEIGHT =
                 new ConfigInteger("wsmRenderHeight", 8, 0, 128).apply(TOOLS_KEY);
 
-        // 世吞运维助手子配置：目标方块 ID 列表
+        // 渲染副本子子配置：目标方块 ID 列表
         public static final ConfigStringList WSM_TARGET_BLOCKS =
                 new ConfigStringList("wsmTargetBlocks", ImmutableList.of(
                         "minecraft:vault",
@@ -157,11 +161,11 @@ public class Configs implements IConfigHandler
                         "minecraft:ender_chest"
                 ), "").apply(TOOLS_KEY);
 
-        // 世吞运维助手子配置：是否同时渲染含水方块
+        // 渲染副本子子配置：是否同时渲染含水方块
         public static final ConfigBooleanHotkeyed WSM_RENDER_WATERLOGGED =
                 new ConfigBooleanHotkeyed("wsmRenderWaterlogged", false, "").apply(TOOLS_KEY);
 
-        // 世吞运维助手子配置：距离阈值（0-32，实际曼哈顿距离 = 该值×16，默认4）
+        // 渲染副本子子配置：距离阈值（0-32，实际曼哈顿距离 = 该值×16，默认4）
         public static final ConfigInteger WSM_DISTANCE_THRESHOLD =
                 new ConfigInteger("wsmDistanceThreshold", 4, 0, 32).apply(TOOLS_KEY);
 
@@ -262,6 +266,7 @@ public class Configs implements IConfigHandler
                 VISUAL_EXPERIENCE,
                 EXPERIENCE_TEXT_COLOR,
                 WORLD_SWALLOW_MAINTENANCE,
+                WSM_RENDER_COPY,
                 WSM_RENDER_HEIGHT,
                 WSM_TARGET_BLOCKS,
                 WSM_RENDER_WATERLOGGED,
@@ -298,6 +303,7 @@ public class Configs implements IConfigHandler
                                                           boolean controlledCrawlExpanded,
                                                           boolean visualExperienceExpanded,
                                                           boolean worldSwallowMaintenanceExpanded,
+                                                          boolean renderCopyExpanded,
                                                           boolean clearKelpExpanded,
                                                           boolean betterAdvancementsExpanded,
                                                           boolean betterHopperMinecartExpanded,
@@ -307,7 +313,7 @@ public class Configs implements IConfigHandler
         {
             if (betterAutoJumpExpanded && betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
                     && armorHudExpanded && controlledCrawlExpanded && visualExperienceExpanded
-                    && worldSwallowMaintenanceExpanded && clearKelpExpanded && betterAdvancementsExpanded
+                    && worldSwallowMaintenanceExpanded && renderCopyExpanded && clearKelpExpanded && betterAdvancementsExpanded
                     && betterHopperMinecartExpanded && suckRangeDisplayExpanded && hopperLockedDisplayExpanded
                     && hopperContainerHighlightExpanded)
             {
@@ -348,7 +354,8 @@ public class Configs implements IConfigHandler
                 {
                     continue;
                 }
-                if (!worldSwallowMaintenanceExpanded && (config == WSM_RENDER_HEIGHT
+                if (!worldSwallowMaintenanceExpanded && (config == WSM_RENDER_COPY
+                        || config == WSM_RENDER_HEIGHT
                         || config == WSM_TARGET_BLOCKS
                         || config == WSM_RENDER_WATERLOGGED
                         || config == WSM_DISTANCE_THRESHOLD
@@ -357,6 +364,14 @@ public class Configs implements IConfigHandler
                         || config == WSM_CLEAR_KELP
                         || config == WSM_CLEAR_KELP_DISTANCE
                         || config == WSM_CLEAR_KELP_SELECTION_ONLY))
+                {
+                    continue;
+                }
+                // 渲染副本子子配置：仅在渲染副本展开时显示
+                if (!renderCopyExpanded && (config == WSM_RENDER_HEIGHT
+                        || config == WSM_TARGET_BLOCKS
+                        || config == WSM_RENDER_WATERLOGGED
+                        || config == WSM_DISTANCE_THRESHOLD))
                 {
                     continue;
                 }
