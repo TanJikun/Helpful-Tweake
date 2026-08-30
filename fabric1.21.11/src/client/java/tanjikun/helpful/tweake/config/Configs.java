@@ -140,7 +140,11 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed WSM_RENDER_COPY =
                 new ConfigBooleanHotkeyed("wsmRenderCopy", false, "").apply(TOOLS_KEY);
 
-        // 渲染副本子子配置：渲染高度（方块自身向上偏移的格数，0-128，默认8）
+        // 渲染副本子子配置：渲染方向（副本相对原方块的偏移方向，默认 Y+ 上方）
+        public static final ConfigOptionList WSM_RENDER_DIRECTION =
+                new ConfigOptionList("wsmRenderDirection", RenderDirection.UP).apply(TOOLS_KEY);
+
+        // 渲染副本子子配置：渲染高度（副本沿渲染方向偏移的格数，0-128，默认8）
         public static final ConfigInteger WSM_RENDER_HEIGHT =
                 new ConfigInteger("wsmRenderHeight", 8, 0, 128).apply(TOOLS_KEY);
 
@@ -267,6 +271,7 @@ public class Configs implements IConfigHandler
                 EXPERIENCE_TEXT_COLOR,
                 WORLD_SWALLOW_MAINTENANCE,
                 WSM_RENDER_COPY,
+                WSM_RENDER_DIRECTION,
                 WSM_RENDER_HEIGHT,
                 WSM_TARGET_BLOCKS,
                 WSM_RENDER_WATERLOGGED,
@@ -355,6 +360,7 @@ public class Configs implements IConfigHandler
                     continue;
                 }
                 if (!worldSwallowMaintenanceExpanded && (config == WSM_RENDER_COPY
+                        || config == WSM_RENDER_DIRECTION
                         || config == WSM_RENDER_HEIGHT
                         || config == WSM_TARGET_BLOCKS
                         || config == WSM_RENDER_WATERLOGGED
@@ -368,7 +374,8 @@ public class Configs implements IConfigHandler
                     continue;
                 }
                 // 渲染副本子子配置：仅在渲染副本展开时显示
-                if (!renderCopyExpanded && (config == WSM_RENDER_HEIGHT
+                if (!renderCopyExpanded && (config == WSM_RENDER_DIRECTION
+                        || config == WSM_RENDER_HEIGHT
                         || config == WSM_TARGET_BLOCKS
                         || config == WSM_RENDER_WATERLOGGED
                         || config == WSM_DISTANCE_THRESHOLD))

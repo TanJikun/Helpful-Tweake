@@ -80,6 +80,7 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
 
     // 子子配置项名称（控件额外缩进 32px）
     private static final Set<String> SUB_SUB_CONFIG_NAMES = Set.of(
+            "wsmRenderDirection",
             "wsmRenderHeight", "wsmTargetBlocks", "wsmRenderWaterlogged",
             "wsmDistanceThreshold",
             "wsmClearKelpDistance",

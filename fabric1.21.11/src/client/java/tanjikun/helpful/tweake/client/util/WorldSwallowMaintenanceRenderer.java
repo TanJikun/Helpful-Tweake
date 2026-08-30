@@ -35,6 +35,7 @@ import net.minecraft.world.phys.Vec3;
 import tanjikun.helpful.tweake.client.mixin.MixinBlockEntityRenderDispatcherAccessor;
 import tanjikun.helpful.tweake.client.mixin.MixinCameraAccessor;
 import tanjikun.helpful.tweake.config.Configs;
+import tanjikun.helpful.tweake.config.RenderDirection;
 
 /**
  * 世吞运维助手：在目标方块上方渲染旋转副本，便于远距离定位。
@@ -42,7 +43,7 @@ import tanjikun.helpful.tweake.config.Configs;
  * 行为：
  *   - 扫描玩家周围（水平曼哈顿距离 ≤ 距离阈值×16，Y ± 32）的方块
  *   - 匹配目标方块列表中的方块（如开启含水检测则还包括所有含水方块）
- *   - 在匹配方块位置 + (0, 渲染高度, 0) 处渲染一个绕 X 轴旋转 45° 的方块副本
+ *   - 在匹配方块位置 + 渲染方向 × 渲染高度 处渲染一个绕 X 轴旋转 45° 的方块副本
  *   - 渲染时再次检查水平曼哈顿距离条件（玩家可能移动）
  *
  * 性能：
@@ -91,7 +92,8 @@ public class WorldSwallowMaintenanceRenderer implements WorldRenderEvents.AfterE
             return;
         }
 
-        int renderHeight = Configs.Tools.WSM_RENDER_HEIGHT.getIntegerValue();
+        int renderDistance = Configs.Tools.WSM_RENDER_HEIGHT.getIntegerValue();
+        RenderDirection renderDir = (RenderDirection) Configs.Tools.WSM_RENDER_DIRECTION.getOptionListValue();
         int distanceThreshold = Configs.Tools.WSM_DISTANCE_THRESHOLD.getIntegerValue() * 16;
         Vec3 camPos = ((MixinCameraAccessor) mc.gameRenderer.getMainCamera()).getPosition();
         BlockPos playerPos = mc.player.blockPosition();
@@ -108,12 +110,12 @@ public class WorldSwallowMaintenanceRenderer implements WorldRenderEvents.AfterE
                 continue;
             }
 
-            // 渲染位置 = 方块位置 + 渲染高度，相对于相机坐标
+            // 渲染位置 = 方块位置 + 渲染方向 × 渲染距离，相对于相机坐标
             // 绕 X 轴旋转 45°：先移到方块中心，旋转，再移回
             poseStack.pushPose();
-            poseStack.translate(cb.pos.getX() - camPos.x,
-                                cb.pos.getY() - camPos.y + renderHeight,
-                                cb.pos.getZ() - camPos.z);
+            poseStack.translate(cb.pos.getX() - camPos.x + renderDistance * renderDir.getOffsetX(),
+                                cb.pos.getY() - camPos.y + renderDistance * renderDir.getOffsetY(),
+                                cb.pos.getZ() - camPos.z + renderDistance * renderDir.getOffsetZ());
             poseStack.translate(0.5, 0.5, 0.5);
             poseStack.mulPose(Axis.XP.rotationDegrees(45.0f));
             poseStack.translate(-0.5, -0.5, -0.5);
