@@ -148,6 +148,9 @@
 	"helpful_tweake.message.creativeShiftToHotbar.enabled": "创造 Shift 移入快捷栏：已开启",
 	"helpful_tweake.message.creativeShiftToHotbar.disabled": "创造 Shift 移入快捷栏：已关闭",
 
+	"helpful_tweake.config.tools.name.containerSignalDisplay": "容器信号输出显示",
+	"helpful_tweake.config.tools.comment.containerSignalDisplay": "开启后打开容器界面时，在容器名字右侧\n显示该容器被比较器检测时输出的信号\n强度，格式如\"箱子 (0)\"。\n支持箱子/木桶/潜影盒/漏斗/发射器/\n投掷器/熔炉类/酿造台，物品变动实时更新。\n仅影响显示，不改变游戏逻辑。",
+
 	"helpful_tweake.config.tools.name.betterHopperMinecart": "更好的漏斗矿车",
 	"helpful_tweake.config.tools.comment.betterHopperMinecart": "漏斗矿车相关功能合集。\n本身不直接提供效果，\n点击 +/- 按钮展开配置子功能。",
 	"helpful_tweake.message.betterHopperMinecart.enabled": "更好的漏斗矿车：已开启",

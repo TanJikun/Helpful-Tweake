@@ -213,6 +213,10 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed CREATIVE_SHIFT_TO_HOTBAR =
                 new ConfigBooleanHotkeyed("creativeShiftToHotbar", false, "").apply(TOOLS_KEY);
 
+        // 容器信号输出显示：打开容器界面时在容器名字右边显示比较器信号强度，如"箱子 (0)"
+        public static final ConfigBooleanHotkeyed CONTAINER_SIGNAL_DISPLAY =
+                new ConfigBooleanHotkeyed("containerSignalDisplay", false, "").apply(TOOLS_KEY);
+
         // 更好的漏斗矿车：容器型主配置，本身只统一管理子功能，不直接提供效果
         public static final ConfigBooleanHotkeyed BETTER_HOPPER_MINECART =
                 new ConfigBooleanHotkeyed("betterHopperMinecart", false, "").apply(TOOLS_KEY);
@@ -286,6 +290,7 @@ public class Configs implements IConfigHandler
                 SHOW_ADVANCEMENT_DETAILS,
                 BIGGER_ADVANCEMENTS_SCREEN,
                 CREATIVE_SHIFT_TO_HOTBAR,
+                CONTAINER_SIGNAL_DISPLAY,
                 BETTER_HOPPER_MINECART,
                 BETTER_HOPPER_MINECART_HITBOX,
                 HOPPER_SUCK_RANGE_COLOR,

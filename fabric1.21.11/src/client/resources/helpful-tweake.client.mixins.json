@@ -29,7 +29,8 @@
 		"MixinAdvancementsScreenBigger",
 		"MixinAdvancementTabBigger",
 		"MixinCreativeModeInventoryScreen",
-		"MixinEntityHitboxDebugRenderer"
+		"MixinEntityHitboxDebugRenderer",
+		"MixinAbstractContainerScreenSignal"
 	],
 	"injectors": {
 		"defaultRequire": 1

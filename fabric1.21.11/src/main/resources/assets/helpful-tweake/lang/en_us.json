@@ -149,6 +149,9 @@
 	"helpful_tweake.message.creativeShiftToHotbar.enabled": "Creative Shift to Hotbar: ON",
 	"helpful_tweake.message.creativeShiftToHotbar.disabled": "Creative Shift to Hotbar: OFF",
 
+	"helpful_tweake.config.tools.name.containerSignalDisplay": "Container Signal Output Display",
+	"helpful_tweake.config.tools.comment.containerSignalDisplay": "When enabled, opening a container GUI shows its\ncomparator signal strength to the right of the\ncontainer name, formatted like \"Chest (0)\".\nSupports chests/barrels/shulker boxes/hoppers/\ndispensers/droppers/furnaces/brewing stands,\nupdating live as items change. Display only.",
+
 	"helpful_tweake.config.tools.name.betterHopperMinecart": "Better Hopper Minecart",
 	"helpful_tweake.config.tools.comment.betterHopperMinecart": "A collection of hopper minecart features.\nProvides no effect on its own.\nClick +/- to expand sub-features.",
 	"helpful_tweake.message.betterHopperMinecart.enabled": "Better Hopper Minecart: ON",
