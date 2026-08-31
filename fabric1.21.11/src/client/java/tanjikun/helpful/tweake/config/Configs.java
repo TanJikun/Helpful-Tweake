@@ -249,6 +249,22 @@ public class Configs implements IConfigHandler
         public static final ConfigInteger HOPPER_CONTAINER_HIGHLIGHT_WIDTH =
                 new ConfigInteger("hopperContainerHighlightWidth", 2, 1, 10).apply(TOOLS_KEY);
 
+        // 放大镜：按住按键放大屏幕画面（滚轮临时调整倍数），默认热键 C
+        public static final ConfigBooleanHotkeyed ZOOM =
+                new ConfigBooleanHotkeyed("zoom", false, "C").apply(TOOLS_KEY);
+
+        // 放大镜子配置：默认放大倍数（按下按键时使用的倍数，1-32，默认2）
+        public static final ConfigDouble ZOOM_DEFAULT_MULTIPLIER =
+                new ConfigDouble("zoomDefaultMultiplier", 2.0, 1.0, 32.0).apply(TOOLS_KEY);
+
+        // 放大镜子配置：过渡函数（默认指数缓出，共14种缓动可选）
+        public static final ConfigOptionList ZOOM_TRANSITION =
+                new ConfigOptionList("zoomTransition", ZoomTransitionMode.EASE_OUT_EXPO).apply(TOOLS_KEY);
+
+        // 放大镜子配置：过渡速度（非即时模式下动画播放速度，动画时长=1000ms/该值，默认1.5）
+        public static final ConfigDouble ZOOM_TRANSITION_SPEED =
+                new ConfigDouble("zoomTransitionSpeed", 1.5, 0.1, 10.0).apply(TOOLS_KEY);
+
         public static ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BETTER_AUTO_JUMP,
                 SNEAK_NO_SLOPE,
@@ -298,7 +314,11 @@ public class Configs implements IConfigHandler
                 HOPPER_LOCKED_COLOR,
                 HOPPER_CONTAINER_HIGHLIGHT,
                 HOPPER_CONTAINER_HIGHLIGHT_COLOR,
-                HOPPER_CONTAINER_HIGHLIGHT_WIDTH
+                HOPPER_CONTAINER_HIGHLIGHT_WIDTH,
+                ZOOM,
+                ZOOM_DEFAULT_MULTIPLIER,
+                ZOOM_TRANSITION,
+                ZOOM_TRANSITION_SPEED
         );
 
         /**
@@ -319,13 +339,14 @@ public class Configs implements IConfigHandler
                                                           boolean betterHopperMinecartExpanded,
                                                           boolean suckRangeDisplayExpanded,
                                                           boolean hopperLockedDisplayExpanded,
-                                                          boolean hopperContainerHighlightExpanded)
+                                                          boolean hopperContainerHighlightExpanded,
+                                                          boolean zoomExpanded)
         {
             if (betterAutoJumpExpanded && betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
                     && armorHudExpanded && controlledCrawlExpanded && visualExperienceExpanded
                     && worldSwallowMaintenanceExpanded && renderCopyExpanded && clearKelpExpanded && betterAdvancementsExpanded
                     && betterHopperMinecartExpanded && suckRangeDisplayExpanded && hopperLockedDisplayExpanded
-                    && hopperContainerHighlightExpanded)
+                    && hopperContainerHighlightExpanded && zoomExpanded)
             {
                 return OPTIONS;
             }
@@ -431,6 +452,13 @@ public class Configs implements IConfigHandler
                 }
                 if (!hopperContainerHighlightExpanded
                         && (config == HOPPER_CONTAINER_HIGHLIGHT_COLOR || config == HOPPER_CONTAINER_HIGHLIGHT_WIDTH))
+                {
+                    continue;
+                }
+                // 放大镜子配置仅在放大镜展开时显示
+                if (!zoomExpanded && (config == ZOOM_DEFAULT_MULTIPLIER
+                        || config == ZOOM_TRANSITION
+                        || config == ZOOM_TRANSITION_SPEED))
                 {
                     continue;
                 }

@@ -30,7 +30,9 @@
 		"MixinAdvancementTabBigger",
 		"MixinCreativeModeInventoryScreen",
 		"MixinEntityHitboxDebugRenderer",
-		"MixinAbstractContainerScreenSignal"
+		"MixinAbstractContainerScreenSignal",
+		"MixinGameRendererZoom",
+		"MixinMouseHandlerZoom"
 	],
 	"injectors": {
 		"defaultRequire": 1

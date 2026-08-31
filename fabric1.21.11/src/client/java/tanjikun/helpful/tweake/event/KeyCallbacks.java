@@ -28,6 +28,7 @@ public class KeyCallbacks
         Configs.Tools.SHIELD_STATUS.getKeybind().setCallback(new ToggleShieldStatusCallback());
         Configs.Tools.ARMOR_HUD.getKeybind().setCallback(new ToggleArmorHudCallback());
         Configs.Tools.CONTROLLED_CRAWL.getKeybind().setCallback(new CrawlKeyCallback());
+        Configs.Tools.ZOOM.getKeybind().setCallback(new ZoomKeyCallback());
         Configs.Optimization.BOLD_FONT.getKeybind().setCallback(new ToggleBoldFontCallback());
         Configs.Optimization.ENTITY_RENDER_OPTIMIZATION.getKeybind().setCallback(new ToggleEntityRenderOptimizationCallback());
         Configs.Optimization.SKIP_DISTANT_ENTITIES.getKeybind().setCallback(new ToggleSkipDistantEntitiesCallback());
@@ -313,6 +314,20 @@ public class KeyCallbacks
                 CrawlState.toggle();
             }
             // HOLD 模式下也不传播按键事件（避免被其他系统误处理）
+            return true;
+        }
+    }
+
+    /**
+     * 放大镜按键回调：按住放大、松开还原。
+     * 状态由 ZoomState 每 tick 轮询 isKeybindHeld() 判定，
+     * 这里仅消费按键事件，避免透传给其他系统（也不切换开关）。
+     */
+    private record ZoomKeyCallback() implements IHotkeyCallback
+    {
+        @Override
+        public boolean onKeyAction(KeyAction action, IKeybind key)
+        {
             return true;
         }
     }

@@ -34,6 +34,7 @@ import tanjikun.helpful.tweake.config.Configs;
  *                             / ENTITY_RENDER_OPTIMIZATION / SKIP_DISTANT_ENTITIES
  *                             / BETTER_ADVANCEMENTS / BETTER_HOPPER_MINECART
  *                             / BETTER_HOPPER_MINECART_HITBOX / HOPPER_MINECART_LOCKED_DISPLAY
+ *                             / HOPPER_CONTAINER_HIGHLIGHT / ZOOM
  *   ConfigHotkey          —— CONTROLLED_CRAWL
  * 其他配置项走原版渲染逻辑。
  *
@@ -75,7 +76,10 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "showAdvancementDetails",
             "biggerAdvancementsScreen",
             "betterHopperMinecartHitbox",
-            "hopperContainerHighlight"
+            "hopperContainerHighlight",
+            "zoomDefaultMultiplier",
+            "zoomTransition",
+            "zoomTransitionSpeed"
     );
 
     // 子子配置项名称（控件额外缩进 32px）
@@ -276,6 +280,11 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.hopperContainerHighlightExpanded, ExpandState::toggleHopperContainerHighlight,
                     getIndent() - CONTROL_INDENT);
+        }
+        else if (configBoolean == Configs.Tools.ZOOM)
+        {
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.zoomExpanded, ExpandState::toggleZoom);
         }
         else
         {

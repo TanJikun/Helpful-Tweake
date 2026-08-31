@@ -19,6 +19,7 @@ import tanjikun.helpful.tweake.client.util.HopperContainerHighlightRenderer;
 import tanjikun.helpful.tweake.client.util.KelpBreaker;
 import tanjikun.helpful.tweake.client.util.VisualExperienceHudRenderer;
 import tanjikun.helpful.tweake.client.util.WorldSwallowMaintenanceRenderer;
+import tanjikun.helpful.tweake.client.util.ZoomState;
 import tanjikun.helpful.tweake.config.Configs;
 import tanjikun.helpful.tweake.config.CommonConfigs;
 import tanjikun.helpful.tweake.config.CrawlTriggerMode;
@@ -127,6 +128,9 @@ public class InitHandler implements IInitializationHandler
 
         // 清海带：每 tick 扫描并破坏 Litematica 选区内海带
         ClientTickEvents.END_CLIENT_TICK.register(new KelpBreaker());
+
+        // 放大镜：每 tick 轮询按键按住/松开，驱动 ZoomState 过渡动画
+        ClientTickEvents.END_CLIENT_TICK.register(mc -> ZoomState.tick());
     }
 
     /**
