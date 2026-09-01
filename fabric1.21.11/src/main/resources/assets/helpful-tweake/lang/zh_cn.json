@@ -207,10 +207,14 @@
 	"helpful_tweake.config.optimization.comment.skipDistantEntitiesDistance": "与玩家距离超过此值的实体不渲染。\n范围1-128，默认32。",
 	"helpful_tweake.config.optimization.name.stackEntityRenderOptimization": "    堆叠实体渲染优化",
 	"helpful_tweake.config.optimization.comment.stackEntityRenderOptimization": "开启后同一方块坐标内相同类型的实体\n仅渲染一个。掉落物按物品类型区分，\n不同物品各渲染一个。",
+	"helpful_tweake.config.optimization.name.disableB36Render": "禁用B36渲染",
+	"helpful_tweake.config.optimization.comment.disableB36Render": "开启后不渲染移动中的活塞技术方块（B36），\n活塞伸缩动画期间被移动的方块不可见，\n伸缩完成后恢复正常显示。\n可提升大量活塞同时工作场景的帧数。",
 	"helpful_tweake.message.entityRenderOptimization.enabled": "实体渲染优化：已开启",
 	"helpful_tweake.message.entityRenderOptimization.disabled": "实体渲染优化：已关闭",
 	"helpful_tweake.message.skipDistantEntities.enabled": "阻止过远实体渲染：已开启",
 	"helpful_tweake.message.skipDistantEntities.disabled": "阻止过远实体渲染：已关闭",
 	"helpful_tweake.message.stackEntityRenderOptimization.enabled": "堆叠实体渲染优化：已开启",
-	"helpful_tweake.message.stackEntityRenderOptimization.disabled": "堆叠实体渲染优化：已关闭"
+	"helpful_tweake.message.stackEntityRenderOptimization.disabled": "堆叠实体渲染优化：已关闭",
+	"helpful_tweake.message.disableB36Render.enabled": "禁用B36渲染：已开启",
+	"helpful_tweake.message.disableB36Render.disabled": "禁用B36渲染：已关闭"
 }

@@ -22,6 +22,7 @@
 		"MixinBlockEntityRenderDispatcherAccessor",
 		"MixinTransparentBedrock",
 		"MixinEntityRenderDispatcher",
+		"MixinPistonHeadRenderer",
 		"MixinShowAllAdvancements",
 		"MixinAdvancementWidgetDrawHover",
 		"MixinAdvancementTabDetails",

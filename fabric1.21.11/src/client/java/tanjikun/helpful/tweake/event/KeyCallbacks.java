@@ -33,6 +33,7 @@ public class KeyCallbacks
         Configs.Optimization.ENTITY_RENDER_OPTIMIZATION.getKeybind().setCallback(new ToggleEntityRenderOptimizationCallback());
         Configs.Optimization.SKIP_DISTANT_ENTITIES.getKeybind().setCallback(new ToggleSkipDistantEntitiesCallback());
         Configs.Optimization.STACK_ENTITY_RENDER_OPTIMIZATION.getKeybind().setCallback(new ToggleStackEntityRenderOptimizationCallback());
+        Configs.Optimization.DISABLE_B36_RENDER.getKeybind().setCallback(new ToggleDisableB36RenderCallback());
     }
 
     private record OpenGuiCallback(Minecraft mc) implements IHotkeyCallback
@@ -257,6 +258,24 @@ public class KeyCallbacks
                 boolean enabled = Configs.Optimization.STACK_ENTITY_RENDER_OPTIMIZATION.getBooleanValue();
                 Minecraft.getInstance().player.displayClientMessage(
                         Component.translatable("helpful_tweake.message.stackEntityRenderOptimization." + (enabled ? "enabled" : "disabled")),
+                        true);
+            }
+            return true;
+        }
+    }
+
+    private record ToggleDisableB36RenderCallback() implements IHotkeyCallback
+    {
+        @Override
+        public boolean onKeyAction(KeyAction action, IKeybind key)
+        {
+            Configs.Optimization.DISABLE_B36_RENDER.toggleBooleanValue();
+            Configs.saveToFile();
+            if (Minecraft.getInstance().player != null)
+            {
+                boolean enabled = Configs.Optimization.DISABLE_B36_RENDER.getBooleanValue();
+                Minecraft.getInstance().player.displayClientMessage(
+                        Component.translatable("helpful_tweake.message.disableB36Render." + (enabled ? "enabled" : "disabled")),
                         true);
             }
             return true;

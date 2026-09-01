@@ -490,12 +490,17 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed STACK_ENTITY_RENDER_OPTIMIZATION =
                 new ConfigBooleanHotkeyed("stackEntityRenderOptimization", false, "").apply(OPTIMIZATION_KEY);
 
+        // 禁用B36渲染：开启后不渲染移动中的活塞技术方块（B36），活塞伸缩动画期间方块不可见
+        public static final ConfigBooleanHotkeyed DISABLE_B36_RENDER =
+                new ConfigBooleanHotkeyed("disableB36Render", false, "").apply(OPTIMIZATION_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BOLD_FONT,
                 ENTITY_RENDER_OPTIMIZATION,
                 SKIP_DISTANT_ENTITIES,
                 SKIP_DISTANT_ENTITIES_DISTANCE,
-                STACK_ENTITY_RENDER_OPTIMIZATION
+                STACK_ENTITY_RENDER_OPTIMIZATION,
+                DISABLE_B36_RENDER
         );
 
         /**

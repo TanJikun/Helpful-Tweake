@@ -208,10 +208,14 @@
 	"helpful_tweake.config.optimization.comment.skipDistantEntitiesDistance": "Entities farther than this value from the player\nare not rendered. Range 1-128, default 32.",
 	"helpful_tweake.config.optimization.name.stackEntityRenderOptimization": "    Stack Entity Render Optimization",
 	"helpful_tweake.config.optimization.comment.stackEntityRenderOptimization": "When enabled, only one entity of the same type\nper block coordinate is rendered. Item entities\nare grouped by item type, so different items\nare each rendered once.",
+	"helpful_tweake.config.optimization.name.disableB36Render": "Disable B36 Rendering",
+	"helpful_tweake.config.optimization.comment.disableB36Render": "When enabled, the moving piston technical block\n(B36) is not rendered. Blocks being pushed or\npulled by pistons are invisible during the\nanimation and reappear once it finishes.\nImproves FPS in piston-heavy contraptions.",
 	"helpful_tweake.message.entityRenderOptimization.enabled": "Entity Render Optimization: ON",
 	"helpful_tweake.message.entityRenderOptimization.disabled": "Entity Render Optimization: OFF",
 	"helpful_tweake.message.skipDistantEntities.enabled": "Skip Distant Entities: ON",
 	"helpful_tweake.message.skipDistantEntities.disabled": "Skip Distant Entities: OFF",
 	"helpful_tweake.message.stackEntityRenderOptimization.enabled": "Stack Entity Render Optimization: ON",
-	"helpful_tweake.message.stackEntityRenderOptimization.disabled": "Stack Entity Render Optimization: OFF"
+	"helpful_tweake.message.stackEntityRenderOptimization.disabled": "Stack Entity Render Optimization: OFF",
+	"helpful_tweake.message.disableB36Render.enabled": "Disable B36 Rendering: ON",
+	"helpful_tweake.message.disableB36Render.disabled": "Disable B36 Rendering: OFF"
 }
