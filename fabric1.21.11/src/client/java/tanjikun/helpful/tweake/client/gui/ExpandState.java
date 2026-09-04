@@ -6,12 +6,9 @@ package tanjikun.helpful.tweake.client.gui;
  */
 public class ExpandState
 {
-    public static boolean betterAutoJumpExpanded = false;
     public static boolean betterBoatExpanded = false;
     public static boolean betterDurabilityExpanded = false;
-    public static boolean betterHarvestExpanded = false;
     public static boolean armorHudExpanded = false;
-    public static boolean controlledCrawlExpanded = false;
     public static boolean visualExperienceExpanded = false;
     public static boolean worldSwallowMaintenanceExpanded = false;
     public static boolean renderCopyExpanded = false;
@@ -29,15 +26,6 @@ public class ExpandState
     public static void setRefreshCallback(Runnable callback)
     {
         refreshCallback = callback;
-    }
-
-    public static void toggleBetterAutoJump()
-    {
-        betterAutoJumpExpanded = !betterAutoJumpExpanded;
-        if (refreshCallback != null)
-        {
-            refreshCallback.run();
-        }
     }
 
     public static void toggleBetterBoat()
@@ -58,27 +46,9 @@ public class ExpandState
         }
     }
 
-    public static void toggleBetterHarvest()
-    {
-        betterHarvestExpanded = !betterHarvestExpanded;
-        if (refreshCallback != null)
-        {
-            refreshCallback.run();
-        }
-    }
-
     public static void toggleArmorHud()
     {
         armorHudExpanded = !armorHudExpanded;
-        if (refreshCallback != null)
-        {
-            refreshCallback.run();
-        }
-    }
-
-    public static void toggleControlledCrawl()
-    {
-        controlledCrawlExpanded = !controlledCrawlExpanded;
         if (refreshCallback != null)
         {
             refreshCallback.run();

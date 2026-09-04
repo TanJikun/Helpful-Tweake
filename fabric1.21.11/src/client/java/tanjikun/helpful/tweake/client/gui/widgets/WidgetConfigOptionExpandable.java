@@ -26,16 +26,15 @@ import tanjikun.helpful.tweake.client.gui.ExpandState;
 import tanjikun.helpful.tweake.config.Configs;
 
 /**
- * 在指定配置行（ConfigBooleanHotkeyed 或 ConfigHotkey）的左侧添加展开/折叠按钮。
+ * 在指定配置行（ConfigBooleanHotkeyed）的左侧添加展开/折叠按钮。
  * 命中表：
- *   ConfigBooleanHotkeyed —— BETTER_AUTO_JUMP / BETTER_BOAT / BETTER_DURABILITY
- *                             / BETTER_HARVEST / ARMOR_HUD / VISUAL_EXPERIENCE
+ *   ConfigBooleanHotkeyed —— BETTER_BOAT / BETTER_DURABILITY
+ *                             / ARMOR_HUD / VISUAL_EXPERIENCE
  *                             / WORLD_SWALLOW_MAINTENANCE / WSM_CLEAR_KELP
  *                             / ENTITY_RENDER_OPTIMIZATION / SKIP_DISTANT_ENTITIES
  *                             / BETTER_ADVANCEMENTS / BETTER_HOPPER_MINECART
  *                             / BETTER_HOPPER_MINECART_HITBOX / HOPPER_MINECART_LOCKED_DISPLAY
  *                             / HOPPER_CONTAINER_HIGHLIGHT / ZOOM
- *   ConfigHotkey          —— CONTROLLED_CRAWL
  * 其他配置项走原版渲染逻辑。
  *
  * 所有配置项的控件（开关、热键、输入框等）统一右移 16px，与有展开按钮的配置项对齐。
@@ -43,7 +42,6 @@ import tanjikun.helpful.tweake.config.Configs;
  * 缩进策略：控件簇整体右移层级缩进量并保持原版宽度不变（不压缩），
  * 确保同一层级的所有行（滑块、布尔、文本列表、展开行）右边缘对齐。
  * 当 Litematica 未安装时，清海带及其子子配置项的标签显示为红色、按钮/文本框禁用。
- * 单机模式专用功能（更方便的收获）的标签也显示为红色。
  */
 public class WidgetConfigOptionExpandable extends WidgetConfigOption
 {
@@ -53,18 +51,11 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
     private static final Set<String> LITEMATICA_DEPENDENT_NAMES =
             Set.of("wsmClearKelp", "wsmClearKelpDistance", "wsmClearKelpSelectionOnly");
 
-    // 仅单机模式可用的配置项名称
-    private static final Set<String> SINGLEPLAYER_ONLY_NAMES =
-            Set.of("betterHarvest");
-
     // 子配置项名称（控件额外缩进 16px）
     private static final Set<String> SUB_CONFIG_NAMES = Set.of(
-            "sneakNoSlope",
             "boatLiftHeight",
             "durabilityUnbreakingCalc",
-            "harvestRequireHoe", "harvestHoeDurability", "harvestBlacklist",
             "armorHudPosition", "armorHudX", "armorHudY",
-            "crawlTriggerMode",
             "experienceTextColor",
             "wsmRenderCopy",
             "wsmTransparentBedrock",
@@ -189,12 +180,7 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
                                               IConfigResettable configResettable,
                                               IConfigBoolean configBoolean, IKeybind keybind)
     {
-        if (configBoolean == Configs.Tools.BETTER_AUTO_JUMP)
-        {
-            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
-                    ExpandState.betterAutoJumpExpanded, ExpandState::toggleBetterAutoJump);
-        }
-        else if (configBoolean == Configs.Tools.BETTER_BOAT)
+        if (configBoolean == Configs.Tools.BETTER_BOAT)
         {
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.betterBoatExpanded, ExpandState::toggleBetterBoat);
@@ -203,11 +189,6 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
         {
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.betterDurabilityExpanded, ExpandState::toggleBetterDurability);
-        }
-        else if (configBoolean == Configs.Tools.BETTER_HARVEST)
-        {
-            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
-                    ExpandState.betterHarvestExpanded, ExpandState::toggleBetterHarvest);
         }
         else if (configBoolean == Configs.Tools.ARMOR_HUD)
         {
@@ -297,19 +278,8 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
     @Override
     protected void addHotkeyConfigElements(int x, int y, int w, String label, IHotkey hotkey)
     {
-        // CONTROLLED_CRAWL 是 ConfigHotkey（仅热键无 boolean 开关），单独加展开按钮
-        if (hotkey == Configs.Tools.CONTROLLED_CRAWL)
-        {
-            ButtonGeneric expandBtn = new ButtonGeneric(x, y, 14, 20,
-                    ExpandState.controlledCrawlExpanded ? "-" : "+");
-            this.addButton(expandBtn, new ExpandButtonListener(ExpandState::toggleControlledCrawl));
-            super.addHotkeyConfigElements(x + 16, y, w, label, hotkey);
-        }
-        else
-        {
-            int indent = getIndent();
-            super.addHotkeyConfigElements(x + indent, y, w, label, hotkey);
-        }
+        int indent = getIndent();
+        super.addHotkeyConfigElements(x + indent, y, w, label, hotkey);
     }
 
     @Override
@@ -366,7 +336,6 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
 
     /**
      * 覆盖 addLabel：Litematica 未安装时，依赖它的配置项标签显示为红色。
-     * 仅单机模式可用的配置项（如更方便的收获）标签也显示为红色。
      * addLabel 在 super 构造期间被调用，此时 this.wrapper 已由父类赋值，可安全访问。
      */
     @Override
@@ -380,7 +349,7 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
     }
 
     /**
-     * 覆盖 addConfigComment：依赖 Litematica 或单机模式专用的配置项，
+     * 覆盖 addConfigComment：依赖 Litematica 的配置项，
      * 其悬停提示文字也显示为红色。
      */
     @Override
@@ -432,20 +401,11 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
 
     /**
      * 判断当前配置项标签是否需要显示为红色。
-     * 条件：Litematica 未安装 + 依赖 Litematica，或为单机模式专用配置项。
+     * 条件：Litematica 未安装 + 依赖 Litematica。
      */
     private boolean isCurrentConfigLabelRed()
     {
-        if (isLitematicaMissing() && isCurrentConfigLitematicaDependent())
-        {
-            return true;
-        }
-        if (this.wrapper == null)
-        {
-            return false;
-        }
-        IConfigBase config = this.wrapper.getConfig();
-        return config != null && SINGLEPLAYER_ONLY_NAMES.contains(config.getName());
+        return isLitematicaMissing() && isCurrentConfigLitematicaDependent();
     }
 
     private record ExpandButtonListener(Runnable toggleAction) implements IButtonActionListener

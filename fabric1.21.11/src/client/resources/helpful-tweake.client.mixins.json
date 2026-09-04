@@ -4,11 +4,8 @@
 	"compatibilityLevel": "JAVA_21",
 	"client": [
 		"ExampleClientMixin",
-		"MixinLivingEntity",
-		"MixinMinecraft",
 		"MixinLivingEntityClimb",
 		"MixinGuiGraphicsDurability",
-		"MixinMultiPlayerGameModeHarvest",
 		"MixinMinecraftAccessor",
 		"MixinFontManagerAccessor",
 		"MixinTrueTypeGlyphProviderAccessor",

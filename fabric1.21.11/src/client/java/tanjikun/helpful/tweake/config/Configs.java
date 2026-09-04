@@ -14,7 +14,6 @@ import fi.dy.masa.malilib.config.IConfigHandler;
 import fi.dy.masa.malilib.config.options.ConfigBooleanHotkeyed;
 import fi.dy.masa.malilib.config.options.ConfigColor;
 import fi.dy.masa.malilib.config.options.ConfigDouble;
-import fi.dy.masa.malilib.config.options.ConfigHotkey;
 import fi.dy.masa.malilib.config.options.ConfigInteger;
 import fi.dy.masa.malilib.config.options.ConfigOptionList;
 import fi.dy.masa.malilib.config.options.ConfigStringList;
@@ -36,15 +35,6 @@ public class Configs implements IConfigHandler
 
     public static class Tools
     {
-        // 更好的自动跳跃：允许玩家平滑通过≤1.25格高的障碍，不损失水平速度
-        // ConfigBooleanHotkeyed 将 boolean 开关与热键合并在同一行（类似 tweakeroo）
-        public static final ConfigBooleanHotkeyed BETTER_AUTO_JUMP =
-                new ConfigBooleanHotkeyed("betterAutoJump", false, "").apply(TOOLS_KEY);
-
-        // 更好的自动跳跃子配置：潜行不上坡（开启后潜行时无法登上任意高度的东西，哪怕是地毯）
-        public static final ConfigBooleanHotkeyed SNEAK_NO_SLOPE =
-                new ConfigBooleanHotkeyed("sneakNoSlope", true, "").apply(TOOLS_KEY);
-
         // 全局经验修补：装备栏/主副手/快捷栏/背包内所有经验修补物品都能在吸收经验时修复
         public static final ConfigBooleanHotkeyed GLOBAL_MENDING =
                 new ConfigBooleanHotkeyed("globalMending", false, "").apply(TOOLS_KEY);
@@ -77,22 +67,6 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed DURABILITY_UNBREAKING_CALC =
                 new ConfigBooleanHotkeyed("durabilityUnbreakingCalc", false, "").apply(TOOLS_KEY);
 
-        // 更方便的收获：右键收获成熟作物并消耗种子重新种植
-        public static final ConfigBooleanHotkeyed BETTER_HARVEST =
-                new ConfigBooleanHotkeyed("betterHarvest", false, "").apply(TOOLS_KEY);
-
-        // 更方便的收获子配置：是否需要手持锄头
-        public static final ConfigBooleanHotkeyed HARVEST_REQUIRE_HOE =
-                new ConfigBooleanHotkeyed("harvestRequireHoe", false, "").apply(TOOLS_KEY);
-
-        // 更方便的收获子配置：手持锄头收获时是否消耗耐久（仅在 requireHoe=true 时生效）
-        public static final ConfigBooleanHotkeyed HARVEST_HOE_DURABILITY =
-                new ConfigBooleanHotkeyed("harvestHoeDurability", false, "").apply(TOOLS_KEY);
-
-        // 更方便的收获子配置：作物黑名单（游戏内 ID 列表）
-        public static final ConfigStringList HARVEST_BLACKLIST =
-                new ConfigStringList("harvestBlacklist", ImmutableList.of(), "").apply(TOOLS_KEY);
-
         // 盾牌状态显示：在盾牌上叠加颜色层（绿色=可用，红色=冷却中）
         public static final ConfigBooleanHotkeyed SHIELD_STATUS =
                 new ConfigBooleanHotkeyed("shieldStatus", false, "").apply(TOOLS_KEY);
@@ -112,15 +86,6 @@ public class Configs implements IConfigHandler
         // 盔甲 HUD 子配置：自定义坐标 Y 百分比（1-100，仅当 ARMOR_HUD_POSITION=CUSTOM 时生效）
         public static final ConfigDouble ARMOR_HUD_Y =
                 new ConfigDouble("armorHudY", 50.0, 1.0, 100.0).apply(TOOLS_KEY);
-
-        // 控制爬行：按下绑定按键时将玩家姿势切换为爬行（默认无开关，仅绑定按键）
-        // ConfigHotkey 仅含热键不含 boolean 开关，区别于 ConfigBooleanHotkeyed
-        public static final ConfigHotkey CONTROLLED_CRAWL =
-                new ConfigHotkey("controlledCrawl", "").apply(TOOLS_KEY);
-
-        // 控制爬行子配置：触发方式（按下/切换）
-        public static final ConfigOptionList CRAWL_TRIGGER_MODE =
-                new ConfigOptionList("crawlTriggerMode", CrawlTriggerMode.HOLD).apply(TOOLS_KEY);
 
         // 可视化经验值：在经验条上方显示当前等级经验进度和总经验值
         public static final ConfigBooleanHotkeyed VISUAL_EXPERIENCE =
@@ -266,8 +231,6 @@ public class Configs implements IConfigHandler
                 new ConfigDouble("zoomTransitionSpeed", 1.5, 0.1, 10.0).apply(TOOLS_KEY);
 
         public static ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
-                BETTER_AUTO_JUMP,
-                SNEAK_NO_SLOPE,
                 GLOBAL_MENDING,
                 BETTER_TOTEM,
                 BETTER_CLIMBING,
@@ -276,17 +239,11 @@ public class Configs implements IConfigHandler
                 INFINITE_WATER,
                 BETTER_DURABILITY,
                 DURABILITY_UNBREAKING_CALC,
-                BETTER_HARVEST,
-                HARVEST_REQUIRE_HOE,
-                HARVEST_HOE_DURABILITY,
-                HARVEST_BLACKLIST,
                 SHIELD_STATUS,
                 ARMOR_HUD,
                 ARMOR_HUD_POSITION,
                 ARMOR_HUD_X,
                 ARMOR_HUD_Y,
-                CONTROLLED_CRAWL,
-                CRAWL_TRIGGER_MODE,
                 VISUAL_EXPERIENCE,
                 EXPERIENCE_TEXT_COLOR,
                 WORLD_SWALLOW_MAINTENANCE,
@@ -325,12 +282,9 @@ public class Configs implements IConfigHandler
          * 返回显示用配置列表。子配置项仅在对应主配置展开时显示。
          * 持久化始终使用 OPTIONS（包含全部配置项）。
          */
-        public static List<IConfigBase> getDisplayOptions(boolean betterAutoJumpExpanded,
-                                                          boolean betterBoatExpanded,
+        public static List<IConfigBase> getDisplayOptions(boolean betterBoatExpanded,
                                                           boolean betterDurabilityExpanded,
-                                                          boolean betterHarvestExpanded,
                                                           boolean armorHudExpanded,
-                                                          boolean controlledCrawlExpanded,
                                                           boolean visualExperienceExpanded,
                                                           boolean worldSwallowMaintenanceExpanded,
                                                           boolean renderCopyExpanded,
@@ -342,8 +296,8 @@ public class Configs implements IConfigHandler
                                                           boolean hopperContainerHighlightExpanded,
                                                           boolean zoomExpanded)
         {
-            if (betterAutoJumpExpanded && betterBoatExpanded && betterDurabilityExpanded && betterHarvestExpanded
-                    && armorHudExpanded && controlledCrawlExpanded && visualExperienceExpanded
+            if (betterBoatExpanded && betterDurabilityExpanded
+                    && armorHudExpanded && visualExperienceExpanded
                     && worldSwallowMaintenanceExpanded && renderCopyExpanded && clearKelpExpanded && betterAdvancementsExpanded
                     && betterHopperMinecartExpanded && suckRangeDisplayExpanded && hopperLockedDisplayExpanded
                     && hopperContainerHighlightExpanded && zoomExpanded)
@@ -353,10 +307,6 @@ public class Configs implements IConfigHandler
             List<IConfigBase> filtered = new java.util.ArrayList<>();
             for (IConfigBase config : OPTIONS)
             {
-                if (!betterAutoJumpExpanded && config == SNEAK_NO_SLOPE)
-                {
-                    continue;
-                }
                 if (!betterBoatExpanded && config == BOAT_LIFT_HEIGHT)
                 {
                     continue;
@@ -365,19 +315,9 @@ public class Configs implements IConfigHandler
                 {
                     continue;
                 }
-                if (!betterHarvestExpanded && (config == HARVEST_REQUIRE_HOE
-                        || config == HARVEST_HOE_DURABILITY
-                        || config == HARVEST_BLACKLIST))
-                {
-                    continue;
-                }
                 if (!armorHudExpanded && (config == ARMOR_HUD_POSITION
                         || config == ARMOR_HUD_X
                         || config == ARMOR_HUD_Y))
-                {
-                    continue;
-                }
-                if (!controlledCrawlExpanded && config == CRAWL_TRIGGER_MODE)
                 {
                     continue;
                 }

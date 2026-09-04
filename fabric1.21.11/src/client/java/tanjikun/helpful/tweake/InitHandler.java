@@ -10,7 +10,6 @@ import fi.dy.masa.malilib.interfaces.IInitializationHandler;
 import fi.dy.masa.malilib.registry.Registry;
 import fi.dy.masa.malilib.util.data.ModInfo;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
 import tanjikun.helpful.tweake.client.util.ArmorHudRenderer;
@@ -22,12 +21,10 @@ import tanjikun.helpful.tweake.client.util.WorldSwallowMaintenanceRenderer;
 import tanjikun.helpful.tweake.client.util.ZoomState;
 import tanjikun.helpful.tweake.config.Configs;
 import tanjikun.helpful.tweake.config.CommonConfigs;
-import tanjikun.helpful.tweake.config.CrawlTriggerMode;
 import tanjikun.helpful.tweake.event.InputHandler;
 import tanjikun.helpful.tweake.event.KeyCallbacks;
 import tanjikun.helpful.tweake.gui.GuiConfigs;
 import tanjikun.helpful.tweake.ServerFlagHolder;
-import tanjikun.helpful.tweake.util.CrawlState;
 
 public class InitHandler implements IInitializationHandler
 {
@@ -72,9 +69,6 @@ public class InitHandler implements IInitializationHandler
         // 堆叠实体渲染优化：每帧渲染结束后清空缓存，为下一帧准备
         WorldRenderEvents.AFTER_ENTITIES.register(context -> EntityRenderStackCache.clear());
 
-        // 控制爬行：客户端 tick 更新 CrawlState，让 common Mixin 能读到最新状态
-        // HOLD 模式实时查询按键，TOGGLE 模式读取切换状态；计算结果写入 crawlRequested
-        // 供 common 侧 MixinPlayerCrawl（同时作用于内部服务器）读取
         ClientTickEvents.END_CLIENT_TICK.register(mc -> {
             // 同步 MaLiLib 配置到 CommonConfigs（供 common 侧 Mixin 读取）
             CommonConfigs.betterTotem = Configs.Tools.BETTER_TOTEM.getBooleanValue();
@@ -93,19 +87,6 @@ public class InitHandler implements IInitializationHandler
             ServerFlagHolder.showUncompletedAdvancements =
                     Configs.Tools.BETTER_ADVANCEMENTS.getBooleanValue()
                     && Configs.Tools.SHOW_UNCOMPLETED_ADVANCEMENTS.getBooleanValue();
-
-            LocalPlayer player = mc.player;
-            if (player == null)
-            {
-                CrawlState.reset();
-                return;
-            }
-            CrawlState.setLocalPlayerUuid(player.getUUID());
-            CrawlTriggerMode mode = (CrawlTriggerMode) Configs.Tools.CRAWL_TRIGGER_MODE.getOptionListValue();
-            boolean requested = (mode == CrawlTriggerMode.HOLD)
-                    ? Configs.Tools.CONTROLLED_CRAWL.getKeybind().isKeybindHeld()
-                    : CrawlState.isToggleCrawling();
-            CrawlState.setCrawlRequested(requested);
 
             // 透明基岩：配置切换时触发区块重渲染 + 光照重算
             boolean currentTransparentBedrock = Configs.Tools.WORLD_SWALLOW_MAINTENANCE.getBooleanValue()

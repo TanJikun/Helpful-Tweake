@@ -6,9 +6,7 @@ import fi.dy.masa.malilib.hotkeys.IKeybind;
 import fi.dy.masa.malilib.hotkeys.KeyAction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import tanjikun.helpful.tweake.util.CrawlState;
 import tanjikun.helpful.tweake.config.Configs;
-import tanjikun.helpful.tweake.config.CrawlTriggerMode;
 import tanjikun.helpful.tweake.config.Hotkeys;
 import tanjikun.helpful.tweake.gui.GuiConfigs;
 
@@ -17,17 +15,14 @@ public class KeyCallbacks
     public static void init(Minecraft mc)
     {
         Hotkeys.OPEN_GUI_SETTINGS.getKeybind().setCallback(new OpenGuiCallback(mc));
-        Configs.Tools.BETTER_AUTO_JUMP.getKeybind().setCallback(new ToggleBetterAutoJumpCallback());
         Configs.Tools.GLOBAL_MENDING.getKeybind().setCallback(new ToggleGlobalMendingCallback());
         Configs.Tools.BETTER_TOTEM.getKeybind().setCallback(new ToggleBetterTotemCallback());
         Configs.Tools.BETTER_CLIMBING.getKeybind().setCallback(new ToggleBetterClimbingCallback());
         Configs.Tools.BETTER_BOAT.getKeybind().setCallback(new ToggleBetterBoatCallback());
         Configs.Tools.INFINITE_WATER.getKeybind().setCallback(new ToggleInfiniteWaterCallback());
         Configs.Tools.BETTER_DURABILITY.getKeybind().setCallback(new ToggleBetterDurabilityCallback());
-        Configs.Tools.BETTER_HARVEST.getKeybind().setCallback(new ToggleBetterHarvestCallback());
         Configs.Tools.SHIELD_STATUS.getKeybind().setCallback(new ToggleShieldStatusCallback());
         Configs.Tools.ARMOR_HUD.getKeybind().setCallback(new ToggleArmorHudCallback());
-        Configs.Tools.CONTROLLED_CRAWL.getKeybind().setCallback(new CrawlKeyCallback());
         Configs.Tools.ZOOM.getKeybind().setCallback(new ZoomKeyCallback());
         Configs.Optimization.BOLD_FONT.getKeybind().setCallback(new ToggleBoldFontCallback());
         Configs.Optimization.ENTITY_RENDER_OPTIMIZATION.getKeybind().setCallback(new ToggleEntityRenderOptimizationCallback());
@@ -42,24 +37,6 @@ public class KeyCallbacks
         public boolean onKeyAction(KeyAction action, IKeybind key)
         {
             GuiBase.openGui(new GuiConfigs());
-            return true;
-        }
-    }
-
-    private record ToggleBetterAutoJumpCallback() implements IHotkeyCallback
-    {
-        @Override
-        public boolean onKeyAction(KeyAction action, IKeybind key)
-        {
-            Configs.Tools.BETTER_AUTO_JUMP.toggleBooleanValue();
-            Configs.saveToFile();
-            if (Minecraft.getInstance().player != null)
-            {
-                boolean enabled = Configs.Tools.BETTER_AUTO_JUMP.getBooleanValue();
-                Minecraft.getInstance().player.displayClientMessage(
-                        Component.translatable("helpful_tweake.message.betterAutoJump." + (enabled ? "enabled" : "disabled")),
-                        true);
-            }
             return true;
         }
     }
@@ -166,24 +143,6 @@ public class KeyCallbacks
                 boolean enabled = Configs.Tools.BETTER_DURABILITY.getBooleanValue();
                 Minecraft.getInstance().player.displayClientMessage(
                         Component.translatable("helpful_tweake.message.betterDurability." + (enabled ? "enabled" : "disabled")),
-                        true);
-            }
-            return true;
-        }
-    }
-
-    private record ToggleBetterHarvestCallback() implements IHotkeyCallback
-    {
-        @Override
-        public boolean onKeyAction(KeyAction action, IKeybind key)
-        {
-            Configs.Tools.BETTER_HARVEST.toggleBooleanValue();
-            Configs.saveToFile();
-            if (Minecraft.getInstance().player != null)
-            {
-                boolean enabled = Configs.Tools.BETTER_HARVEST.getBooleanValue();
-                Minecraft.getInstance().player.displayClientMessage(
-                        Component.translatable("helpful_tweake.message.betterHarvest." + (enabled ? "enabled" : "disabled")),
                         true);
             }
             return true;
@@ -314,25 +273,6 @@ public class KeyCallbacks
                         Component.translatable("helpful_tweake.message.armorHud." + (enabled ? "enabled" : "disabled")),
                         true);
             }
-            return true;
-        }
-    }
-
-    /**
-     * 控制爬行按键回调。
-     * HOLD 模式下不做事（爬行状态由 Mixin 实时查询 isKeybindHeld() 判定），
-     * TOGGLE 模式下切换 toggleCrawling 状态。
-     */
-    private record CrawlKeyCallback() implements IHotkeyCallback
-    {
-        @Override
-        public boolean onKeyAction(KeyAction action, IKeybind key)
-        {
-            if (Configs.Tools.CRAWL_TRIGGER_MODE.getOptionListValue() == CrawlTriggerMode.TOGGLE)
-            {
-                CrawlState.toggle();
-            }
-            // HOLD 模式下也不传播按键事件（避免被其他系统误处理）
             return true;
         }
     }
