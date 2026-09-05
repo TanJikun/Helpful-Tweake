@@ -6,11 +6,12 @@
 		"ExampleMixin",
 		"MixinLivingEntityDeath",
 		"MixinExperienceOrb",
-		"MixinEntityBoatStep",
 		"MixinDisableLiquidInteraction",
 		"MixinBucketItem",
 		"MixinAdvancementVisibility",
-		"MixinPlayerAdvancements"
+		"MixinPlayerAdvancements",
+		"MixinMob",
+		"MixinWardenVibrationUser"
 	],
 	"injectors": {
 		"defaultRequire": 1

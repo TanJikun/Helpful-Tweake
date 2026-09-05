@@ -6,7 +6,6 @@ package tanjikun.helpful.tweake.client.gui;
  */
 public class ExpandState
 {
-    public static boolean betterBoatExpanded = false;
     public static boolean betterDurabilityExpanded = false;
     public static boolean armorHudExpanded = false;
     public static boolean visualExperienceExpanded = false;
@@ -15,26 +14,17 @@ public class ExpandState
     public static boolean clearKelpExpanded = false;
     public static boolean entityRenderOptimizationExpanded = false;
     public static boolean skipDistantEntitiesExpanded = false;
+    public static boolean fakePeacefulExpanded = false;
     public static boolean betterAdvancementsExpanded = false;
     public static boolean betterHopperMinecartExpanded = false;
     public static boolean suckRangeDisplayExpanded = false;
     public static boolean hopperLockedDisplayExpanded = false;
     public static boolean hopperContainerHighlightExpanded = false;
-    public static boolean zoomExpanded = false;
     private static Runnable refreshCallback;
 
     public static void setRefreshCallback(Runnable callback)
     {
         refreshCallback = callback;
-    }
-
-    public static void toggleBetterBoat()
-    {
-        betterBoatExpanded = !betterBoatExpanded;
-        if (refreshCallback != null)
-        {
-            refreshCallback.run();
-        }
     }
 
     public static void toggleBetterDurability()
@@ -109,6 +99,15 @@ public class ExpandState
         }
     }
 
+    public static void toggleFakePeaceful()
+    {
+        fakePeacefulExpanded = !fakePeacefulExpanded;
+        if (refreshCallback != null)
+        {
+            refreshCallback.run();
+        }
+    }
+
     public static void toggleBetterAdvancements()
     {
         betterAdvancementsExpanded = !betterAdvancementsExpanded;
@@ -148,15 +147,6 @@ public class ExpandState
     public static void toggleHopperContainerHighlight()
     {
         hopperContainerHighlightExpanded = !hopperContainerHighlightExpanded;
-        if (refreshCallback != null)
-        {
-            refreshCallback.run();
-        }
-    }
-
-    public static void toggleZoom()
-    {
-        zoomExpanded = !zoomExpanded;
         if (refreshCallback != null)
         {
             refreshCallback.run();

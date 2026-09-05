@@ -14,7 +14,7 @@ import tanjikun.helpful.tweake.HelpfulTweake;
 /**
  * 双端配置：服务端从 JSON 读取，客户端从 MaLiLib 配置同步。
  *
- * 仅包含需要在服务端生效的功能配置值（不死图腾、经验修补、船抬升）。
+ * 仅包含需要在服务端生效的功能配置值（不死图腾、经验修补）。
  * 客户端在每 tick 从 MaLiLib Configs 同步到此类静态字段。
  * 服务端无 MaLiLib，直接从 JSON 文件读写。
  */
@@ -26,9 +26,10 @@ public class CommonConfigs
     // 服务端逻辑功能开关
     public static boolean betterTotem = false;
     public static boolean globalMending = false;
-    public static boolean betterBoat = false;
-    public static double boatLiftHeight = 0.0;
     public static boolean infiniteWater = false;
+    // 伪和平优化（含子配置：坚守者听声音不钻地）
+    public static boolean fakePeaceful = false;
+    public static boolean fakePeacefulWardenHearing = true;
 
     /**
      * 从 JSON 文件加载配置（服务端调用）。
@@ -50,9 +51,9 @@ public class CommonConfigs
             {
                 betterTotem = obj.has("betterTotem") && obj.get("betterTotem").getAsBoolean();
                 globalMending = obj.has("globalMending") && obj.get("globalMending").getAsBoolean();
-                betterBoat = obj.has("betterBoat") && obj.get("betterBoat").getAsBoolean();
-                boatLiftHeight = obj.has("boatLiftHeight") ? obj.get("boatLiftHeight").getAsDouble() : 0.0;
                 infiniteWater = obj.has("infiniteWater") && obj.get("infiniteWater").getAsBoolean();
+                fakePeaceful = obj.has("fakePeaceful") && obj.get("fakePeaceful").getAsBoolean();
+                fakePeacefulWardenHearing = !obj.has("fakePeacefulWardenHearing") || obj.get("fakePeacefulWardenHearing").getAsBoolean();
             }
         }
         catch (Exception e)
@@ -70,9 +71,9 @@ public class CommonConfigs
         JsonObject obj = new JsonObject();
         obj.addProperty("betterTotem", betterTotem);
         obj.addProperty("globalMending", globalMending);
-        obj.addProperty("betterBoat", betterBoat);
-        obj.addProperty("boatLiftHeight", boatLiftHeight);
         obj.addProperty("infiniteWater", infiniteWater);
+        obj.addProperty("fakePeaceful", fakePeaceful);
+        obj.addProperty("fakePeacefulWardenHearing", fakePeacefulWardenHearing);
         try
         {
             Files.writeString(configPath, GSON.toJson(obj));

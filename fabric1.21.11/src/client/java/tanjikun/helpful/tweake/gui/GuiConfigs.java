@@ -79,13 +79,14 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
         }
         else if (currentTab == ConfigGuiTab.TOOLS)
         {
-            configs = Configs.Tools.getDisplayOptions(ExpandState.betterBoatExpanded, ExpandState.betterDurabilityExpanded, ExpandState.armorHudExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.renderCopyExpanded, ExpandState.clearKelpExpanded, ExpandState.betterAdvancementsExpanded, ExpandState.betterHopperMinecartExpanded, ExpandState.suckRangeDisplayExpanded, ExpandState.hopperLockedDisplayExpanded, ExpandState.hopperContainerHighlightExpanded, ExpandState.zoomExpanded);
+            configs = Configs.Tools.getDisplayOptions(ExpandState.betterDurabilityExpanded, ExpandState.armorHudExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.renderCopyExpanded, ExpandState.clearKelpExpanded, ExpandState.betterAdvancementsExpanded, ExpandState.betterHopperMinecartExpanded, ExpandState.suckRangeDisplayExpanded, ExpandState.hopperLockedDisplayExpanded, ExpandState.hopperContainerHighlightExpanded);
         }
         else if (currentTab == ConfigGuiTab.OPTIMIZATION)
         {
             configs = Configs.Optimization.getDisplayOptions(
                     ExpandState.entityRenderOptimizationExpanded,
-                    ExpandState.skipDistantEntitiesExpanded);
+                    ExpandState.skipDistantEntitiesExpanded,
+                    ExpandState.fakePeacefulExpanded);
         }
         else
         {
@@ -105,8 +106,8 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
     public List<ConfigOptionWrapper> getAllConfigs()
     {
         List<ConfigOptionWrapper> configs = new ArrayList<>();
-        configs.addAll(ConfigOptionWrapper.createFor(Configs.Tools.getDisplayOptions(ExpandState.betterBoatExpanded, ExpandState.betterDurabilityExpanded, ExpandState.armorHudExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.renderCopyExpanded, ExpandState.clearKelpExpanded, ExpandState.betterAdvancementsExpanded, ExpandState.betterHopperMinecartExpanded, ExpandState.suckRangeDisplayExpanded, ExpandState.hopperLockedDisplayExpanded, ExpandState.hopperContainerHighlightExpanded, ExpandState.zoomExpanded)));
-        configs.addAll(ConfigOptionWrapper.createFor(Configs.Optimization.getDisplayOptions(ExpandState.entityRenderOptimizationExpanded, ExpandState.skipDistantEntitiesExpanded)));
+        configs.addAll(ConfigOptionWrapper.createFor(Configs.Tools.getDisplayOptions(ExpandState.betterDurabilityExpanded, ExpandState.armorHudExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.renderCopyExpanded, ExpandState.clearKelpExpanded, ExpandState.betterAdvancementsExpanded, ExpandState.betterHopperMinecartExpanded, ExpandState.suckRangeDisplayExpanded, ExpandState.hopperLockedDisplayExpanded, ExpandState.hopperContainerHighlightExpanded)));
+        configs.addAll(ConfigOptionWrapper.createFor(Configs.Optimization.getDisplayOptions(ExpandState.entityRenderOptimizationExpanded, ExpandState.skipDistantEntitiesExpanded, ExpandState.fakePeacefulExpanded)));
         configs.addAll(ConfigOptionWrapper.createFor(Hotkeys.HOTKEY_LIST));
         return configs;
     }

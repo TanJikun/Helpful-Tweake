@@ -4,7 +4,6 @@
 	"compatibilityLevel": "JAVA_21",
 	"client": [
 		"ExampleClientMixin",
-		"MixinLivingEntityClimb",
 		"MixinGuiGraphicsDurability",
 		"MixinMinecraftAccessor",
 		"MixinFontManagerAccessor",
@@ -28,9 +27,7 @@
 		"MixinAdvancementTabBigger",
 		"MixinCreativeModeInventoryScreen",
 		"MixinEntityHitboxDebugRenderer",
-		"MixinAbstractContainerScreenSignal",
-		"MixinGameRendererZoom",
-		"MixinMouseHandlerZoom"
+		"MixinAbstractContainerScreenSignal"
 	],
 	"injectors": {
 		"defaultRequire": 1

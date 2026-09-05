@@ -17,13 +17,10 @@ public class KeyCallbacks
         Hotkeys.OPEN_GUI_SETTINGS.getKeybind().setCallback(new OpenGuiCallback(mc));
         Configs.Tools.GLOBAL_MENDING.getKeybind().setCallback(new ToggleGlobalMendingCallback());
         Configs.Tools.BETTER_TOTEM.getKeybind().setCallback(new ToggleBetterTotemCallback());
-        Configs.Tools.BETTER_CLIMBING.getKeybind().setCallback(new ToggleBetterClimbingCallback());
-        Configs.Tools.BETTER_BOAT.getKeybind().setCallback(new ToggleBetterBoatCallback());
         Configs.Tools.INFINITE_WATER.getKeybind().setCallback(new ToggleInfiniteWaterCallback());
         Configs.Tools.BETTER_DURABILITY.getKeybind().setCallback(new ToggleBetterDurabilityCallback());
         Configs.Tools.SHIELD_STATUS.getKeybind().setCallback(new ToggleShieldStatusCallback());
         Configs.Tools.ARMOR_HUD.getKeybind().setCallback(new ToggleArmorHudCallback());
-        Configs.Tools.ZOOM.getKeybind().setCallback(new ZoomKeyCallback());
         Configs.Optimization.BOLD_FONT.getKeybind().setCallback(new ToggleBoldFontCallback());
         Configs.Optimization.ENTITY_RENDER_OPTIMIZATION.getKeybind().setCallback(new ToggleEntityRenderOptimizationCallback());
         Configs.Optimization.SKIP_DISTANT_ENTITIES.getKeybind().setCallback(new ToggleSkipDistantEntitiesCallback());
@@ -71,42 +68,6 @@ public class KeyCallbacks
                 boolean enabled = Configs.Tools.BETTER_TOTEM.getBooleanValue();
                 Minecraft.getInstance().player.displayClientMessage(
                         Component.translatable("helpful_tweake.message.betterTotem." + (enabled ? "enabled" : "disabled")),
-                        true);
-            }
-            return true;
-        }
-    }
-
-    private record ToggleBetterClimbingCallback() implements IHotkeyCallback
-    {
-        @Override
-        public boolean onKeyAction(KeyAction action, IKeybind key)
-        {
-            Configs.Tools.BETTER_CLIMBING.toggleBooleanValue();
-            Configs.saveToFile();
-            if (Minecraft.getInstance().player != null)
-            {
-                boolean enabled = Configs.Tools.BETTER_CLIMBING.getBooleanValue();
-                Minecraft.getInstance().player.displayClientMessage(
-                        Component.translatable("helpful_tweake.message.betterClimbing." + (enabled ? "enabled" : "disabled")),
-                        true);
-            }
-            return true;
-        }
-    }
-
-    private record ToggleBetterBoatCallback() implements IHotkeyCallback
-    {
-        @Override
-        public boolean onKeyAction(KeyAction action, IKeybind key)
-        {
-            Configs.Tools.BETTER_BOAT.toggleBooleanValue();
-            Configs.saveToFile();
-            if (Minecraft.getInstance().player != null)
-            {
-                boolean enabled = Configs.Tools.BETTER_BOAT.getBooleanValue();
-                Minecraft.getInstance().player.displayClientMessage(
-                        Component.translatable("helpful_tweake.message.betterBoat." + (enabled ? "enabled" : "disabled")),
                         true);
             }
             return true;
@@ -273,20 +234,6 @@ public class KeyCallbacks
                         Component.translatable("helpful_tweake.message.armorHud." + (enabled ? "enabled" : "disabled")),
                         true);
             }
-            return true;
-        }
-    }
-
-    /**
-     * 放大镜按键回调：按住放大、松开还原。
-     * 状态由 ZoomState 每 tick 轮询 isKeybindHeld() 判定，
-     * 这里仅消费按键事件，避免透传给其他系统（也不切换开关）。
-     */
-    private record ZoomKeyCallback() implements IHotkeyCallback
-    {
-        @Override
-        public boolean onKeyAction(KeyAction action, IKeybind key)
-        {
             return true;
         }
     }

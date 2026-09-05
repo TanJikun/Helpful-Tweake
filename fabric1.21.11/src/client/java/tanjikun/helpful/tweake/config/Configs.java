@@ -43,18 +43,6 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed BETTER_TOTEM =
                 new ConfigBooleanHotkeyed("betterTotem", false, "").apply(TOOLS_KEY);
 
-        // 更好的攀爬：攀爬时根据视角方向调整纵向速度
-        public static final ConfigBooleanHotkeyed BETTER_CLIMBING =
-                new ConfigBooleanHotkeyed("betterClimbing", false, "").apply(TOOLS_KEY);
-
-        // 更好的船：船只可越过高度不大于抬升高度的障碍
-        public static final ConfigBooleanHotkeyed BETTER_BOAT =
-                new ConfigBooleanHotkeyed("betterBoat", false, "").apply(TOOLS_KEY);
-
-        // 更好的船子配置：抬升高度（0-200，默认0）
-        public static final ConfigDouble BOAT_LIFT_HEIGHT =
-                new ConfigDouble("boatLiftHeight", 0.0, 0.0, 200.0).apply(TOOLS_KEY);
-
         // 背包内无限水：快捷栏+副手+背包内共有两桶及以上的水（含鱼桶）时，生存模式放水不消耗桶中的水
         public static final ConfigBooleanHotkeyed INFINITE_WATER =
                 new ConfigBooleanHotkeyed("infiniteWater", false, "").apply(TOOLS_KEY);
@@ -214,28 +202,9 @@ public class Configs implements IConfigHandler
         public static final ConfigInteger HOPPER_CONTAINER_HIGHLIGHT_WIDTH =
                 new ConfigInteger("hopperContainerHighlightWidth", 2, 1, 10).apply(TOOLS_KEY);
 
-        // 放大镜：按住按键放大屏幕画面（滚轮临时调整倍数），默认热键 C
-        public static final ConfigBooleanHotkeyed ZOOM =
-                new ConfigBooleanHotkeyed("zoom", false, "C").apply(TOOLS_KEY);
-
-        // 放大镜子配置：默认放大倍数（按下按键时使用的倍数，1-32，默认2）
-        public static final ConfigDouble ZOOM_DEFAULT_MULTIPLIER =
-                new ConfigDouble("zoomDefaultMultiplier", 2.0, 1.0, 32.0).apply(TOOLS_KEY);
-
-        // 放大镜子配置：过渡函数（默认指数缓出，共14种缓动可选）
-        public static final ConfigOptionList ZOOM_TRANSITION =
-                new ConfigOptionList("zoomTransition", ZoomTransitionMode.EASE_OUT_EXPO).apply(TOOLS_KEY);
-
-        // 放大镜子配置：过渡速度（非即时模式下动画播放速度，动画时长=1000ms/该值，默认1.5）
-        public static final ConfigDouble ZOOM_TRANSITION_SPEED =
-                new ConfigDouble("zoomTransitionSpeed", 1.5, 0.1, 10.0).apply(TOOLS_KEY);
-
         public static ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 GLOBAL_MENDING,
                 BETTER_TOTEM,
-                BETTER_CLIMBING,
-                BETTER_BOAT,
-                BOAT_LIFT_HEIGHT,
                 INFINITE_WATER,
                 BETTER_DURABILITY,
                 DURABILITY_UNBREAKING_CALC,
@@ -271,19 +240,14 @@ public class Configs implements IConfigHandler
                 HOPPER_LOCKED_COLOR,
                 HOPPER_CONTAINER_HIGHLIGHT,
                 HOPPER_CONTAINER_HIGHLIGHT_COLOR,
-                HOPPER_CONTAINER_HIGHLIGHT_WIDTH,
-                ZOOM,
-                ZOOM_DEFAULT_MULTIPLIER,
-                ZOOM_TRANSITION,
-                ZOOM_TRANSITION_SPEED
+                HOPPER_CONTAINER_HIGHLIGHT_WIDTH
         );
 
         /**
          * 返回显示用配置列表。子配置项仅在对应主配置展开时显示。
          * 持久化始终使用 OPTIONS（包含全部配置项）。
          */
-        public static List<IConfigBase> getDisplayOptions(boolean betterBoatExpanded,
-                                                          boolean betterDurabilityExpanded,
+        public static List<IConfigBase> getDisplayOptions(boolean betterDurabilityExpanded,
                                                           boolean armorHudExpanded,
                                                           boolean visualExperienceExpanded,
                                                           boolean worldSwallowMaintenanceExpanded,
@@ -293,24 +257,19 @@ public class Configs implements IConfigHandler
                                                           boolean betterHopperMinecartExpanded,
                                                           boolean suckRangeDisplayExpanded,
                                                           boolean hopperLockedDisplayExpanded,
-                                                          boolean hopperContainerHighlightExpanded,
-                                                          boolean zoomExpanded)
+                                                          boolean hopperContainerHighlightExpanded)
         {
-            if (betterBoatExpanded && betterDurabilityExpanded
+            if (betterDurabilityExpanded
                     && armorHudExpanded && visualExperienceExpanded
                     && worldSwallowMaintenanceExpanded && renderCopyExpanded && clearKelpExpanded && betterAdvancementsExpanded
                     && betterHopperMinecartExpanded && suckRangeDisplayExpanded && hopperLockedDisplayExpanded
-                    && hopperContainerHighlightExpanded && zoomExpanded)
+                    && hopperContainerHighlightExpanded)
             {
                 return OPTIONS;
             }
             List<IConfigBase> filtered = new java.util.ArrayList<>();
             for (IConfigBase config : OPTIONS)
             {
-                if (!betterBoatExpanded && config == BOAT_LIFT_HEIGHT)
-                {
-                    continue;
-                }
                 if (!betterDurabilityExpanded && config == DURABILITY_UNBREAKING_CALC)
                 {
                     continue;
@@ -395,13 +354,6 @@ public class Configs implements IConfigHandler
                 {
                     continue;
                 }
-                // 放大镜子配置仅在放大镜展开时显示
-                if (!zoomExpanded && (config == ZOOM_DEFAULT_MULTIPLIER
-                        || config == ZOOM_TRANSITION
-                        || config == ZOOM_TRANSITION_SPEED))
-                {
-                    continue;
-                }
                 filtered.add(config);
             }
             return filtered;
@@ -434,13 +386,23 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed DISABLE_B36_RENDER =
                 new ConfigBooleanHotkeyed("disableB36Render", false, "").apply(OPTIMIZATION_KEY);
 
+        // 伪和平优化：同一方块内敌对生物超过70个时移除其全部AI，仅保留对敌对生物总数的判定
+        public static final ConfigBooleanHotkeyed FAKE_PEACEFUL =
+                new ConfigBooleanHotkeyed("fakePeaceful", false, "").apply(OPTIMIZATION_KEY);
+
+        // 伪和平优化子配置：坚守者听声音不钻地（被移除AI的坚守者保留听到声音刷新钻地冷却的机制）
+        public static final ConfigBooleanHotkeyed FAKE_PEACEFUL_WARDEN_HEARING =
+                new ConfigBooleanHotkeyed("fakePeacefulWardenHearing", true, "").apply(OPTIMIZATION_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BOLD_FONT,
                 ENTITY_RENDER_OPTIMIZATION,
                 SKIP_DISTANT_ENTITIES,
                 SKIP_DISTANT_ENTITIES_DISTANCE,
                 STACK_ENTITY_RENDER_OPTIMIZATION,
-                DISABLE_B36_RENDER
+                DISABLE_B36_RENDER,
+                FAKE_PEACEFUL,
+                FAKE_PEACEFUL_WARDEN_HEARING
         );
 
         /**
@@ -448,9 +410,10 @@ public class Configs implements IConfigHandler
          * 持久化始终使用 OPTIONS（包含全部配置项）。
          */
         public static List<IConfigBase> getDisplayOptions(boolean entityRenderOptimizationExpanded,
-                                                           boolean skipDistantEntitiesExpanded)
+                                                           boolean skipDistantEntitiesExpanded,
+                                                           boolean fakePeacefulExpanded)
         {
-            if (entityRenderOptimizationExpanded && skipDistantEntitiesExpanded)
+            if (entityRenderOptimizationExpanded && skipDistantEntitiesExpanded && fakePeacefulExpanded)
             {
                 return OPTIONS;
             }
@@ -466,6 +429,11 @@ public class Configs implements IConfigHandler
                 }
                 // skipDistantEntitiesDistance 仅在 skipDistantEntities 展开时显示
                 if (!skipDistantEntitiesExpanded && config == SKIP_DISTANT_ENTITIES_DISTANCE)
+                {
+                    continue;
+                }
+                // 坚守者听声音不钻地仅在 fakePeaceful 展开时显示
+                if (!fakePeacefulExpanded && config == FAKE_PEACEFUL_WARDEN_HEARING)
                 {
                     continue;
                 }

@@ -28,13 +28,14 @@ import tanjikun.helpful.tweake.config.Configs;
 /**
  * 在指定配置行（ConfigBooleanHotkeyed）的左侧添加展开/折叠按钮。
  * 命中表：
- *   ConfigBooleanHotkeyed —— BETTER_BOAT / BETTER_DURABILITY
+ *   ConfigBooleanHotkeyed —— BETTER_DURABILITY
  *                             / ARMOR_HUD / VISUAL_EXPERIENCE
  *                             / WORLD_SWALLOW_MAINTENANCE / WSM_CLEAR_KELP
  *                             / ENTITY_RENDER_OPTIMIZATION / SKIP_DISTANT_ENTITIES
+ *                             / FAKE_PEACEFUL
  *                             / BETTER_ADVANCEMENTS / BETTER_HOPPER_MINECART
  *                             / BETTER_HOPPER_MINECART_HITBOX / HOPPER_MINECART_LOCKED_DISPLAY
- *                             / HOPPER_CONTAINER_HIGHLIGHT / ZOOM
+ *                             / HOPPER_CONTAINER_HIGHLIGHT
  * 其他配置项走原版渲染逻辑。
  *
  * 所有配置项的控件（开关、热键、输入框等）统一右移 16px，与有展开按钮的配置项对齐。
@@ -53,7 +54,6 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
 
     // 子配置项名称（控件额外缩进 16px）
     private static final Set<String> SUB_CONFIG_NAMES = Set.of(
-            "boatLiftHeight",
             "durabilityUnbreakingCalc",
             "armorHudPosition", "armorHudX", "armorHudY",
             "experienceTextColor",
@@ -67,10 +67,7 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "showAdvancementDetails",
             "biggerAdvancementsScreen",
             "betterHopperMinecartHitbox",
-            "hopperContainerHighlight",
-            "zoomDefaultMultiplier",
-            "zoomTransition",
-            "zoomTransitionSpeed"
+            "hopperContainerHighlight"
     );
 
     // 子子配置项名称（控件额外缩进 32px）
@@ -180,12 +177,7 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
                                               IConfigResettable configResettable,
                                               IConfigBoolean configBoolean, IKeybind keybind)
     {
-        if (configBoolean == Configs.Tools.BETTER_BOAT)
-        {
-            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
-                    ExpandState.betterBoatExpanded, ExpandState::toggleBetterBoat);
-        }
-        else if (configBoolean == Configs.Tools.BETTER_DURABILITY)
+        if (configBoolean == Configs.Tools.BETTER_DURABILITY)
         {
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.betterDurabilityExpanded, ExpandState::toggleBetterDurability);
@@ -231,6 +223,11 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
                     ExpandState.skipDistantEntitiesExpanded, ExpandState::toggleSkipDistantEntities,
                     getIndent() - CONTROL_INDENT);
         }
+        else if (configBoolean == Configs.Optimization.FAKE_PEACEFUL)
+        {
+            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
+                    ExpandState.fakePeacefulExpanded, ExpandState::toggleFakePeaceful);
+        }
         else if (configBoolean == Configs.Tools.BETTER_ADVANCEMENTS)
         {
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
@@ -261,11 +258,6 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.hopperContainerHighlightExpanded, ExpandState::toggleHopperContainerHighlight,
                     getIndent() - CONTROL_INDENT);
-        }
-        else if (configBoolean == Configs.Tools.ZOOM)
-        {
-            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
-                    ExpandState.zoomExpanded, ExpandState::toggleZoom);
         }
         else
         {
