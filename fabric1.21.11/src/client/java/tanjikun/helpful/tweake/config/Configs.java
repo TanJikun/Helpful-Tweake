@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.IConfigHandler;
+import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import fi.dy.masa.malilib.config.options.ConfigBooleanHotkeyed;
 import fi.dy.masa.malilib.config.options.ConfigColor;
 import fi.dy.masa.malilib.config.options.ConfigDouble;
@@ -394,6 +395,10 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed FAKE_PEACEFUL_WARDEN_HEARING =
                 new ConfigBooleanHotkeyed("fakePeacefulWardenHearing", true, "").apply(OPTIMIZATION_KEY);
 
+        // 列表优化：配置值列表界面行内显示图标、提供搜索选择器（使用 ConfigBoolean，不提供热键绑定）
+        public static final ConfigBoolean LIST_OPTIMIZATION =
+                new ConfigBoolean("listOptimization", true).apply(OPTIMIZATION_KEY);
+
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BOLD_FONT,
                 ENTITY_RENDER_OPTIMIZATION,
@@ -402,7 +407,8 @@ public class Configs implements IConfigHandler
                 STACK_ENTITY_RENDER_OPTIMIZATION,
                 DISABLE_B36_RENDER,
                 FAKE_PEACEFUL,
-                FAKE_PEACEFUL_WARDEN_HEARING
+                FAKE_PEACEFUL_WARDEN_HEARING,
+                LIST_OPTIMIZATION
         );
 
         /**

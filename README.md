@@ -8,7 +8,7 @@
 
 必要依赖：[Fabric API](https://modrinth.com/mod/fabric-api)、[MaLiLib](https://modrinth.com/mod/malilib)(仅客户端需要安装，服务端因无法安装次前置只能更改配置文件)
 
-可选依赖：[模组菜单（modmenu）](https://modrinth.com/mod/mOgUt4GM)、[投影(Litematica)](https://modrinth.com/mod/litematica)
+可选依赖：[模组菜单（modmenu）](https://modrinth.com/mod/mOgUt4GM)、[投影(Litematica)](https://modrinth.com/mod/litematica)、 [通用拼音搜索(JustEnoughCharacters)](https://modrinth.com/mod/justenoughcharacters)
 
 会产生冲突的模组：[更好的进度(BetterAdvancements)](https://modrinth.com/mod/better-advancements)（若安装更好的进度部分子功能无法生效）
 

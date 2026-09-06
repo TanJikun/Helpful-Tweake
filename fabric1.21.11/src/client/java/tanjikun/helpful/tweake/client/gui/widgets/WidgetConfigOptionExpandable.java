@@ -8,10 +8,12 @@ import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.IConfigBoolean;
 import fi.dy.masa.malilib.config.IConfigResettable;
 import fi.dy.masa.malilib.config.IConfigSlider;
+import fi.dy.masa.malilib.config.IConfigStringList;
 import fi.dy.masa.malilib.config.IConfigValue;
 import fi.dy.masa.malilib.gui.GuiConfigsBase.ConfigOptionWrapper;
 import fi.dy.masa.malilib.gui.button.ButtonBase;
 import fi.dy.masa.malilib.gui.button.ButtonGeneric;
+import fi.dy.masa.malilib.gui.button.ConfigButtonStringList;
 import fi.dy.masa.malilib.gui.button.IButtonActionListener;
 import fi.dy.masa.malilib.gui.interfaces.IKeybindConfigGui;
 import fi.dy.masa.malilib.gui.widgets.WidgetBase;
@@ -23,6 +25,7 @@ import fi.dy.masa.malilib.hotkeys.IHotkey;
 import fi.dy.masa.malilib.hotkeys.IKeybind;
 
 import tanjikun.helpful.tweake.client.gui.ExpandState;
+import tanjikun.helpful.tweake.client.gui.button.ConfigButtonStringListEnhanced;
 import tanjikun.helpful.tweake.config.Configs;
 
 /**
@@ -300,6 +303,16 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
     @Override
     protected void addConfigButtonEntry(int x, int y, IConfigResettable configResettable, ButtonBase button)
     {
+        // 列表优化开启时：将字符串列表按钮替换为增强版（打开带图标/选择器的编辑界面）
+        if (Configs.Optimization.LIST_OPTIMIZATION.getBooleanValue()
+                && button instanceof ConfigButtonStringList
+                && configResettable instanceof IConfigStringList configList)
+        {
+            button = new ConfigButtonStringListEnhanced(button.getX(), button.getY(),
+                    button.getWidth(), button.getHeight(), configList,
+                    this.host, this.host.getDialogHandler());
+        }
+
         int indent = getIndent();
         if (this.isSliderOrTextField)
         {

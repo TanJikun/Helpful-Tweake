@@ -164,5 +164,9 @@
 	"helpful_tweake.config.optimization.name.fakePeaceful": "Fake Peaceful Optimization",
 	"helpful_tweake.config.optimization.comment.fakePeaceful": "When enabled, if more than 70 hostile mobs are\nin the same block, all their AI is removed\n(pathfinding, attacks, targeting, etc.).\nThey still count toward the server's hostile\nmob cap judgment, greatly reducing lag from\nmob piles. Click +/- to expand sub-options.",
 	"helpful_tweake.config.optimization.name.fakePeacefulWardenHearing": "    Wardens Don't Dig When Hearing Sounds",
-	"helpful_tweake.config.optimization.comment.fakePeacefulWardenHearing": "When enabled, frozen Wardens keep the mechanism\nof not digging down when hearing sounds\n(hearing refreshes their dig cooldown), but do\nnot pathfind toward sounds or get angry.\nWhen disabled, frozen Wardens are fully deaf.\nOnly active when Fake Peaceful Optimization is on."
+	"helpful_tweake.config.optimization.comment.fakePeacefulWardenHearing": "When enabled, frozen Wardens keep the mechanism\nof not digging down when hearing sounds\n(hearing refreshes their dig cooldown), but do\nnot pathfind toward sounds or get angry.\nWhen disabled, frozen Wardens are fully deaf.\nOnly active when Fake Peaceful Optimization is on.",
+	"helpful_tweake.config.optimization.name.listOptimization": "List Optimization",
+	"helpful_tweake.config.optimization.comment.listOptimization": "Enhances the string list config editor:\nshows a block/item icon between the index and\nthe value, and adds a ? button on the right of\neach row to open a picker where clicking an\nicon replaces the value. The picker auto-scans\nregistered items and blocks (mod compatible),\nsupports ID search, and Chinese/pinyin search\nwhen JustEnoughCharacters is installed.\nEnabled by default, no keybind.",
+	"helpful_tweake.gui.title.registry_entry_picker": "Select Registry Entry",
+	"helpful_tweake.gui.button.hovertext.pick_entry": "Click to open the picker and\nreplace this value with the selected entry"
 }
