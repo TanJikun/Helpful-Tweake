@@ -30,6 +30,8 @@ public class CommonConfigs
     // 伪和平优化（含子配置：坚守者听声音不钻地）
     public static boolean fakePeaceful = false;
     public static boolean fakePeacefulWardenHearing = true;
+    // 切门刷怪塔优化：生成时碰撞箱碰到下界/末地传送门方块的生物永久禁用AI（主世界僵尸猪人豁免）
+    public static boolean portalFarmOptimization = false;
 
     /**
      * 从 JSON 文件加载配置（服务端调用）。
@@ -54,6 +56,7 @@ public class CommonConfigs
                 infiniteWater = obj.has("infiniteWater") && obj.get("infiniteWater").getAsBoolean();
                 fakePeaceful = obj.has("fakePeaceful") && obj.get("fakePeaceful").getAsBoolean();
                 fakePeacefulWardenHearing = !obj.has("fakePeacefulWardenHearing") || obj.get("fakePeacefulWardenHearing").getAsBoolean();
+                portalFarmOptimization = obj.has("portalFarmOptimization") && obj.get("portalFarmOptimization").getAsBoolean();
             }
         }
         catch (Exception e)
@@ -74,6 +77,7 @@ public class CommonConfigs
         obj.addProperty("infiniteWater", infiniteWater);
         obj.addProperty("fakePeaceful", fakePeaceful);
         obj.addProperty("fakePeacefulWardenHearing", fakePeacefulWardenHearing);
+        obj.addProperty("portalFarmOptimization", portalFarmOptimization);
         try
         {
             Files.writeString(configPath, GSON.toJson(obj));

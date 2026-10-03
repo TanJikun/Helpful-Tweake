@@ -79,7 +79,7 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
         }
         else if (currentTab == ConfigGuiTab.TOOLS)
         {
-            configs = Configs.Tools.getDisplayOptions(ExpandState.betterDurabilityExpanded, ExpandState.armorHudExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.renderCopyExpanded, ExpandState.clearKelpExpanded, ExpandState.betterAdvancementsExpanded, ExpandState.betterHopperMinecartExpanded, ExpandState.suckRangeDisplayExpanded, ExpandState.hopperLockedDisplayExpanded, ExpandState.hopperContainerHighlightExpanded);
+            configs = Configs.Tools.getDisplayOptions(ExpandState.betterDurabilityExpanded, ExpandState.armorHudExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.renderCopyExpanded, ExpandState.clearKelpExpanded, ExpandState.betterAdvancementsExpanded, ExpandState.guiTransparencyExpanded);
         }
         else if (currentTab == ConfigGuiTab.OPTIMIZATION)
         {
@@ -106,7 +106,7 @@ public class GuiConfigs extends GuiConfigsBase implements IConfigGuiAllTab
     public List<ConfigOptionWrapper> getAllConfigs()
     {
         List<ConfigOptionWrapper> configs = new ArrayList<>();
-        configs.addAll(ConfigOptionWrapper.createFor(Configs.Tools.getDisplayOptions(ExpandState.betterDurabilityExpanded, ExpandState.armorHudExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.renderCopyExpanded, ExpandState.clearKelpExpanded, ExpandState.betterAdvancementsExpanded, ExpandState.betterHopperMinecartExpanded, ExpandState.suckRangeDisplayExpanded, ExpandState.hopperLockedDisplayExpanded, ExpandState.hopperContainerHighlightExpanded)));
+        configs.addAll(ConfigOptionWrapper.createFor(Configs.Tools.getDisplayOptions(ExpandState.betterDurabilityExpanded, ExpandState.armorHudExpanded, ExpandState.visualExperienceExpanded, ExpandState.worldSwallowMaintenanceExpanded, ExpandState.renderCopyExpanded, ExpandState.clearKelpExpanded, ExpandState.betterAdvancementsExpanded, ExpandState.guiTransparencyExpanded)));
         configs.addAll(ConfigOptionWrapper.createFor(Configs.Optimization.getDisplayOptions(ExpandState.entityRenderOptimizationExpanded, ExpandState.skipDistantEntitiesExpanded, ExpandState.fakePeacefulExpanded)));
         configs.addAll(ConfigOptionWrapper.createFor(Hotkeys.HOTKEY_LIST));
         return configs;

@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
 import tanjikun.helpful.tweake.client.util.ArmorHudRenderer;
 import tanjikun.helpful.tweake.client.util.EntityRenderStackCache;
-import tanjikun.helpful.tweake.client.util.HopperContainerHighlightRenderer;
 import tanjikun.helpful.tweake.client.util.KelpBreaker;
 import tanjikun.helpful.tweake.client.util.VisualExperienceHudRenderer;
 import tanjikun.helpful.tweake.client.util.WorldSwallowMaintenanceRenderer;
@@ -62,9 +61,6 @@ public class InitHandler implements IInitializationHandler
         WorldSwallowMaintenanceRenderer wsmRenderer = new WorldSwallowMaintenanceRenderer();
         WorldRenderEvents.AFTER_ENTITIES.register(wsmRenderer);
 
-        // 注册吸取容器高亮世界渲染回调
-        WorldRenderEvents.AFTER_ENTITIES.register(new HopperContainerHighlightRenderer());
-
         // 堆叠实体渲染优化：每帧渲染结束后清空缓存，为下一帧准备
         WorldRenderEvents.AFTER_ENTITIES.register(context -> EntityRenderStackCache.clear());
 
@@ -75,6 +71,7 @@ public class InitHandler implements IInitializationHandler
             CommonConfigs.infiniteWater = Configs.Tools.INFINITE_WATER.getBooleanValue();
             CommonConfigs.fakePeaceful = Configs.Optimization.FAKE_PEACEFUL.getBooleanValue();
             CommonConfigs.fakePeacefulWardenHearing = Configs.Optimization.FAKE_PEACEFUL_WARDEN_HEARING.getBooleanValue();
+            CommonConfigs.portalFarmOptimization = Configs.Optimization.PORTAL_FARM_OPTIMIZATION.getBooleanValue();
 
             // 同步禁用水与岩浆互动配置到 ServerFlagHolder（供 common 侧 Mixin 读取）
             ServerFlagHolder.disableLiquidInteraction =

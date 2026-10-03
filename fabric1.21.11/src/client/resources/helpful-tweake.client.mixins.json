@@ -26,8 +26,10 @@
 		"MixinAdvancementsScreenBigger",
 		"MixinAdvancementTabBigger",
 		"MixinCreativeModeInventoryScreen",
-		"MixinEntityHitboxDebugRenderer",
-		"MixinAbstractContainerScreenSignal"
+		"MixinAbstractContainerScreenSignal",
+		"MixinScreenGuiTransparency",
+		"MixinGuiGraphicsTransparency",
+		"MixinAbstractContainerScreenTransparency"
 	],
 	"injectors": {
 		"defaultRequire": 1

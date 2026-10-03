@@ -11,6 +11,7 @@
 		"MixinAdvancementVisibility",
 		"MixinPlayerAdvancements",
 		"MixinMob",
+		"MixinEntity",
 		"MixinWardenVibrationUser"
 	],
 	"injectors": {

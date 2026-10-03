@@ -36,9 +36,8 @@ import tanjikun.helpful.tweake.config.Configs;
  *                             / WORLD_SWALLOW_MAINTENANCE / WSM_CLEAR_KELP
  *                             / ENTITY_RENDER_OPTIMIZATION / SKIP_DISTANT_ENTITIES
  *                             / FAKE_PEACEFUL
- *                             / BETTER_ADVANCEMENTS / BETTER_HOPPER_MINECART
- *                             / BETTER_HOPPER_MINECART_HITBOX / HOPPER_MINECART_LOCKED_DISPLAY
- *                             / HOPPER_CONTAINER_HIGHLIGHT
+ *                             / BETTER_ADVANCEMENTS
+ *                             / GUI_TRANSPARENCY
  * 其他配置项走原版渲染逻辑。
  *
  * 所有配置项的控件（开关、热键、输入框等）统一右移 16px，与有展开按钮的配置项对齐。
@@ -69,8 +68,7 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "showUncompletedAdvancements",
             "showAdvancementDetails",
             "biggerAdvancementsScreen",
-            "betterHopperMinecartHitbox",
-            "hopperContainerHighlight"
+            "guiOpacity", "guiBackgroundOpacity"
     );
 
     // 子子配置项名称（控件额外缩进 32px）
@@ -80,16 +78,7 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             "wsmDistanceThreshold",
             "wsmClearKelpDistance",
             "wsmClearKelpSelectionOnly",
-            "skipDistantEntitiesDistance",
-            "hopperSuckRangeColor",
-            "hopperMinecartLockedDisplay",
-            "hopperContainerHighlightColor",
-            "hopperContainerHighlightWidth"
-    );
-
-    // 子子子配置项名称（控件额外缩进 48px）
-    private static final Set<String> SUB_SUB_SUB_CONFIG_NAMES = Set.of(
-            "hopperLockedColor"
+            "skipDistantEntitiesDistance"
     );
 
     /**
@@ -138,7 +127,7 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
     }
 
     /**
-     * 返回当前配置项的层级深度：0 = 主配置项，1 = 子配置项，2 = 子子配置项，3 = 子子子配置项。
+     * 返回当前配置项的层级深度：0 = 主配置项，1 = 子配置项，2 = 子子配置项。
      */
     private int getConfigLevel()
     {
@@ -152,10 +141,6 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             return 0;
         }
         String name = config.getName();
-        if (SUB_SUB_SUB_CONFIG_NAMES.contains(name))
-        {
-            return 3;
-        }
         if (SUB_SUB_CONFIG_NAMES.contains(name))
         {
             return 2;
@@ -236,31 +221,10 @@ public class WidgetConfigOptionExpandable extends WidgetConfigOption
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
                     ExpandState.betterAdvancementsExpanded, ExpandState::toggleBetterAdvancements);
         }
-        else if (configBoolean == Configs.Tools.BETTER_HOPPER_MINECART)
+        else if (configBoolean == Configs.Tools.GUI_TRANSPARENCY)
         {
             addExpandButton(x, y, w, configResettable, configBoolean, keybind,
-                    ExpandState.betterHopperMinecartExpanded, ExpandState::toggleBetterHopperMinecart);
-        }
-        else if (configBoolean == Configs.Tools.BETTER_HOPPER_MINECART_HITBOX)
-        {
-            // 吸取范围显示是子配置项（level 1），需额外缩进 getIndent() - CONTROL_INDENT = 16px
-            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
-                    ExpandState.suckRangeDisplayExpanded, ExpandState::toggleSuckRangeDisplay,
-                    getIndent() - CONTROL_INDENT);
-        }
-        else if (configBoolean == Configs.Tools.HOPPER_MINECART_LOCKED_DISPLAY)
-        {
-            // 漏斗矿车锁定显示是子子配置项（level 2），需额外缩进 getIndent() - CONTROL_INDENT = 32px
-            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
-                    ExpandState.hopperLockedDisplayExpanded, ExpandState::toggleHopperLockedDisplay,
-                    getIndent() - CONTROL_INDENT);
-        }
-        else if (configBoolean == Configs.Tools.HOPPER_CONTAINER_HIGHLIGHT)
-        {
-            // 吸取容器高亮是子配置项（level 1），需额外缩进 getIndent() - CONTROL_INDENT = 16px
-            addExpandButton(x, y, w, configResettable, configBoolean, keybind,
-                    ExpandState.hopperContainerHighlightExpanded, ExpandState::toggleHopperContainerHighlight,
-                    getIndent() - CONTROL_INDENT);
+                    ExpandState.guiTransparencyExpanded, ExpandState::toggleGuiTransparency);
         }
         else
         {

@@ -171,37 +171,17 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed CONTAINER_SIGNAL_DISPLAY =
                 new ConfigBooleanHotkeyed("containerSignalDisplay", false, "").apply(TOOLS_KEY);
 
-        // 更好的漏斗矿车：容器型主配置，本身只统一管理子功能，不直接提供效果
-        public static final ConfigBooleanHotkeyed BETTER_HOPPER_MINECART =
-                new ConfigBooleanHotkeyed("betterHopperMinecart", false, "").apply(TOOLS_KEY);
+        // GUI界面透明度修改：容器型主配置，本身不直接提供效果，统一管理子功能
+        public static final ConfigBooleanHotkeyed GUI_TRANSPARENCY =
+                new ConfigBooleanHotkeyed("guiTransparency", false, "").apply(TOOLS_KEY);
 
-        // 更好的漏斗矿车子配置：吸取范围显示（F3+B 显示碰撞箱时，漏斗矿车额外显示掉落物吸取范围框）
-        public static final ConfigBooleanHotkeyed BETTER_HOPPER_MINECART_HITBOX =
-                new ConfigBooleanHotkeyed("betterHopperMinecartHitbox", false, "").apply(TOOLS_KEY);
+        // GUI界面透明度修改子配置：GUI 不透明度（0-100%，100% 为原版完全不透明）
+        public static final ConfigInteger GUI_OPACITY =
+                new ConfigInteger("guiOpacity", 100, 0, 100).apply(TOOLS_KEY);
 
-        // 吸取范围显示的子子配置：框线颜色
-        public static final ConfigColor HOPPER_SUCK_RANGE_COLOR =
-                new ConfigColor("hopperSuckRangeColor", "#00FF00").apply(TOOLS_KEY);
-
-        // 吸取范围显示的子子配置：漏斗矿车锁定显示（被激活铁轨锁定时换色显示）
-        public static final ConfigBooleanHotkeyed HOPPER_MINECART_LOCKED_DISPLAY =
-                new ConfigBooleanHotkeyed("hopperMinecartLockedDisplay", false, "").apply(TOOLS_KEY);
-
-        // 漏斗矿车锁定显示的子子子配置：锁定时的框线颜色
-        public static final ConfigColor HOPPER_LOCKED_COLOR =
-                new ConfigColor("hopperLockedColor", "#FF0000").apply(TOOLS_KEY);
-
-        // 更好的漏斗矿车子配置：吸取容器高亮（为漏斗矿车正在吸取的容器描边）
-        public static final ConfigBooleanHotkeyed HOPPER_CONTAINER_HIGHLIGHT =
-                new ConfigBooleanHotkeyed("hopperContainerHighlight", false, "").apply(TOOLS_KEY);
-
-        // 吸取容器高亮的子配置：描边颜色
-        public static final ConfigColor HOPPER_CONTAINER_HIGHLIGHT_COLOR =
-                new ConfigColor("hopperContainerHighlightColor", "#00FF00").apply(TOOLS_KEY);
-
-        // 吸取容器高亮的子配置：描边宽度（1-10，默认2）
-        public static final ConfigInteger HOPPER_CONTAINER_HIGHLIGHT_WIDTH =
-                new ConfigInteger("hopperContainerHighlightWidth", 2, 1, 10).apply(TOOLS_KEY);
+        // GUI界面透明度修改子配置：背景半透明黑色不透明度（0-100%，75% 为原版默认效果）
+        public static final ConfigInteger GUI_BACKGROUND_OPACITY =
+                new ConfigInteger("guiBackgroundOpacity", 75, 0, 100).apply(TOOLS_KEY);
 
         public static ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 GLOBAL_MENDING,
@@ -234,14 +214,9 @@ public class Configs implements IConfigHandler
                 BIGGER_ADVANCEMENTS_SCREEN,
                 CREATIVE_SHIFT_TO_HOTBAR,
                 CONTAINER_SIGNAL_DISPLAY,
-                BETTER_HOPPER_MINECART,
-                BETTER_HOPPER_MINECART_HITBOX,
-                HOPPER_SUCK_RANGE_COLOR,
-                HOPPER_MINECART_LOCKED_DISPLAY,
-                HOPPER_LOCKED_COLOR,
-                HOPPER_CONTAINER_HIGHLIGHT,
-                HOPPER_CONTAINER_HIGHLIGHT_COLOR,
-                HOPPER_CONTAINER_HIGHLIGHT_WIDTH
+                GUI_TRANSPARENCY,
+                GUI_OPACITY,
+                GUI_BACKGROUND_OPACITY
         );
 
         /**
@@ -255,16 +230,12 @@ public class Configs implements IConfigHandler
                                                           boolean renderCopyExpanded,
                                                           boolean clearKelpExpanded,
                                                           boolean betterAdvancementsExpanded,
-                                                          boolean betterHopperMinecartExpanded,
-                                                          boolean suckRangeDisplayExpanded,
-                                                          boolean hopperLockedDisplayExpanded,
-                                                          boolean hopperContainerHighlightExpanded)
+                                                          boolean guiTransparencyExpanded)
         {
             if (betterDurabilityExpanded
                     && armorHudExpanded && visualExperienceExpanded
                     && worldSwallowMaintenanceExpanded && renderCopyExpanded && clearKelpExpanded && betterAdvancementsExpanded
-                    && betterHopperMinecartExpanded && suckRangeDisplayExpanded && hopperLockedDisplayExpanded
-                    && hopperContainerHighlightExpanded)
+                    && guiTransparencyExpanded)
             {
                 return OPTIONS;
             }
@@ -329,29 +300,9 @@ public class Configs implements IConfigHandler
                 {
                     continue;
                 }
-                // 碰撞箱子配置仅在更好的漏斗矿车展开时显示
-                if (!betterHopperMinecartExpanded && config == BETTER_HOPPER_MINECART_HITBOX)
-                {
-                    continue;
-                }
-                // 框线颜色、漏斗矿车锁定显示仅在吸取范围显示展开时显示
-                if (!suckRangeDisplayExpanded
-                        && (config == HOPPER_SUCK_RANGE_COLOR || config == HOPPER_MINECART_LOCKED_DISPLAY))
-                {
-                    continue;
-                }
-                // 锁定框线颜色仅在漏斗矿车锁定显示展开时显示
-                if (!hopperLockedDisplayExpanded && config == HOPPER_LOCKED_COLOR)
-                {
-                    continue;
-                }
-                // 吸取容器高亮仅在更好的漏斗矿车展开时显示，其颜色子配置仅在自身展开时显示
-                if (!betterHopperMinecartExpanded && config == HOPPER_CONTAINER_HIGHLIGHT)
-                {
-                    continue;
-                }
-                if (!hopperContainerHighlightExpanded
-                        && (config == HOPPER_CONTAINER_HIGHLIGHT_COLOR || config == HOPPER_CONTAINER_HIGHLIGHT_WIDTH))
+                // GUI界面透明度修改子配置：仅在主配置展开时显示
+                if (!guiTransparencyExpanded && (config == GUI_OPACITY
+                        || config == GUI_BACKGROUND_OPACITY))
                 {
                     continue;
                 }
@@ -395,6 +346,10 @@ public class Configs implements IConfigHandler
         public static final ConfigBooleanHotkeyed FAKE_PEACEFUL_WARDEN_HEARING =
                 new ConfigBooleanHotkeyed("fakePeacefulWardenHearing", true, "").apply(OPTIMIZATION_KEY);
 
+        // 切门刷怪塔优化：生物生成瞬间碰撞箱碰到下界/末地传送门方块则永久禁用其AI（主世界僵尸猪人豁免）
+        public static final ConfigBooleanHotkeyed PORTAL_FARM_OPTIMIZATION =
+                new ConfigBooleanHotkeyed("portalFarmOptimization", false, "").apply(OPTIMIZATION_KEY);
+
         // 列表优化：配置值列表界面行内显示图标、提供搜索选择器（使用 ConfigBoolean，不提供热键绑定）
         public static final ConfigBoolean LIST_OPTIMIZATION =
                 new ConfigBoolean("listOptimization", true).apply(OPTIMIZATION_KEY);
@@ -408,6 +363,7 @@ public class Configs implements IConfigHandler
                 DISABLE_B36_RENDER,
                 FAKE_PEACEFUL,
                 FAKE_PEACEFUL_WARDEN_HEARING,
+                PORTAL_FARM_OPTIMIZATION,
                 LIST_OPTIMIZATION
         );
 
